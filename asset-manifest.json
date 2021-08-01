@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/CarSharingAdminPanel/static/css/main.019b1f89.chunk.css",
+    "main.css": "/CarSharingAdminPanel/static/css/main.ba815d18.chunk.css",
     "main.js": "/CarSharingAdminPanel/static/js/main.6c552c92.chunk.js",
     "main.js.map": "/CarSharingAdminPanel/static/js/main.6c552c92.chunk.js.map",
     "runtime-main.js": "/CarSharingAdminPanel/static/js/runtime-main.febdfc33.js",
@@ -8,14 +8,14 @@
     "static/js/2.9a40ba0d.chunk.js": "/CarSharingAdminPanel/static/js/2.9a40ba0d.chunk.js",
     "static/js/2.9a40ba0d.chunk.js.map": "/CarSharingAdminPanel/static/js/2.9a40ba0d.chunk.js.map",
     "index.html": "/CarSharingAdminPanel/index.html",
-    "static/css/main.019b1f89.chunk.css.map": "/CarSharingAdminPanel/static/css/main.019b1f89.chunk.css.map",
+    "static/css/main.ba815d18.chunk.css.map": "/CarSharingAdminPanel/static/css/main.ba815d18.chunk.css.map",
     "static/js/2.9a40ba0d.chunk.js.LICENSE.txt": "/CarSharingAdminPanel/static/js/2.9a40ba0d.chunk.js.LICENSE.txt",
     "static/media/Logo.bc4f3ee8.svg": "/CarSharingAdminPanel/static/media/Logo.bc4f3ee8.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.febdfc33.js",
     "static/js/2.9a40ba0d.chunk.js",
-    "static/css/main.019b1f89.chunk.css",
+    "static/css/main.ba815d18.chunk.css",
     "static/js/main.6c552c92.chunk.js"
   ]
 }
