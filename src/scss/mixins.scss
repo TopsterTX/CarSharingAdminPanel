@@ -1,0 +1,40 @@
+@import "./vars.scss";
+
+@mixin input {
+  width: 100%;
+  height: 30px;
+  border-radius: 3px;
+  border: 1px solid $inputBorder;
+  padding: 8px 10px;
+  &.warning {
+    border: 1px solid $inputWarning;
+  }
+  &.active {
+    border: 1px solid $inputActive;
+  }
+}
+
+@mixin button {
+  font-family: $mainFont;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  color: #fff;
+  border-radius: 5px;
+  padding: 0 37px 3px 37px;
+  cursor: pointer;
+  height: 30px;
+  background-color: $buttonPrimary;
+  transition: 0.2s all ease-in-out;
+  &:hover {
+    background-color: $buttonHover;
+  }
+}
+
+@mixin container {
+  padding: 0 20px;
+  @media (min-width: 1400px) {
+    padding: 0 27px;
+  }
+}

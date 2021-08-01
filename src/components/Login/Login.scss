@@ -1,0 +1,83 @@
+@import "../../scss/vars.scss";
+@import "../../scss/mixins.scss";
+
+.login {
+  &__block {
+    padding: 20px 0;
+    width: 100%;
+    max-width: 377px;
+    background-color: #fff;
+    box-shadow: $boxShadowOnBlock;
+  }
+  &__wrapper {
+    color: $wordsColor;
+    min-height: $fullHeight;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  &__logo {
+    font-size: 28px;
+    color: $wordsColor;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 17px;
+  }
+  &__title {
+    margin-left: 11px;
+  }
+  &__container {
+    color: $wordsColor;
+    @include container();
+  }
+  &__subtitle {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    label {
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+    input {
+      @include input();
+      margin-bottom: 15px;
+    }
+  }
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__enter {
+    @include button();
+  }
+  &__access {
+    color: $buttonPrimary;
+    font-family: $mainFont;
+    background-color: transparent;
+    cursor: pointer;
+  }
+}
+
+@media (min-width: 375px) {
+  .login {
+    &__block {
+      border-radius: 10px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .login {
+    &__wrapper {
+      padding-top: 175px;
+      justify-content: flex-start;
+    }
+  }
+}
