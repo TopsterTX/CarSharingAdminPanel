@@ -1,0 +1,78 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.header {
+  box-shadow: $boxShadowOnBlock;
+  background-color: #fff;
+  &__button {
+    @include headerButtonMenu();
+  }
+  &__item {
+    width: min-content;
+    position: relative;
+    height: 67px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &-menu {
+    }
+    &-search {
+      width: 60%;
+      border-right: 1px solid #cacedb;
+      padding-left: 25px;
+    }
+    &-notice {
+      width: 50px;
+      border-right: 1px solid #cacedb;
+    }
+    &-account {
+      width: 50px;
+    }
+  }
+  &__list {
+    width: 100vw;
+    height: 67px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__search {
+    &-logo {
+    }
+    &-input {
+      width: 100%;
+      @include inputHeader();
+    }
+  }
+  &__notice {
+    &-logo {
+    }
+  }
+  &__account {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &-logo {
+      border-radius: 50%;
+    }
+    &-arrow {
+      position: relative;
+      span {
+        top: 45%;
+
+        position: absolute;
+        background-color: #abb6bf;
+        height: 4px;
+        width: 1px;
+      }
+      span:nth-child(1) {
+        left: 7px;
+        transform: rotate(-45deg);
+      }
+      span:nth-child(2) {
+        left: 10px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.scss";
 import { mobileViewport } from "./mobileViewportOption";
 import { App } from "./App";
+import { BrowserRouter } from "react-router-dom";
 import { configureStore } from "./redux/configureStore";
 import { Provider } from "react-redux";
 
@@ -11,9 +12,11 @@ mobileViewport();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

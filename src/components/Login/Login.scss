@@ -45,7 +45,7 @@
       font-size: 12px;
     }
     input {
-      @include input();
+      @include inputLogin();
       margin-bottom: 15px;
     }
   }

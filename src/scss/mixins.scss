@@ -1,6 +1,6 @@
 @import "./vars.scss";
 
-@mixin input {
+@mixin inputLogin {
   width: 100%;
   height: 30px;
   border-radius: 3px;
@@ -11,6 +11,20 @@
   }
   &.active {
     border: 1px solid $inputActive;
+  }
+}
+
+@mixin inputHeader {
+  background-color: transparent;
+  border: 0;
+  padding-left: 9px;
+  padding-right: 9px;
+  font-size: 13px;
+  &:active,
+  &:focus,
+  &:hover {
+    outline: 0;
+    outline-offset: 0;
   }
 }
 
@@ -36,5 +50,91 @@
   padding: 0 20px;
   @media (min-width: 1400px) {
     padding: 0 27px;
+  }
+}
+
+@mixin asideItem {
+  &-title {
+    margin-left: 16px;
+    color: $wordsColor;
+    font-size: 15px;
+  }
+  &-icon {
+    height: 15px;
+    width: 15px;
+  }
+  &-container {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    padding-left: 28px;
+    align-items: center;
+    height: 57px;
+    width: 100%;
+    box-shadow: $boxShadowInnerAsideItem;
+    font-family: $mainFont;
+    background-color: #fff;
+    transition: 0.4s all;
+    text-decoration: none;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 4px;
+      background-color: transparent;
+      transition: 0.2s all;
+    }
+    &.active::after {
+      border-right: 1px solid $borderAsideItemActive;
+      background-color: $buttonPrimary;
+      box-shadow: 5px 0px 12px 0px $buttonPrimary;
+    }
+    &.active {
+      background-color: #fbfbfb;
+    }
+  }
+}
+
+@mixin headerButtonMenu {
+  top: 25px;
+  left: 12px;
+  cursor: pointer;
+  z-index: 10;
+  position: absolute;
+  width: 22px;
+  height: 16px;
+  span {
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background-color: $wordsColor;
+    left: 0;
+    border-radius: 10px;
+  }
+  span:nth-child(1) {
+    top: 0;
+  }
+  span:nth-child(2) {
+    top: 42%;
+  }
+  span:nth-child(3) {
+    bottom: 0;
+  }
+}
+
+@mixin headerItem {
+  padding: 10px;
+  &-input {
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #cacedb;
+  }
+  &-notice {
+    border-right: 1px solid #cacedb;
+  }
+  &-account {
   }
 }
