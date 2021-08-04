@@ -58,10 +58,7 @@
     @include button();
   }
   &__access {
-    color: $buttonPrimary;
-    font-family: $mainFont;
-    background-color: transparent;
-    cursor: pointer;
+    @include linkButton();
   }
 }
 

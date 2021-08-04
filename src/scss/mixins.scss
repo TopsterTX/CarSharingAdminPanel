@@ -105,7 +105,7 @@
   z-index: 10;
   position: absolute;
   width: 22px;
-  height: 16px;
+  height: 17px;
   span {
     position: absolute;
     height: 3px;
@@ -118,7 +118,7 @@
     top: 0;
   }
   span:nth-child(2) {
-    top: 42%;
+    top: 44%;
   }
   span:nth-child(3) {
     bottom: 0;
@@ -137,4 +137,13 @@
   }
   &-account {
   }
+}
+
+@mixin linkButton {
+  font-size: 13px;
+  text-decoration: none;
+  color: $buttonPrimary;
+  font-family: $mainFont;
+  background-color: transparent;
+  cursor: pointer;
 }
