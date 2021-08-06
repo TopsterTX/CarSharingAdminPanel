@@ -2,6 +2,7 @@
 @import "../../../scss/vars.scss";
 
 .header {
+  position: fixed;
   box-shadow: $boxShadowOnBlock;
   background-color: #fff;
   &__button {
@@ -26,11 +27,15 @@
       border-right: 1px solid #cacedb;
     }
     &-account {
-      width: 50px;
+      padding-left: 5px;
+      width: 15%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
     }
   }
   &__list {
-    width: 100vw;
+    min-width: 100vw;
     height: 67px;
     display: flex;
     align-items: center;
@@ -56,23 +61,43 @@
       border-radius: 50%;
     }
     &-arrow {
-      position: relative;
-      span {
-        top: 45%;
+      @include accountArrow();
+    }
+    &-name {
+      display: none;
+      color: $wordsColor;
+      font-size: 15px;
+      padding-left: 10px;
+      padding-right: 5px;
+    }
+  }
+}
 
-        position: absolute;
-        background-color: #abb6bf;
-        height: 4px;
-        width: 1px;
+@media (min-width: 768px) {
+  .header {
+    &__item {
+      &-account {
+        padding-left: 15px;
       }
-      span:nth-child(1) {
-        left: 7px;
-        transform: rotate(-45deg);
+    }
+    &__account {
+      &-name {
+        display: block;
       }
-      span:nth-child(2) {
-        left: 10px;
-        transform: rotate(45deg);
-      }
+    }
+  }
+}
+
+@media (min-width: 1400px) {
+  .header {
+    min-width: 100%;
+    &__button {
+      display: none;
+    }
+    &__list {
+      // padding-left: 285px;
+      min-width: 100%;
+      justify-content: flex-end;
     }
   }
 }

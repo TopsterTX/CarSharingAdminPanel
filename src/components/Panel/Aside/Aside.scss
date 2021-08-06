@@ -8,7 +8,6 @@
   position: absolute;
   transition: 0.4s all ease-out;
   &.active {
-    display: block;
     left: 0;
   }
   &__head {
@@ -33,5 +32,13 @@
     width: 285px;
     min-height: $fullHeight;
     background-color: #fff;
+  }
+}
+
+
+@media(min-width: 1400px){
+  .aside{
+    left: 0;
+    
   }
 }

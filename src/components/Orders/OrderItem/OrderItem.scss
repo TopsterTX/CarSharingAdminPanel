@@ -1,0 +1,16 @@
+.order__item {
+  &-container {
+    display: flex;
+  }
+  &-part {
+    display: flex;
+    align-items: center;
+  }
+  &-info {
+    display: flex;
+    flex-direction: column;
+  }
+  &-image{
+      display: none;
+  }
+}

@@ -14,7 +14,7 @@ export const Router = () => {
   return isUserLogin ? (
     <React.Fragment>
       <Route path="/admin/panel" render={() => <Panel />} />
-      <Redirect to="/admin/panel/main" />
+      {/* <Redirect to="/admin/panel/main" /> */}
     </React.Fragment>
   ) : (
     <React.Fragment>

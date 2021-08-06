@@ -3,7 +3,7 @@ import { changeIsOpenAsideMenu } from "../../../redux/actions/aside/aside";
 import { useSelector, useDispatch } from "react-redux";
 import search from "../../../icons/Shape.svg";
 import notice from "../../../icons/Notifications.svg";
-import avatar from "../../../icons/Avatar.png";
+import avatar from "../../../images/Avatar.png";
 import "./Header.scss";
 
 export const Header = () => {
@@ -35,6 +35,7 @@ export const Header = () => {
         </li>
         <li className="header__item header__item-account">
           <img src={avatar} alt="" className="header__account-logo" />
+          <span className="header__account-name">Admin</span>
           <div className="header__account-arrow">
             <span></span>
             <span></span>
