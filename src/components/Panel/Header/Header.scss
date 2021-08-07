@@ -38,7 +38,7 @@
     &-account:hover {
       .header__account-sublist {
         opacity: 1;
-        padding: 20px 25px;
+        padding: 5px 5px;
       }
     }
   }
@@ -107,6 +107,9 @@
       background-color: #900;
       color: #fff;
     }
+    &-text {
+      display: none;
+    }
   }
 }
 
@@ -116,10 +119,25 @@
       &-account {
         padding-left: 15px;
       }
+      &-account:hover {
+        .header__account-sublist {
+          opacity: 1;
+          padding: 5px 15px;
+        }
+      }
     }
     &__account {
       &-name {
         display: block;
+      }
+      &-text {
+        display: block;
+        padding-bottom: 5px;
+      }
+      &-button {
+        img {
+          display: none;
+        }
       }
     }
   }

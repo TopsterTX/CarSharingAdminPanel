@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import search from "../../../icons/Shape.svg";
 import notice from "../../../icons/Notifications.svg";
 import avatar from "../../../images/Avatar.png";
+import exit from "../../../icons/Exit.svg";
 import "./Header.scss";
 import { userLogout } from "./../../../redux/actions/user/user";
 
@@ -55,7 +56,8 @@ export const Header = () => {
                   clickHandler();
                 }}
               >
-                Выйти
+                <span className='header__account-text'>Выйти</span>
+                <img src={exit} alt="" width="15px" height="15px" />
               </button>
             </li>
           </ul>
