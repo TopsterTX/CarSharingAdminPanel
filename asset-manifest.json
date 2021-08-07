@@ -1,16 +1,17 @@
 {
   "files": {
-    "main.css": "/CarSharingAdminPanel/static/css/main.eea7cf19.chunk.css",
-    "main.js": "/CarSharingAdminPanel/static/js/main.b3865b60.chunk.js",
-    "main.js.map": "/CarSharingAdminPanel/static/js/main.b3865b60.chunk.js.map",
+    "main.css": "/CarSharingAdminPanel/static/css/main.1c867fdf.chunk.css",
+    "main.js": "/CarSharingAdminPanel/static/js/main.8053a76a.chunk.js",
+    "main.js.map": "/CarSharingAdminPanel/static/js/main.8053a76a.chunk.js.map",
     "runtime-main.js": "/CarSharingAdminPanel/static/js/runtime-main.febdfc33.js",
     "runtime-main.js.map": "/CarSharingAdminPanel/static/js/runtime-main.febdfc33.js.map",
     "static/js/2.0a37bed3.chunk.js": "/CarSharingAdminPanel/static/js/2.0a37bed3.chunk.js",
     "static/js/2.0a37bed3.chunk.js.map": "/CarSharingAdminPanel/static/js/2.0a37bed3.chunk.js.map",
     "index.html": "/CarSharingAdminPanel/index.html",
-    "static/css/main.eea7cf19.chunk.css.map": "/CarSharingAdminPanel/static/css/main.eea7cf19.chunk.css.map",
+    "static/css/main.1c867fdf.chunk.css.map": "/CarSharingAdminPanel/static/css/main.1c867fdf.chunk.css.map",
     "static/js/2.0a37bed3.chunk.js.LICENSE.txt": "/CarSharingAdminPanel/static/js/2.0a37bed3.chunk.js.LICENSE.txt",
     "static/media/Error.08eae30a.svg": "/CarSharingAdminPanel/static/media/Error.08eae30a.svg",
+    "static/media/Exit.4c3a4716.svg": "/CarSharingAdminPanel/static/media/Exit.4c3a4716.svg",
     "static/media/Forms.0758ecaa.svg": "/CarSharingAdminPanel/static/media/Forms.0758ecaa.svg",
     "static/media/Logo.42a15795.svg": "/CarSharingAdminPanel/static/media/Logo.42a15795.svg",
     "static/media/NewPost.6c12ceca.svg": "/CarSharingAdminPanel/static/media/NewPost.6c12ceca.svg",
@@ -23,7 +24,7 @@
   "entrypoints": [
     "static/js/runtime-main.febdfc33.js",
     "static/js/2.0a37bed3.chunk.js",
-    "static/css/main.eea7cf19.chunk.css",
-    "static/js/main.b3865b60.chunk.js"
+    "static/css/main.1c867fdf.chunk.css",
+    "static/js/main.8053a76a.chunk.js"
   ]
 }
