@@ -2,6 +2,7 @@
 @import "../../../scss/vars.scss";
 
 .header {
+  z-index: 5;
   position: fixed;
   box-shadow: $boxShadowOnBlock;
   background-color: #fff;
@@ -32,6 +33,13 @@
       display: flex;
       align-items: center;
       justify-content: flex-start;
+      position: relative;
+    }
+    &-account:hover {
+      .header__account-sublist {
+        opacity: 1;
+        padding: 20px 25px;
+      }
     }
   }
   &__list {
@@ -69,6 +77,35 @@
       font-size: 15px;
       padding-left: 10px;
       padding-right: 5px;
+    }
+    &-sublist {
+      // pointer-events: auto;
+      align-items: center;
+      transition: 0.2s all;
+      box-shadow: $boxShadowOnBlock;
+      background-color: #fff;
+      height: 67px;
+      width: 120%;
+      top: 67px;
+      position: absolute;
+      display: flex;
+      opacity: 0;
+      left: 0;
+      border-bottom-left-radius: 9px;
+      border-bottom-right-radius: 9px;
+    }
+    &-button {
+      cursor: pointer;
+      padding: 5px 12px;
+      border: 1px solid #900;
+      border-radius: 5px;
+      background-color: transparent;
+      transition: 0.2s all;
+      color: #900;
+    }
+    &-button:active {
+      background-color: #900;
+      color: #fff;
     }
   }
 }

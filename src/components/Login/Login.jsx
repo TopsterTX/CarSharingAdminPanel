@@ -1,31 +1,36 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { SECRET_KEY } from "../../constants";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import logo from "../../icons/Logo.svg";
-import { userAuthorize } from "../../redux/actions/user/user";
+import {
+  changeUsername,
+  userAuthorize,
+  changePassword,
+} from "../../redux/actions/user/user";
 import "./Login.scss";
 
 export const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { username } = useSelector((state) => state.user);
+  const { password } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const authUser = (body) => {
+  const authUser = () => {
     let secret = SECRET_KEY;
     let random = uuidv4();
     let basicKey = btoa(`${random}:${secret}`);
+    let body = {
+      username: `${username}`,
+      password: `${password}`,
+    };
 
     dispatch(userAuthorize(body, basicKey));
   };
 
   const clickHandler = (e) => {
     e.preventDefault();
-    let body = {
-      username: `${username}`,
-      password: `${password}`,
-    };
-    authUser(body);
+
+    authUser();
   };
 
   return (
@@ -46,7 +51,7 @@ export const Login = () => {
                 id="email"
                 required
                 value={username}
-                onChange={(e) => setUsername((username) => e.target.value)}
+                onChange={(e) => dispatch(changeUsername(e.target.value))}
               />
               <label htmlFor="password">Пароль </label>
               <input
@@ -55,7 +60,7 @@ export const Login = () => {
                 id="password"
                 required
                 value={password}
-                onChange={(e) => setPassword((password) => e.target.value)}
+                onChange={(e) => dispatch(changePassword(e.target.value))}
               />
               <div className="login__buttons">
                 <button className="login__access">Запросить доступ</button>

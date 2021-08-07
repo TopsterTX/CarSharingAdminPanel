@@ -5,10 +5,16 @@ import search from "../../../icons/Shape.svg";
 import notice from "../../../icons/Notifications.svg";
 import avatar from "../../../images/Avatar.png";
 import "./Header.scss";
+import { userLogout } from "./../../../redux/actions/user/user";
 
 export const Header = () => {
+  const { accessToken } = useSelector((state) => state.user);
   const { asideMenuIsOpen } = useSelector((state) => state.aside);
   const dispatch = useDispatch();
+
+  const clickHandler = () => {
+    return dispatch(userLogout(accessToken));
+  };
 
   return (
     <header className="header">
@@ -40,6 +46,19 @@ export const Header = () => {
             <span></span>
             <span></span>
           </div>
+          <ul className="header__account-sublist">
+            <li className="header__account-item">
+              <button
+                className="header__account-button"
+                onClick={() => {
+                  console.log("click");
+                  clickHandler();
+                }}
+              >
+                Выйти
+              </button>
+            </li>
+          </ul>
         </li>
       </ul>
     </header>

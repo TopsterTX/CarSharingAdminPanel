@@ -3,9 +3,9 @@ import rootReducer from "./rootReducer";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 
-export const configureStore = (reducers = {}, defaultState = {}) => {
+export const configureStore = (defaultState = {}) => {
   return createStore(
-    combineReducers({ ...reducers, ...rootReducer }),
+    combineReducers({ ...rootReducer }),
     defaultState,
     compose(
       applyMiddleware(thunk, logger),

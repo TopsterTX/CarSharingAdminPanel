@@ -1,19 +1,38 @@
 const defaultState = {
   isUserLogin: false,
+  password: "",
+  username: "",
+  refreshToken: null,
+  accessToken: null,
+  userId: null,
 };
 
 const reduce = "USER__";
 export const USER_LOGIN = `${reduce}LOGIN`;
+export const CHANGE_USERNAME = `${reduce}CHANGE_USERNAME`;
+export const CHANGE_PASSWORD = `${reduce}CHANGE_PASSWORD`;
 
 export default (state = defaultState, { type, payload }) => {
   switch (type) {
     case USER_LOGIN:
       return {
         ...state,
-        isUserLogin: payload,
+        isUserLogin: payload.isUserLogin,
+        refreshToken: payload.refreshToken,
+        accessToken: payload.accessToken,
+        userId: payload.userId,
+      };
+    case CHANGE_USERNAME:
+      return {
+        ...state,
+        username: payload,
+      };
+    case CHANGE_PASSWORD:
+      return {
+        ...state,
+        password: payload,
       };
     default:
       return state;
   }
 };
-
