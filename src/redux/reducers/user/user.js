@@ -5,6 +5,7 @@ const defaultState = {
   refreshToken: null,
   accessToken: null,
   userId: null,
+  isUserLoginFailed: false,
 };
 
 const reduce = "USER__";
@@ -21,6 +22,7 @@ export default (state = defaultState, { type, payload }) => {
         refreshToken: payload.refreshToken,
         accessToken: payload.accessToken,
         userId: payload.userId,
+        isUserLoginFailed: payload.isUserLoginFailed,
       };
     case CHANGE_USERNAME:
       return {

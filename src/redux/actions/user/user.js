@@ -5,14 +5,21 @@ import {
 } from "../../reducers/user/user";
 import { BASE_URL } from "./../../../constants";
 
-export const userLogin = (bool, refreshToken, accessToken, userId) => {
+export const userLogin = (
+  isUserLogin,
+  refreshToken,
+  accessToken,
+  userId,
+  isUserLoginFailed
+) => {
   return {
     type: USER_LOGIN,
     payload: {
-      isUserLogin: bool,
+      isUserLogin,
       refreshToken,
       accessToken,
       userId,
+      isUserLoginFailed,
     },
   };
 };
@@ -30,10 +37,18 @@ export const userAuthorize = (body, key) => async (dispatch) => {
     })
       .then((res) => res.json())
       .then((res) =>
-        dispatch(userLogin(true, res.refresh_token, res.access_token, res.user_id))
+        dispatch(
+          userLogin(
+            true,
+            res.refresh_token,
+            res.access_token,
+            res.user_id,
+            false
+          )
+        )
       );
   } catch (e) {
-    console.error(e);
+    dispatch(userLogin(false, null, null, null, true));
   }
 };
 
@@ -45,8 +60,7 @@ export const userLogout = (access) => async (dispatch) => {
         "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
         Authorization: `Bearer ${access}`,
       },
-    })
-      .then((res) => dispatch(userLogin(false, null, null, null)));
+    }).then((res) => dispatch(userLogin(false, null, null, null)));
   } catch (e) {
     console.error(e);
   }

@@ -11,8 +11,9 @@ import {
 import "./Login.scss";
 
 export const Login = () => {
-  const { username } = useSelector((state) => state.user);
-  const { password } = useSelector((state) => state.user);
+  const { username, password, isUserLoginFailed } = useSelector(
+    (state) => state.user
+  );
   const dispatch = useDispatch();
 
   const authUser = () => {
@@ -43,11 +44,11 @@ export const Login = () => {
         <div className="login__block">
           <div className="login__container">
             <div className="login__subtitle">Вход</div>
-            <form action="#" className="login__form">
+            <form action="" className="login__form">
               <label htmlFor="email">Почта</label>
               <input
                 type="text"
-                className="login__email"
+                className={`login__email ${isUserLoginFailed ? "warning" : ""}`}
                 id="email"
                 required
                 value={username}
@@ -56,7 +57,9 @@ export const Login = () => {
               <label htmlFor="password">Пароль </label>
               <input
                 type="password"
-                className="login__password"
+                className={`login__password ${
+                  isUserLoginFailed ? "warning" : ""
+                }`}
                 id="password"
                 required
                 value={password}
