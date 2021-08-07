@@ -1,8 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { SECRET_KEY } from "../../constants";
+import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
 import logo from "../../icons/Logo.svg";
+import { userAuthorize } from "../../redux/actions/user/user";
 import "./Login.scss";
 
 export const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+
+  const authUser = (body) => {
+    let secret = SECRET_KEY;
+    let random = uuidv4();
+    let basicKey = btoa(`${random}:${secret}`);
+
+    dispatch(userAuthorize(body, basicKey));
+  };
+
+  const clickHandler = (e) => {
+    e.preventDefault();
+    let body = {
+      username: `${username}`,
+      password: `${password}`,
+    };
+    authUser(body);
+  };
+
   return (
     <section className="login">
       <div className="login__wrapper">
@@ -15,17 +40,30 @@ export const Login = () => {
             <div className="login__subtitle">Вход</div>
             <form action="#" className="login__form">
               <label htmlFor="email">Почта</label>
-              <input type="text" className="login__email" id="email" required />
+              <input
+                type="text"
+                className="login__email"
+                id="email"
+                required
+                value={username}
+                onChange={(e) => setUsername((username) => e.target.value)}
+              />
               <label htmlFor="password">Пароль </label>
               <input
                 type="password"
                 className="login__password"
                 id="password"
                 required
+                value={password}
+                onChange={(e) => setPassword((password) => e.target.value)}
               />
               <div className="login__buttons">
                 <button className="login__access">Запросить доступ</button>
-                <button className="login__enter" type="submit">
+                <button
+                  className="login__enter"
+                  type="submit"
+                  onClick={(e) => clickHandler(e)}
+                >
                   Войти
                 </button>
               </div>

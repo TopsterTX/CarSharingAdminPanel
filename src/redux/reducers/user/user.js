@@ -1,5 +1,5 @@
 const defaultState = {
-  isUserLogin: true,
+  isUserLogin: false,
 };
 
 const reduce = "USER__";
@@ -16,3 +16,4 @@ export default (state = defaultState, { type, payload }) => {
       return state;
   }
 };
+
