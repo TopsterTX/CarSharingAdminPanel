@@ -1,0 +1,95 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.filter {
+  position: relative;
+  &__toggler {
+    cursor: pointer;
+    background-color: transparent;
+    position: relative;
+    padding: 5px 20px;
+    border: 1px solid $mainGrayDark;
+    border-radius: 5px;
+    @include dotsIcon(10px, 7px);
+    z-index: 3;
+  }
+  &__container {
+    height: min-content;
+    width: max-content;
+
+    transition: 0.2s all;
+    padding: 15px 25px;
+    position: absolute;
+    border-radius: 10px;
+    z-index: 2;
+    background-color: #fff;
+    box-shadow: $boxShadowOnBlock;
+    opacity: 0;
+    transform: translate(0, -20px);
+    &.active {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+  }
+  &__wrapper {
+  }
+  &__list {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 7px 14px;
+    width: 110px;
+    border-radius: 5px;
+    border: 1px solid $mainGrayDark;
+    font-size: 12px;
+    margin-bottom: 12px;
+    color: $wordGray;
+    @include arrowFilter();
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+  &__item {
+  }
+  &__button {
+    @include button();
+  }
+}
+
+@media (min-width: 768px) {
+  .filter {
+    &__wrapper {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .filter {
+    width: 100%;
+    &__toggler {
+      display: none;
+    }
+    &__container {
+      padding: 0;
+      justify-content: space-between;
+      align-items: center;
+      height: min-content;
+      width: 100%;
+      position: relative;
+      opacity: 1;
+      transform: translate(0, 0);
+      display: flex;
+      box-shadow: none;
+      background-color: transparent;
+    }
+    &__wrapper{
+        
+    }
+    &__list{
+        margin: 0;
+    }
+  }
+}

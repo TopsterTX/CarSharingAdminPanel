@@ -1,6 +1,8 @@
 import React from "react";
 import "./Orders.scss";
 import { OrderItem } from "./OrderItem/OrderItem";
+import { Pages } from "./Pages/Pages";
+import { Filter } from "./Filter/Filter";
 
 export const Orders = () => {
   return (
@@ -9,18 +11,16 @@ export const Orders = () => {
         <h2 className="orders__title">Заказы</h2>
         <div className="orders__block">
           <div className="orders__filters">
-            <div className="orders__inputs">
-              <input type="text" className="order__liter" />
-              <input type="text" className="order__liter" />
-              <input type="text" className="order__liter" />
-              <input type="text" className="order__liter" />
-            </div>
-            <button className="order__button">Применить</button>
+            <Filter />
           </div>
           <div className="orders__main">
             <OrderItem />
+            <OrderItem />
+            <OrderItem />
           </div>
-          <div className="orders__pages"></div>
+          <div className="orders__pages">
+            <Pages />
+          </div>
         </div>
       </div>
     </section>

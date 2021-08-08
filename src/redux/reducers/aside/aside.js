@@ -1,9 +1,9 @@
 import { v4 } from "uuid";
-import pen from "../../../icons/Pen.svg";
-import forms from "../../../icons/Forms.svg";
-import newPost from "../../../icons/NewPost.svg";
-import error from "../../../icons/Error.svg";
-import overview from "../../../icons/Overview.svg";
+import pen from "../../../icons/navbar/Pen.svg";
+import forms from "../../../icons/navbar/Forms.svg";
+import newPost from "../../../icons/navbar/NewPost.svg";
+import error from "../../../icons/navbar/Error.svg";
+import overview from "../../../icons/navbar/Overview.svg";
 
 const defaultState = {
   asideMenuIsOpen: false,

@@ -1,8 +1,8 @@
 import React from "react";
 import { changeIsOpenAsideMenu } from "../../../redux/actions/aside/aside";
 import { useSelector, useDispatch } from "react-redux";
-import search from "../../../icons/Shape.svg";
-import notice from "../../../icons/Notifications.svg";
+import search from "../../../icons/header/Shape.svg";
+import notice from "../../../icons/header/Notifications.svg";
 import avatar from "../../../images/Avatar.png";
 import "./Header.scss";
 
