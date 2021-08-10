@@ -3,6 +3,7 @@
 
 .header {
   position: fixed;
+  z-index: 20;
   box-shadow: $boxShadowOnBlock;
   background-color: #fff;
   &__button {
