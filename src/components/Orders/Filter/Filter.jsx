@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Filter.scss";
 
-export const Filter = () => {
+export const Filter = ({ filterItems, buttons }) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -14,20 +14,27 @@ export const Filter = () => {
       </button>
       <div className={`filter__container ${active ? "active" : ""}`}>
         <div className="filter__wrapper">
-          <ul className="filter__list">
-            <span>За неделю</span>
-          </ul>
-          <ul className="filter__list">
-            <span>ELANTRA</span>
-          </ul>
-          <ul className="filter__list">
-            <span>Ульяновск</span>
-          </ul>
-          <ul className="filter__list">
-            <span>В процессе</span>
-          </ul>
+          {filterItems
+            ? filterItems.map((el) => {
+                return (
+                  <ul className="filter__list" key={el.id}>
+                    <span>{el.text}</span>
+                  </ul>
+                );
+              })
+            : ""}
         </div>
-        <button className="filter__button">Применить</button>
+        <div className="filter__button-wrapper">
+          {buttons
+            ? buttons.map((el) => {
+                return (
+                  <button className={el.className} key={el.id}>
+                    {el.text}
+                  </button>
+                );
+              })
+            : ""}
+        </div>
       </div>
     </section>
   );

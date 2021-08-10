@@ -28,7 +28,7 @@
   &__copyright {
     display: block;
     font-size: 12px;
-    color: $wordsFooterColor;
+    color: $dotsGray;
   }
   &__link {
     @include linkButton();

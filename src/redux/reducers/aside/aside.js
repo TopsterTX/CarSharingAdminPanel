@@ -28,9 +28,9 @@ const defaultState = {
     },
     {
       id: v4(),
-      title: "Меню 4",
+      title: "Сущности",
       icon: overview,
-      path: "/admin/panel/orders",
+      path: "/admin/panel/entities",
     },
     {
       id: v4(),

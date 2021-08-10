@@ -1,0 +1,14 @@
+@import "../../scss/mixins.scss";
+@import "../../scss/vars.scss";
+
+.entities {
+  &__title {
+    @include mainBlockTitle();
+  }
+  &__container {
+    @include mainBlockContainer();
+  }
+  &__block {
+    @include mainBlock();
+  }
+}
