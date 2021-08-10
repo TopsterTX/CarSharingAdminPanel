@@ -1,38 +1,12 @@
 import React from "react";
-import "./Orders.scss";
+import { useSelector } from "react-redux";
 import { OrderItem } from "./OrderItem/OrderItem";
 import { Pages } from "./Pages/Pages";
 import { Filter } from "./Filter/Filter";
-import { v4 as uuidv4 } from "uuid";
+import "./Orders.scss";
 
 export const Orders = () => {
-  const configureFilter = {
-    filterItems: [
-      {
-        id: uuidv4(),
-        text: "За неделю",
-      },
-      {
-        id: uuidv4(),
-        text: "ELANTRA",
-      },
-      {
-        id: uuidv4(),
-        text: "Ульяновск",
-      },
-      {
-        id: uuidv4(),
-        text: "В процессе",
-      },
-    ],
-    buttons: [
-      {
-        id: uuidv4(),
-        className: "filter__button",
-        text: "Применить",
-      },
-    ],
-  };
+  const { configureFilter } = useSelector((state) => state.order);
 
   return (
     <section className="orders">

@@ -316,7 +316,7 @@
 }
 
 @mixin mainBlockContainer {
-  padding: 100px 0 0 10px;
+  padding: 100px 0 0 0;
   @media (min-width: 768px) {
     padding: 100px 32px 10px 32px;
   }
@@ -401,4 +401,13 @@
   @media (min-width: 1024px) {
     margin: 0;
   }
+}
+
+@mixin filterWrapperInComponent {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 22px 14px 22px;
+  border-bottom: 1px solid $grayBorderBottom;
+  margin-bottom: 16px;
 }

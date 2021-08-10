@@ -16,12 +16,7 @@
     @include mainBlock();
   }
   &__filters {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0 22px 14px 22px;
-    border-bottom: 1px solid $grayBorderBottom;
-    margin-bottom: 16px;
+    @include filterWrapperInComponent();
   }
   &__main {
     padding: 0 22px 14px 22px;

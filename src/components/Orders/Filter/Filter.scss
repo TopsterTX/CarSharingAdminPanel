@@ -9,15 +9,17 @@
   &__container {
     @include filterContainer();
   }
-  &__wrapper {
-  }
   &__list {
     @include filterList();
   }
-  &__item {
-  }
   &__button {
     @include button();
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+  &__button-wrapper {
+    display: flex;
   }
 }
 
