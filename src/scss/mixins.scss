@@ -299,3 +299,12 @@
       border-top: 3px solid #000;
     }
 }
+
+@mixin mainBlock {
+  background-color: #fff;
+    box-shadow: $boxShadowOnBlock;
+    display: flex;
+    flex-direction: column;
+    border-radius: 9px;
+    padding: 16px 0 0 0;
+}

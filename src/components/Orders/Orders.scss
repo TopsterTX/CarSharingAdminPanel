@@ -17,12 +17,7 @@
     margin-bottom: 15px;
   }
   &__block {
-    background-color: #fff;
-    box-shadow: $boxShadowOnBlock;
-    display: flex;
-    flex-direction: column;
-    border-radius: 9px;
-    padding: 16px 0 0 0;
+    @include mainBlock();
   }
   &__filters {
     display: flex;
