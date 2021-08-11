@@ -11,6 +11,7 @@ import {
 import "./Login.scss";
 
 export const Login = () => {
+  
   const { username, password, isUserLoginFailed } = useSelector(
     (state) => state.user
   );
@@ -25,13 +26,13 @@ export const Login = () => {
       password: `${password}`,
     };
 
-    dispatch(userAuthorize(body, basicKey));
+    return dispatch(userAuthorize(body, basicKey));
   };
 
   const clickHandler = (e) => {
     e.preventDefault();
 
-    authUser();
+    return authUser();
   };
 
   return (

@@ -6,12 +6,14 @@ const defaultState = {
   accessToken: null,
   userId: null,
   isUserLoginFailed: false,
+  basicKey: null,
 };
 
 const reduce = "USER__";
 export const USER_LOGIN = `${reduce}LOGIN`;
 export const CHANGE_USERNAME = `${reduce}CHANGE_USERNAME`;
 export const CHANGE_PASSWORD = `${reduce}CHANGE_PASSWORD`;
+export const GET_TOKENS = `${reduce}GET_TOKENS`;
 
 export default (state = defaultState, { type, payload }) => {
   switch (type) {
@@ -19,10 +21,11 @@ export default (state = defaultState, { type, payload }) => {
       return {
         ...state,
         isUserLogin: payload.isUserLogin,
-        refreshToken: payload.refreshToken,
-        accessToken: payload.accessToken,
-        userId: payload.userId,
+        refreshToken: payload.refresh_token,
+        accessToken: payload.access_token,
+        userId: payload.user_id,
         isUserLoginFailed: payload.isUserLoginFailed,
+        basicKey: payload.basicKey,
       };
     case CHANGE_USERNAME:
       return {
@@ -33,6 +36,12 @@ export default (state = defaultState, { type, payload }) => {
       return {
         ...state,
         password: payload,
+      };
+    case GET_TOKENS:
+      return {
+        ...state,
+        refreshToken: payload.refresh,
+        accessToken: payload.access,
       };
     default:
       return state;

@@ -9,7 +9,6 @@ export const OrderItem = () => {
         let random = uuidv4()
         let secret = '4cbcea96de'
         let basic = btoa(`${random}:${secret}`)
-        console.log(basic);
     })()
 
 

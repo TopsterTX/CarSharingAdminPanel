@@ -10,7 +10,6 @@ import { userLogout } from "./../../../redux/actions/user/user";
 
 export const Header = () => {
   const { accessToken } = useSelector((state) => state.user);
-  const { asideMenuIsOpen } = useSelector((state) => state.aside);
   const dispatch = useDispatch();
 
   const clickHandler = () => {
@@ -52,7 +51,6 @@ export const Header = () => {
               <button
                 className="header__account-button"
                 onClick={() => {
-                  console.log("click");
                   clickHandler();
                 }}
               >
