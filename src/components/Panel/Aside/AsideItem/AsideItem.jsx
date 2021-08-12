@@ -14,7 +14,7 @@ export const AsideItem = ({ item }) => {
 
   return (
     <li
-      className={`aside__item ${item.active ? "active" : ""}`}
+      className={`aside__item ${item.active ? "active" : null}`}
       onClick={() => clickHandler()}
     >
       <NavLink to={item.path} className="aside__item-container">
