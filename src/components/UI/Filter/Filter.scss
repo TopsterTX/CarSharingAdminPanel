@@ -3,14 +3,13 @@
 
 .filter {
   position: relative;
+  @include filterWrapper();
+  
   &__toggler {
     @include filterToggler();
   }
   &__container {
     @include filterContainer();
-  }
-  &__list {
-    @include filterList();
   }
   &__button {
     @include button();

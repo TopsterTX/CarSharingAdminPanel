@@ -1,0 +1,7 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.content__container {
+  @include mainBlockContainer();
+  
+}

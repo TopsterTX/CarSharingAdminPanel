@@ -23,15 +23,21 @@ const defaultState = {
     buttons: [
       {
         id: uuidv4(),
-        className: "filter__button",
         text: "Применить",
       },
     ],
   },
 };
 
+const reduce = "ORDER";
+export const GET_ORDERS = `${reduce}GET_ORDERS`;
+
 export default (state = defaultState, { type, payload }) => {
   switch (type) {
+    case GET_ORDERS:
+      return {
+        ...state,
+      };
     default:
       return state;
   }

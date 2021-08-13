@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 const defaultState = {
+  cars: [],
   configureFilter: {
     filterItems: [
       {
@@ -23,19 +24,22 @@ const defaultState = {
     buttons: [
       {
         id: uuidv4(),
-        type: "warning",
-        text: "Сбросить",
-      },
-      {
-        id: uuidv4(),
         text: "Применить",
       },
     ],
   },
 };
 
+const reduce = "CARS";
+export const GET_CARS = `${reduce}GET_CARS`;
+
 export default (state = defaultState, { type, payload }) => {
   switch (type) {
+    case GET_CARS:
+      return {
+        ...state,
+        cars: payload,
+      };
     default:
       return state;
   }

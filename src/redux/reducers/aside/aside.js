@@ -12,13 +12,13 @@ const defaultState = {
       id: v4(),
       title: "Карточка автомобиля",
       icon: pen,
-      path: "/admin/panel/main",
+      path: "/admin/panel/card",
     },
     {
       id: v4(),
       title: "Список авто",
       icon: forms,
-      path: "/admin/panel/cars",
+      path: "/admin/panel/main",
     },
     {
       id: v4(),
@@ -36,7 +36,7 @@ const defaultState = {
       id: v4(),
       title: "Меню 5",
       icon: error,
-      path: "/admin/panel/orders",
+      path: "/admin/panel/xxx",
     },
   ],
 };

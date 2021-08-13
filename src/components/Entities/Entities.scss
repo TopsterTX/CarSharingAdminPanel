@@ -11,7 +11,4 @@
   &__block {
     @include mainBlock();
   }
-  &__filter {
-    @include filterWrapperInComponent();
-  }
 }

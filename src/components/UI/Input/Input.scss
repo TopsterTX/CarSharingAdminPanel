@@ -1,0 +1,27 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.input {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 15px;
+  &__label {
+    font-size: 12px;
+    color: $mainBlack;
+    margin-bottom: 5px;
+  }
+  &__item {
+    @include inputLogin();
+  }
+  &__error {
+    display: none;
+    font-size: 12px;
+    padding-top: 5px;
+    padding-left: 10px;
+    &.active {
+      display: block;
+      color: $mainRed;
+    }
+  }
+}

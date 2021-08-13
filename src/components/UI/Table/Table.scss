@@ -1,0 +1,11 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.block {
+  @include mainBlock();
+  &__main {
+    padding: 16px 21px ;
+    border-bottom: 1px solid $mainGrayDark;
+    min-height: 312px;
+  }
+}

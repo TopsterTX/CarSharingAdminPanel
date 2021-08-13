@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { AsideItem } from "./AsideItem/AsideItem";
-import { changeIsOpenAsideMenu } from "../../../redux/actions/aside/aside";
 import logo from "../../../icons/Logo.svg";
 import "./Aside.scss";
 

@@ -2,37 +2,7 @@
 @import "../../scss/vars.scss";
 
 .orders {
-  overflow: scroll;
+  min-width: 100vw;
   min-height: 100vh;
   padding: 0 0 67px 0;
-  &__container {
-    @include mainBlockContainer();
-  }
-
-  &__title {
-    @include mainBlockTitle();
-  }
-  &__block {
-    @include mainBlock();
-  }
-  &__filters {
-    @include filterWrapperInComponent();
-  }
-  &__main {
-    padding: 0 22px 14px 22px;
-    font-size: 12px;
-    flex: 1 1 100%;
-    border-bottom: 1px solid $grayBorderBottom;
-  }
-  &__button {
-    @include button();
-  }
-}
-
-@media (min-width: 768px) {
-  .orders {
-    &__main {
-      font-size: 15px;
-    }
-  }
 }

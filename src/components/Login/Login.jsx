@@ -8,10 +8,12 @@ import {
   userAuthorize,
   changePassword,
 } from "../../redux/actions/user/user";
+import { Button } from "../UI/Button/Button";
+import { Input } from "../UI/Input/Input";
 import "./Login.scss";
+import { userLogin } from "./../../redux/actions/user/user";
 
 export const Login = () => {
-  
   const { username, password, isUserLoginFailed } = useSelector(
     (state) => state.user
   );
@@ -26,12 +28,12 @@ export const Login = () => {
       password: `${password}`,
     };
 
-    return dispatch(userAuthorize(body, basicKey));
+    
+    dispatch(userAuthorize(body, basicKey));
   };
 
   const clickHandler = (e) => {
     e.preventDefault();
-
     return authUser();
   };
 
@@ -46,35 +48,26 @@ export const Login = () => {
           <div className="login__container">
             <div className="login__subtitle">Вход</div>
             <form action="" className="login__form">
-              <label htmlFor="email">Почта</label>
-              <input
-                type="text"
-                className={`login__email ${isUserLoginFailed ? "warning" : ""}`}
-                id="email"
-                required
-                value={username}
+              <Input
+                label={"Логин"}
+                warning={isUserLoginFailed}
+                warningText={"Не правильный логин"}
                 onChange={(e) => dispatch(changeUsername(e.target.value))}
+                value={username}
+                required
               />
-              <label htmlFor="password">Пароль </label>
-              <input
-                type="password"
-                className={`login__password ${
-                  isUserLoginFailed ? "warning" : ""
-                }`}
-                id="password"
+              <Input
+                label={"Пароль"}
+                warning={isUserLoginFailed}
+                type={"password"}
                 required
                 value={password}
                 onChange={(e) => dispatch(changePassword(e.target.value))}
+                warningText={"Не правильный пароль"}
               />
               <div className="login__buttons">
-                <button className="login__access">Запросить доступ</button>
-                <button
-                  className="login__enter"
-                  type="submit"
-                  onClick={(e) => clickHandler(e)}
-                >
-                  Войти
-                </button>
+                <Button text={"Запросить доступ"} type={"link"} />
+                <Button text={"Войти"} onClick={(e) => clickHandler(e)} />
               </div>
             </form>
           </div>

@@ -2,7 +2,7 @@ import React from "react";
 import car from "../../../images/car.png";
 import { Checkbox } from "./Checkbox/Checkbox";
 import { Info } from "./Info/Info";
-import { Buttons } from "./Buttons/Buttons";
+import { Buttons } from "../../UI/Buttons/Buttons";
 import "./OrderItem.scss";
 
 export const OrderItem = () => {

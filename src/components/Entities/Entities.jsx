@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Filter } from "../Orders/Filter/Filter";
+import { Filter } from "../UI/Filter/Filter";
 import "./Entities.scss";
 
 export const Entities = () => {

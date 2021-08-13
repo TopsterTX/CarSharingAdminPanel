@@ -40,25 +40,11 @@
   &__form {
     display: flex;
     flex-direction: column;
-    label {
-      margin-bottom: 8px;
-      font-size: 12px;
-    }
-    input {
-      @include inputLogin();
-      margin-bottom: 15px;
-    }
   }
   &__buttons {
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  &__enter {
-    @include button();
-  }
-  &__access {
-    @include linkButton();
   }
 }
 

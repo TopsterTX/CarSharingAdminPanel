@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Selector } from "../Selector/Selector";
+import { Button } from "../Button/Button";
 import "./Filter.scss";
 
 export const Filter = ({ filterItems, buttons }) => {
@@ -16,22 +18,14 @@ export const Filter = ({ filterItems, buttons }) => {
         <div className="filter__wrapper">
           {filterItems
             ? filterItems.map((el) => {
-                return (
-                  <ul className="filter__list" key={el.id}>
-                    <span>{el.text}</span>
-                  </ul>
-                );
+                return <Selector text={el.text} key={el.id} />;
               })
             : ""}
         </div>
         <div className="filter__button-wrapper">
           {buttons
             ? buttons.map((el) => {
-                return (
-                  <button className={el.className} key={el.id}>
-                    {el.text}
-                  </button>
-                );
+                return <Button text={el.text} key={el.id} type={el.type} />;
               })
             : ""}
         </div>

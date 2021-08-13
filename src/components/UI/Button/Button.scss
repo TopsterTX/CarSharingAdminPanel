@@ -1,0 +1,12 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.button {
+  &:not(:last-child){
+    margin-right: 15px;
+  }
+  @include button();
+  &.link {
+    @include linkButton();
+  }
+}

@@ -6,14 +6,20 @@ import notice from "../../../icons/header/Notifications.svg";
 import avatar from "../../../images/Avatar.png";
 import exit from "../../../icons/Exit.svg";
 import "./Header.scss";
-import { userLogout } from "./../../../redux/actions/user/user";
+import {
+  changePassword,
+  changeUsername,
+  userLogout,
+} from "./../../../redux/actions/user/user";
 
 export const Header = () => {
   const { accessToken } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const clickHandler = () => {
-    return dispatch(userLogout(accessToken));
+    dispatch(userLogout(accessToken));
+    dispatch(changePassword(""));
+    dispatch(changeUsername(""));
   };
 
   return (
@@ -54,7 +60,7 @@ export const Header = () => {
                   clickHandler();
                 }}
               >
-                <span className='header__account-text'>Выйти</span>
+                <span className="header__account-text">Выйти</span>
                 <img src={exit} alt="" width="15px" height="15px" />
               </button>
             </li>
