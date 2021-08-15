@@ -10,9 +10,15 @@ const defaultState = {
   asideItems: [
     {
       id: v4(),
+      title: "Карточка заказа",
+      icon: forms,
+      path: "/admin/panel/card_order",
+    },
+    {
+      id: v4(),
       title: "Карточка автомобиля",
       icon: pen,
-      path: "/admin/panel/card",
+      path: "/admin/panel/card_car",
     },
     {
       id: v4(),

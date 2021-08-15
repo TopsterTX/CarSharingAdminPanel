@@ -12,13 +12,9 @@ export default React.memo(function Cars() {
   const dispatch = useDispatch();
   let page = 1;
 
-  const requestCars = async (page) => {
-    let result = await dispatch(getCars(1));
-    return result;
-  };
 
   useEffect(() => {
-    requestCars();
+    dispatch(getCars(page));
   }, [page]);
 
   return (

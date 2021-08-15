@@ -1,6 +1,6 @@
 import React from "react";
 import car from "../../../images/car.png";
-import { Checkbox } from "./Checkbox/Checkbox";
+import { CheckboxOrder } from "./CheckboxOrder/CheckboxOrder";
 import { Info } from "./Info/Info";
 import { Buttons } from "../../UI/Buttons/Buttons";
 import "./OrderItem.scss";
@@ -14,7 +14,7 @@ export const OrderItem = () => {
             <img src={car} alt="" className="order__item-image" />
             <Info />
           </div>
-          <Checkbox />
+          <CheckboxOrder />
         </li>
         <li className="order__item-part">
           <span className="order__item-price">4 300 ₽</span>

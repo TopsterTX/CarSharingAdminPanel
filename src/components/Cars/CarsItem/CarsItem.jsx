@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Buttons } from "../../UI/Buttons/Buttons";
+import carImage from "../../../images/car.png";
 import "./CarsItem.scss";
 
 export function CarsItem({ car }) {
@@ -9,7 +10,7 @@ export function CarsItem({ car }) {
       <ul className="car__item-container">
         <li className="car__item-part car__item-part --full-width">
           <li className="car__item-part --first-block">
-            <img src="" alt="image" className="car__image" />
+            <img src={carImage} alt="image" className="car__image" />
             <div className="car__info">
               <p className="car__model">ELANTRA</p>
               <p className="car__description">
@@ -28,7 +29,7 @@ export function CarsItem({ car }) {
         </li>
 
         <li className="car__item-part">
-          <span className="car__price">10 000 - 20 000</span>
+          <span className="car__price">10 000 ₽ - 20 000 ₽</span>
         </li>
         <li className="car__item-part">
           <Buttons />

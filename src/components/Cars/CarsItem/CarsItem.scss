@@ -3,7 +3,8 @@
 
 .car {
   &__price {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-size: 18px;
   }
   &__image {
     display: none;
@@ -79,17 +80,20 @@
 
 @media (min-width: 1024px) {
   .car {
-      &__item{
-          &-part{
-             .--fisrt-block{
-                 display: flex;
-             } 
-          }
+    &__price {
+      font-size: 22px;
+    }
+    &__item {
+      &-part {
+        .--fisrt-block {
+          display: flex;
+        }
       }
+    }
     &__image {
       display: block;
-      width: 70px;
-      height: 70px;
+      // width: 70px;
+      // height: 70px;
     }
   }
 }

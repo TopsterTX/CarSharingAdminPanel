@@ -12,6 +12,40 @@
   &.active {
     border: 1px solid $inputActive;
   }
+  &.plus {
+    width: calc(100% - 38px);
+  }
+}
+
+@mixin inputWithPlus {
+  &::after,
+  &::before {
+    transition: 0.2s all ease-in-out;
+    content: "";
+    position: absolute;
+    background-color: $inputBorder;
+  }
+  &::after {
+    bottom: 20%;
+    right: 45%;
+    width: 2px;
+    height: 16px;
+  }
+  &::before {
+    bottom: 45%;
+    right: 20%;
+    width: 16px;
+    height: 2px;
+  }
+  &:hover {
+    cursor: pointer;
+    transition: 0.2s all ease-in;
+    border: 1px solid $mainBlack;
+    &::after,
+    &::before {
+      background-color: $mainBlack;
+    }
+  }
 }
 
 @mixin inputHeader {
@@ -49,6 +83,14 @@
     background-color: $mainRed;
     &:hover {
       background-color: $buttonHoverWarning;
+    }
+  }
+  &.cancel {
+    background-color: $buttonCancel;
+    color: $wordsColor;
+    &:hover {
+      background-color: $buttonCancelHover;
+      color: #fff;
     }
   }
 }
@@ -313,7 +355,7 @@
   display: flex;
   flex-direction: column;
   border-radius: 9px;
-  padding: 16px 0 0 0;
+  padding: 17px 0 0 0;
 }
 
 @mixin mainBlockContainer {
@@ -334,6 +376,7 @@
   margin-bottom: 15px;
   @media (min-width: 768px) {
     padding-left: 0;
+    font-size: 29px;
   }
 }
 
@@ -388,7 +431,7 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   padding: 7px 14px;
-  width: 110px;
+  min-width: 110px;
   border-radius: 5px;
   border: 1px solid $mainGrayDark;
   margin-bottom: 12px;
@@ -410,9 +453,5 @@
   border-bottom: 1px solid $grayBorderBottom;
 }
 
-// @mixin mainBlock {
-//   padding: 0 22px 14px 22px;
-//   font-size: 12px;
-//   flex: 1 1 100%;
-//   border-bottom: 1px solid $grayBorderBottom;
-// }
+@mixin cardContainer {
+}
