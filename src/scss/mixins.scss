@@ -402,13 +402,14 @@
   padding: 15px 25px;
   position: absolute;
   border-radius: 10px;
-  z-index: 2;
+  z-index: -1;
   background-color: #fff;
   box-shadow: $boxShadowOnBlock;
   opacity: 0;
   top: 30px;
   &.active {
     opacity: 1;
+    z-index: 2;
   }
   @media (min-width: 1024px) {
     padding: 0;
