@@ -1,0 +1,10 @@
+@import "../../scss/mixins.scss";
+@import "../../scss/vars.scss";
+
+.address {
+  padding-bottom: 100px;
+
+  &__block {
+    @include mainBlock();
+  }
+}

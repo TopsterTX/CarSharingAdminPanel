@@ -5,6 +5,10 @@ import carImage from "../../../images/car.png";
 import "./CarsItem.scss";
 
 export function CarsItem({ car }) {
+  const buttonsProps = {
+    buttons: [{ type: "default" }],
+  };
+
   return (
     <section className="car__item">
       <ul className="car__item-container">
@@ -32,7 +36,7 @@ export function CarsItem({ car }) {
           <span className="car__price">10 000 ₽ - 20 000 ₽</span>
         </li>
         <li className="car__item-part">
-          <Buttons />
+          <Buttons buttonsProps={buttonsProps} />
         </li>
       </ul>
     </section>

@@ -19,9 +19,9 @@ export function Input(props) {
           value={props.value}
           onChange={props.onChange}
         />
-        <div className={`input__plus ${
-            props.addButton ? "active" : null
-          }`}></div>
+        <div
+          className={`input__plus ${props.addButton ? "active" : null}`}
+        ></div>
       </div>
       <span className={`input__error ${props.warning ? "active" : null}`}>
         {props.warningText}

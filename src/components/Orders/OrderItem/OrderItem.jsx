@@ -6,6 +6,10 @@ import { Buttons } from "../../UI/Buttons/Buttons";
 import "./OrderItem.scss";
 
 export const OrderItem = () => {
+  const buttonsProps = {
+    buttons: [{ type: "primary" }, { type: "warning" }, { type: "default" }],
+  };
+
   return (
     <section className="order__item">
       <ul className="order__item-container">
@@ -20,7 +24,7 @@ export const OrderItem = () => {
           <span className="order__item-price">4 300 ₽</span>
         </li>
         <li className="order__item-part">
-          <Buttons />
+          <Buttons buttonsProps={buttonsProps} />
         </li>
       </ul>
     </section>

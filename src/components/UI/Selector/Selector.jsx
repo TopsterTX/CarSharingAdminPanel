@@ -1,7 +1,10 @@
 import React from "react";
+import {v4 as uuidv4} from 'uuid'
 import "./Selector.scss";
 
-export function Selector({ text, key, array, arrayContent }) {
+export function Selector({ text,  array, arrayContent }) {
+
+  let key = uuidv4()
   return (
     <div key={key} className="selector">
       <ul className="selector__list">

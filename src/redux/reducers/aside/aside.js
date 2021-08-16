@@ -34,9 +34,9 @@ const defaultState = {
     },
     {
       id: v4(),
-      title: "Сущности",
+      title: "Адреса",
       icon: overview,
-      path: "/admin/panel/entities",
+      path: "/admin/panel/address",
     },
     {
       id: v4(),

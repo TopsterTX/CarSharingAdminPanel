@@ -4,7 +4,7 @@ import "./Setting.scss";
 
 export function Setting({ title, type, children }) {
   return (
-    <section className="setting">
+    <form action="#" type="submit" className="setting">
       <div className="setting__block">
         <div className="setting__container">
           <h2 className="setting__title">{title}</h2>
@@ -18,6 +18,6 @@ export function Setting({ title, type, children }) {
           </div>
         </div>
       </div>
-    </section>
+    </form>
   );
 }
