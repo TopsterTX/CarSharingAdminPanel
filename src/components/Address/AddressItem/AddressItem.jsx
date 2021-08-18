@@ -12,6 +12,7 @@ export function AddressItem() {
       {
         type: "default",
         onClick: () => dispatch(changePopup(true)),
+        to: "/admin/panel/address",
       },
     ],
   };

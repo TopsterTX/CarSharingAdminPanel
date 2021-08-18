@@ -5,13 +5,12 @@ import { Table } from "../UI/Table/Table";
 import { Title } from "./../UI/Title/Title";
 import { getCars } from "../../redux/actions/cars/cars";
 import { CarsItem } from "./CarsItem/CarsItem";
+import { v4 as uuidv4 } from "uuid";
 import "./Cars.scss";
 
 export default React.memo(function Cars() {
-  const { cars, configureFilter } = useSelector((state) => state.cars);
+  const { cars, configureFilter, page } = useSelector((state) => state.cars);
   const dispatch = useDispatch();
-  let page = 1;
-
 
   useEffect(() => {
     dispatch(getCars(page));
@@ -24,9 +23,11 @@ export default React.memo(function Cars() {
         <Table configureFilter={configureFilter}>
           {cars
             ? cars.map((el) => {
-                return <CarsItem key={el.id} />;
+                return <CarsItem key={uuidv4()} car={el} />;
               })
             : null}
+          
+          
         </Table>
       </ContentContainer>
     </section>

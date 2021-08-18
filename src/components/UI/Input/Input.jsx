@@ -15,7 +15,7 @@ export function Input(props) {
           type={props.type ? props.type : "text"}
           className={`input__item ${props.warning ? "warning" : null} `}
           id={x}
-          require={props.required ? true : false}
+          require={props.required ? "true" : "false"}
           value={props.value}
           onChange={props.onChange}
         />

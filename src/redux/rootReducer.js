@@ -4,6 +4,7 @@ import entities from "./reducers/entities/entities";
 import order from "./reducers/order/order";
 import cars from "./reducers/cars/cars";
 import popup from "./reducers/popup/popup";
+import carCard from "./reducers/carCard/carCard";
 
 export default {
   user,
@@ -12,4 +13,5 @@ export default {
   order,
   cars,
   popup,
+  carCard,
 };

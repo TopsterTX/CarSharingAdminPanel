@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import "./Buttons.scss";
 
@@ -10,7 +11,8 @@ export const Buttons = ({ buttonsProps }) => {
           ? buttonsProps.buttons.map((el) => {
               let id = uuidv4();
               return (
-                <li
+                <NavLink
+                  to={el.to}
                   className={`buttons__item buttons__item--${el.type}`}
                   key={id}
                   onClick={el.onClick}
@@ -24,7 +26,7 @@ export const Buttons = ({ buttonsProps }) => {
                       ? "Изменить"
                       : null}
                   </span>
-                </li>
+                </NavLink>
               );
             })
           : null}

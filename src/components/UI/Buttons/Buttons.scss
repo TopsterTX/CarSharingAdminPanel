@@ -17,6 +17,8 @@
     align-items: center;
     font-size: 10px;
     position: relative;
+    text-decoration: none;
+    color: $mainBlack;
     &--primary {
       @include readyIcon();
     }

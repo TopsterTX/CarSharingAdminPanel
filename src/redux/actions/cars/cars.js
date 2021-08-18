@@ -1,4 +1,4 @@
-import { GET_CARS } from "../../reducers/cars/cars";
+import { GET_CARS, CHANGE_PAGE } from "../../reducers/cars/cars";
 import api from "../../../axios/axios";
 
 export const getCars = (page) => async (dispatch) => {
@@ -13,4 +13,11 @@ export const getCars = (page) => async (dispatch) => {
   } catch (e) {
     console.error(e);
   }
+};
+
+export const changePage = (value) => {
+  return {
+    type: CHANGE_PAGE,
+    payload: value,
+  };
 };

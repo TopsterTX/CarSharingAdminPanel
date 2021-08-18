@@ -1,12 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./InfoBlock.scss";
 
 export function InfoBlock(props) {
-  const [value, setValue] =
-    useState(`Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio
-    non, aspernatur, voluptatibus illo nesciunt a adipisci quo cumque nam
-    mollitia minima`);
-
   return (
     <section className="info-block">
       <div className="info-block__picture">
@@ -20,8 +15,14 @@ export function InfoBlock(props) {
         <h2 className="info-block__picture-label">{props.label}</h2>
         <h3 className="info-block__picture-sublabel">{props.subLabel}</h3>
         <div className="info-block__picture-review">
-          <input type="file" name="" id="file"/>
-          <label htmlFor="file">Обзор</label>
+          <input type="file" name="" id="file" />
+          <label
+            htmlFor="file"
+            value={props.valueFile}
+            onChange={props.onChangeFile}
+          >
+            Обзор
+          </label>
         </div>
       </div>
       <div className="info-block__progress">
@@ -39,10 +40,8 @@ export function InfoBlock(props) {
         <span className="info-block__description-label">Описание</span>
         <textarea
           className="info-block__description-text"
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-          }}
+          value={props.valueDescription}
+          onChange={props.onChangeDescription}
         />
       </div>
     </section>

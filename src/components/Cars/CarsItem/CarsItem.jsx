@@ -1,39 +1,55 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { Buttons } from "../../UI/Buttons/Buttons";
-import carImage from "../../../images/car.png";
+import { getEditCar } from "../../../redux/actions/carCard/carCard";
 import "./CarsItem.scss";
 
 export function CarsItem({ car }) {
+  const dispatch = useDispatch();
+  let src;
   const buttonsProps = {
-    buttons: [{ type: "default" }],
+    buttons: [
+      {
+        type: "default",
+        to: "/admin/panel/card_car",
+        onClick: () => dispatch(getEditCar(car)),
+      },
+    ],
   };
+
+  (function imageHandler() {
+    if (car.thumbnail.path.indexOf("/files") !== -1) {
+      src = `https://api-factory.simbirsoft1.com${car.thumbnail.path}`;
+    } else {
+      src = car.thumbnail.path;
+    }
+  })();
 
   return (
     <section className="car__item">
       <ul className="car__item-container">
         <li className="car__item-part car__item-part --full-width">
-          <li className="car__item-part --first-block">
-            <img src={carImage} alt="image" className="car__image" />
+          <div className="car__item-part --first-block">
+            <img src={src} alt="image" className="car__image" />
             <div className="car__info">
-              <p className="car__model">ELANTRA</p>
-              <p className="car__description">
-                Супер пупер автомобиль для повседневной жизни
-              </p>
+              <p className="car__model">{car.name}</p>
+              <p className="car__description">{car.description}</p>
             </div>
-          </li>
-          <li>
+          </div>
+          <div>
             <ul className="car__colors">
               <span>Цвета:</span>
-              <li className="car__colors-item">Красный,</li>
-              <li className="car__colors-item">Синий,</li>
-              <li className="car__colors-item">Чёрный</li>
+              {car.colors.map((el) => {
+                return <li className="car__colors-item">{el}</li>;
+              })}
             </ul>
-          </li>
+          </div>
         </li>
 
         <li className="car__item-part">
-          <span className="car__price">10 000 ₽ - 20 000 ₽</span>
+          <span className="car__price">
+            {car.priceMin} ₽ - {car.priceMax} ₽
+          </span>
         </li>
         <li className="car__item-part">
           <Buttons buttonsProps={buttonsProps} />

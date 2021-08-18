@@ -7,7 +7,11 @@ import "./OrderItem.scss";
 
 export const OrderItem = () => {
   const buttonsProps = {
-    buttons: [{ type: "primary" }, { type: "warning" }, { type: "default" }],
+    buttons: [
+      { type: "primary", to: "/admin/panel/card_order" },
+      { type: "warning", to: "/admin/panel/card_order" },
+      { type: "default", to: "/admin/panel/card_order" },
+    ],
   };
 
   return (
