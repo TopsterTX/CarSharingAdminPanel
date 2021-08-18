@@ -45,7 +45,7 @@
       font-size: 12px;
     }
     input {
-      @include input();
+      @include inputLogin();
       margin-bottom: 15px;
     }
   }
@@ -58,10 +58,7 @@
     @include button();
   }
   &__access {
-    color: $buttonPrimary;
-    font-family: $mainFont;
-    background-color: transparent;
-    cursor: pointer;
+    @include linkButton();
   }
 }
 

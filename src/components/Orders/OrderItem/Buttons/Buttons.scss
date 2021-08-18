@@ -1,0 +1,47 @@
+@import "../../../../scss/mixins.scss";
+@import "../../../../scss/vars.scss";
+
+.buttons {
+  &__container {
+    display: flex;
+    border-radius: 5px;
+    height: 24px;
+    border: 1px solid $mainGrayDark;
+    border-radius: 5px;
+  }
+  &__item {
+    cursor: pointer;
+    width: 66px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    position: relative;
+    &--primary {
+      @include readyIcon();
+    }
+    &--warning {
+      @include closeIcon();
+    }
+    &--default {
+      @include dotsIcon(7px, 4px);
+    }
+  }
+  &__item:not(:last-child) {
+    border-right: 1px solid $mainGrayDark;
+  }
+  &__text {
+    display: block;
+    &::after {
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .buttons {
+    &__item {
+      width: 71px;
+      font-size: 11px;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+@import "../../../../scss/vars.scss";
+@import "../../../../scss/mixins.scss";
+
+.info {
+  display: flex;
+  flex-direction: column;
+  padding-right: 20px;
+  color: #889098;
+  &__place {
+    span {
+      color: $mainBlack;
+    }
+  }
+  &__date {
+    span {
+      color: $mainBlack;
+    }
+  }
+  &__color {
+    span {
+      color: $mainBlack;
+    }
+  }
+}

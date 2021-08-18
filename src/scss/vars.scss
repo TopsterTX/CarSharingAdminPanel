@@ -1,15 +1,26 @@
 $backgroundAdminPanel: #f5f6f8;
+$mainGrayDark: #becad6;
+$mainGreen: #0ec261;
+$mainBlack: #121212;
+$mainRed: #c4183c;
+$dotsGray: #818ea3;
+$wordGray: #999;
+$grayBorderBottom: #e0e2e8;
 
 $wordsColor: #3d5170;
+$wordsFooterColor: #818ea3;
 
 $inputBorder: #becad6;
 $inputWarning: #c4183c;
 $inputActive: #1d6cc0;
 
+$borderAsideItemActive: #6facfc;
+
 $buttonPrimary: #007bff;
 $buttonHover: #0056b3;
 
-$boxShadowOnBlock: 1px 10px 20px 1px rgba(90, 97, 104, 11%);
+$boxShadowOnBlock: 1px 6px 20px 1px rgba(77, 83, 90, 0.171);
+$boxShadowInnerAsideItem: inset 0px -1px 0px #e1e5eb;
 
 $fullHeight: calc(var(--vh, 1vh) * 100);
 $mainFont: "Helvetica";

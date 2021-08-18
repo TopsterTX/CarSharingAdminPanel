@@ -1,0 +1,104 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.header {
+  position: fixed;
+  z-index: 20;
+  box-shadow: $boxShadowOnBlock;
+  background-color: #fff;
+  &__button {
+    @include headerButtonMenu();
+  }
+  &__item {
+    width: min-content;
+    position: relative;
+    height: 67px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &-menu {
+    }
+    &-search {
+      width: 60%;
+      border-right: 1px solid #cacedb;
+      padding-left: 25px;
+    }
+    &-notice {
+      width: 50px;
+      border-right: 1px solid #cacedb;
+    }
+    &-account {
+      padding-left: 5px;
+      width: 15%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+  &__list {
+    min-width: 100vw;
+    height: 67px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &__search {
+    &-logo {
+    }
+    &-input {
+      width: 100%;
+      @include inputHeader();
+    }
+  }
+  &__notice {
+    &-logo {
+    }
+  }
+  &__account {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &-logo {
+      border-radius: 50%;
+    }
+    &-arrow {
+      @include accountArrow();
+    }
+    &-name {
+      display: none;
+      color: $wordsColor;
+      font-size: 15px;
+      padding-left: 10px;
+      padding-right: 5px;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .header {
+    &__item {
+      &-account {
+        padding-left: 15px;
+      }
+    }
+    &__account {
+      &-name {
+        display: block;
+      }
+    }
+  }
+}
+
+@media (min-width: 1400px) {
+  .header {
+    min-width: 100%;
+    &__button {
+      display: none;
+    }
+    &__list {
+      // padding-left: 285px;
+      min-width: 100%;
+      justify-content: flex-end;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 const defaultState = {
-  isUserLogin: false,
+  isUserLogin: true,
 };
 
 const reduce = "USER__";

@@ -1,6 +1,6 @@
 @import "./vars.scss";
 
-@mixin input {
+@mixin inputLogin {
   width: 100%;
   height: 30px;
   border-radius: 3px;
@@ -14,6 +14,20 @@
   }
 }
 
+@mixin inputHeader {
+  background-color: transparent;
+  border: 0;
+  padding-left: 9px;
+  padding-right: 9px;
+  font-size: 13px;
+  &:active,
+  &:focus,
+  &:hover {
+    outline: 0;
+    outline-offset: 0;
+  }
+}
+
 @mixin button {
   font-family: $mainFont;
   display: flex;
@@ -22,7 +36,8 @@
   align-content: center;
   color: #fff;
   border-radius: 5px;
-  padding: 0 37px 3px 37px;
+  padding: 0 20px 3px 20px;
+  font-size: 11px;
   cursor: pointer;
   height: 30px;
   background-color: $buttonPrimary;
@@ -37,4 +52,250 @@
   @media (min-width: 1400px) {
     padding: 0 27px;
   }
+}
+
+@mixin asideItem {
+  &-title {
+    margin-left: 16px;
+    color: $wordsColor;
+    font-size: 15px;
+  }
+  &-icon {
+    height: 15px;
+    width: 15px;
+  }
+  &-container {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    padding-left: 28px;
+    align-items: center;
+    height: 57px;
+    width: 100%;
+    box-shadow: $boxShadowInnerAsideItem;
+    font-family: $mainFont;
+    background-color: #fff;
+    transition: 0.4s all;
+    text-decoration: none;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 4px;
+      background-color: transparent;
+      transition: 0.2s all;
+    }
+    &.active::after {
+      border-right: 1px solid $borderAsideItemActive;
+      background-color: $buttonPrimary;
+      box-shadow: 5px 0px 12px 0px $buttonPrimary;
+    }
+    &.active {
+      background-color: #fbfbfb;
+    }
+  }
+}
+
+@mixin headerButtonMenu {
+  top: 25px;
+  left: 12px;
+  cursor: pointer;
+  z-index: 10;
+  position: absolute;
+  width: 22px;
+  height: 17px;
+  span {
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    background-color: $wordsColor;
+    left: 0;
+    border-radius: 10px;
+  }
+  span:nth-child(1) {
+    top: 0;
+  }
+  span:nth-child(2) {
+    top: 7px;
+  }
+  span:nth-child(3) {
+    bottom: 0;
+  }
+  @media (min-width: 768px) {
+    left: 30px;
+  }
+}
+
+@mixin headerItem {
+  padding: 10px;
+  &-input {
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #cacedb;
+  }
+  &-notice {
+    border-right: 1px solid #cacedb;
+  }
+  &-account {
+  }
+}
+
+@mixin linkButton {
+  font-size: 13px;
+  text-decoration: none;
+  color: $buttonPrimary;
+  font-family: $mainFont;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+@mixin accountArrow {
+  position: relative;
+  span {
+    top: 45%;
+    position: absolute;
+    background-color: #abb6bf;
+    height: 4px;
+    width: 1px;
+  }
+  span:nth-child(1) {
+    left: 7px;
+    transform: rotate(-45deg);
+  }
+  span:nth-child(2) {
+    left: 10px;
+    transform: rotate(45deg);
+  }
+}
+
+@mixin checkbox {
+  display: flex;
+  position: relative;
+  align-items: center;
+  line-height: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  color: $mainGrayDark;
+  font-weight: 300;
+  transition: 0.2s all;
+  &::before {
+    content: "";
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    margin-right: 8px;
+    border: 1px solid $mainGrayDark;
+    background-color: transparent;
+    border-radius: 2px;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    transition: 0.2s all;
+    left: 7px;
+    top: 4px;
+    width: 8px;
+    height: 4px;
+    opacity: 0;
+    border-left: 0px solid $mainGrayDark;
+    border-bottom: 0px solid $mainGrayDark;
+    transform: rotate(-45deg);
+  }
+}
+
+@mixin readyIcon {
+  &::after {
+    content: "";
+    position: absolute;
+    background-color: transparent;
+    top:6px;
+    transform: rotate(45deg);
+    border-bottom: 1px solid $mainGreen;
+    border-right: 1px solid $mainGreen;
+    left: 7px;
+    width: 4px;
+    height: 8px;
+  }
+}
+
+@mixin closeIcon {
+  &::after,
+  &::before {
+    position: absolute;
+    content: "";
+    width: 9px;
+    height: 1px;
+    top: 11px;
+    left: 4px;
+    background-color: #900;
+  }
+  &::after {
+    transform: rotate(45deg);
+  }
+  &::before {
+    transform: rotate(-45deg);
+  }
+}
+
+@mixin dotsIcon($top, $left) {
+  &::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background-color: $dotsGray;
+    top: $top;
+    left: $left;
+    box-shadow: 0px 3px 0px 0px $dotsGray, 0px 6px 0px 0px $dotsGray;
+  }
+}
+
+@mixin pagesArrow{
+  &::after,
+    &::before {
+      cursor: pointer;
+      content: "";
+      position: absolute;
+      top: 45%;
+      width: 4px;
+      height: 4px;
+      background-color: transparent;
+      transform: rotate(45deg);
+    }
+    &::after {
+      left: -3px;
+      border-left: 1px solid $buttonPrimary;
+      border-bottom: 1px solid $buttonPrimary;
+    }
+    &::before {
+      right: -3px;
+      border-right: 1px solid $buttonPrimary;
+      border-top: 1px solid $buttonPrimary;
+    }
+}
+
+@mixin arrowFilter {
+  &::after,
+    &::before {
+        right: 10px;
+      content: "";
+      position: absolute;
+      width: 4px;
+      border-right: 3px solid transparent;
+      border-left: 3px solid transparent;
+    }
+    &::after {
+        top: 11px;
+      border-bottom: 3px solid #000;
+    }
+    &::before {
+        bottom: 10px;
+      border-top: 3px solid #000;
+    }
 }

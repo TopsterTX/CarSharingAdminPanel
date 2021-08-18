@@ -1,0 +1,8 @@
+@import "../../../../scss/vars.scss";
+@import "../../../../scss/mixins.scss";
+
+.aside {
+  &__item {
+    @include asideItem();
+  }
+}
