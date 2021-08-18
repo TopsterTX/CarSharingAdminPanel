@@ -4,11 +4,17 @@ import { useSelector, useDispatch } from "react-redux";
 import search from "../../../icons/header/Shape.svg";
 import notice from "../../../icons/header/Notifications.svg";
 import avatar from "../../../images/Avatar.png";
+import exit from "../../../icons/Exit.svg";
 import "./Header.scss";
+import { userLogout } from "./../../../redux/actions/user/user";
 
 export const Header = () => {
-  const { asideMenuIsOpen } = useSelector((state) => state.aside);
+  const { accessToken } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  const clickHandler = () => {
+    return dispatch(userLogout(accessToken));
+  };
 
   return (
     <header className="header">
@@ -40,6 +46,19 @@ export const Header = () => {
             <span></span>
             <span></span>
           </div>
+          <ul className="header__account-sublist">
+            <li className="header__account-item">
+              <button
+                className="header__account-button"
+                onClick={() => {
+                  clickHandler();
+                }}
+              >
+                <span className='header__account-text'>Выйти</span>
+                <img src={exit} alt="" width="15px" height="15px" />
+              </button>
+            </li>
+          </ul>
         </li>
       </ul>
     </header>
