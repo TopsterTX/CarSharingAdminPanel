@@ -4,8 +4,8 @@
 .aside {
   top: 0;
   left: -100%;
-  z-index: 10;
-  position: absolute;
+  z-index: 20;
+  position: fixed;
   transition: 0.4s all ease-out;
   &.active {
     left: 0;
@@ -35,10 +35,8 @@
   }
 }
 
-
-@media(min-width: 1400px){
-  .aside{
+@media (min-width: 1400px) {
+  .aside {
     left: 0;
-    
   }
 }
