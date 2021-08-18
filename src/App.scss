@@ -1,6 +1,7 @@
+@import "./scss/vars.scss";
 
 .page {
-  background-color: #fff;
+  background-color: $backgroundAdminPanel;
   min-height: 100vh;
   min-width: 100vw;
   overflow: hidden;
