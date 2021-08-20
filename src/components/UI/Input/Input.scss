@@ -29,6 +29,7 @@
   }
   &__plus {
     display: none;
+    background-color: transparent;
     &.active {
       display: block;
       height: 30px;
@@ -38,7 +39,6 @@
       border: 1px solid $inputBorder;
       position: relative;
       @include inputWithPlus();
-      
     }
   }
 }

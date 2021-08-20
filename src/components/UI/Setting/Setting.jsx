@@ -2,7 +2,14 @@ import React from "react";
 import { Button } from "../Button/Button";
 import "./Setting.scss";
 
-export function Setting({ title, type, children }) {
+export function Setting({
+  title,
+  type,
+  children,
+  onClickApply,
+  onClickCancel,
+  onClickDelete,
+}) {
   return (
     <form action="#" type="submit" className="setting">
       <div className="setting__block">
@@ -11,10 +18,14 @@ export function Setting({ title, type, children }) {
           <div className="setting__main">{children}</div>
           <div className="setting__buttons">
             <div className="setting__buttons-wrapper">
-              <Button text={"Применить"} />
-              <Button type={"cancel"} text={"Отменить"} />
+              <Button onClick={onClickApply}>Применить</Button>
+              <Button type={"cancel"} onClick={onClickCancel}>
+                Отменить
+              </Button>
             </div>
-            <Button type={"warning"} text={"Удалить"} />
+            <Button type={"warning"} onClick={onClickDelete}>
+              Удалить
+            </Button>
           </div>
         </div>
       </div>

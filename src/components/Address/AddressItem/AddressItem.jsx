@@ -1,12 +1,11 @@
 import React from "react";
 import { Buttons } from "./../../UI/Buttons/Buttons";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { changePopup } from "../../../redux/actions/popup/popup";
 import "./AddressItem.scss";
 
 export function AddressItem() {
   const dispatch = useDispatch();
-  const { isActive } = useSelector((state) => state.popup);
   const buttonsProps = {
     buttons: [
       {

@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Buttons } from "../../UI/Buttons/Buttons";
+import { v4 as uuidv4 } from "uuid";
 import { getEditCar } from "../../../redux/actions/carCard/carCard";
 import "./CarsItem.scss";
 
@@ -40,7 +41,11 @@ export function CarsItem({ car }) {
             <ul className="car__colors">
               <span>Цвета:</span>
               {car.colors.map((el) => {
-                return <li className="car__colors-item">{el}</li>;
+                return (
+                  <li className="car__colors-item" key={uuidv4()}>
+                    {el}
+                  </li>
+                );
               })}
             </ul>
           </div>

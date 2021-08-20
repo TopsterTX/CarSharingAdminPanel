@@ -3,12 +3,12 @@ const defaultState = {
     id: "",
     priceMax: 0,
     priceMin: 0,
-    name: "Название машины",
+    name: "Название автомобиля",
     thumbnail: {
       size: 0,
       originalname: "",
       mimetype: "",
-      path: null,
+      path: "",
     },
     description: "Описание машины",
     categoryId: {
@@ -19,17 +19,12 @@ const defaultState = {
     colors: [],
   },
   inputs: {
-    name: "",
-    type: "",
-    description: "",
-    colors: "",
-    priceMin: "",
-    priceMax: "",
-    file: "",
+    color: "",
   },
 };
 
 const reduce = "CAR-CARD__";
+export const ADD_COLOR = `${reduce}ADD_COLOR`;
 export const GET_EDIT_CAR = `${reduce}GET_CAR`;
 export const CHANGE_MODEL_CAR = `${reduce}CHANGE_MODEL_CAR`;
 export const CHANGE_DESCRIPTION_CAR = `${reduce}CHANGE_DESCRIPTION_CAR`;
@@ -38,6 +33,7 @@ export const CHANGE_COLORS_CAR = `${reduce}CHANGE_COLORS_CAR`;
 export const CHANGE_PRICE_MIN_CAR = `${reduce}CHANGE_PRICE_MIN_CAR`;
 export const CHANGE_PRICE_MAX_CAR = `${reduce}CHANGE_PRICE_MAX_CAR`;
 export const CHANGE_PHOTO_CAR = `${reduce}CHANGE_PHOTO_CAR`;
+export const CANCEL_EDIT_CAR = `${reduce}CANCEL_EDIT_CAR`;
 
 export default (state = defaultState, { type, payload }) => {
   switch (type) {
@@ -75,8 +71,28 @@ export default (state = defaultState, { type, payload }) => {
         ...state,
         editCar: { ...state.editCar, priceMax: payload },
       };
-    
-
+    case CHANGE_COLORS_CAR:
+      return {
+        ...state,
+        inputs: {
+          ...state.inputs,
+          color: payload,
+        },
+      };
+    case CANCEL_EDIT_CAR:
+      return {
+        ...state,
+        editCar: state.copyCar,
+      };
+    case ADD_COLOR: {
+      return {
+        ...state,
+        editCar: {
+          ...state.editCar,
+          colors: [...state.editCar.colors, ...payload],
+        },
+      };
+    }
     default:
       return state;
   }

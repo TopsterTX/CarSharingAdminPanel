@@ -40,10 +40,10 @@
   &:hover {
     cursor: pointer;
     transition: 0.2s all ease-in;
-    border: 1px solid $mainBlack;
+    border: 1px solid $buttonPrimary;
     &::after,
     &::before {
-      background-color: $mainBlack;
+      background-color: $buttonPrimary;
     }
   }
 }

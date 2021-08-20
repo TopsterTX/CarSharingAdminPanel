@@ -11,7 +11,6 @@ import {
 import { Button } from "../UI/Button/Button";
 import { Input } from "../UI/Input/Input";
 import "./Login.scss";
-import { userLogin } from "./../../redux/actions/user/user";
 
 export const Login = () => {
   const { username, password, isUserLoginFailed } = useSelector(
@@ -28,13 +27,7 @@ export const Login = () => {
       password: `${password}`,
     };
 
-    
     dispatch(userAuthorize(body, basicKey));
-  };
-
-  const clickHandler = (e) => {
-    e.preventDefault();
-    return authUser();
   };
 
   return (
@@ -66,8 +59,8 @@ export const Login = () => {
                 warningText={"Не правильный пароль"}
               />
               <div className="login__buttons">
-                <Button text={"Запросить доступ"} type={"link"} />
-                <Button text={"Войти"} onClick={(e) => clickHandler(e)} />
+                <Button type={"link"}>Запросить доступ</Button>
+                <Button onClick={() => authUser()}>Войти</Button>
               </div>
             </form>
           </div>

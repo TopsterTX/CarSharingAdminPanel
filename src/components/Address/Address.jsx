@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Table } from "../UI/Table/Table";
 import { Title } from "../UI/Title/Title";
@@ -12,7 +12,6 @@ import "./Address.scss";
 
 export const Address = () => {
   const { configureFilter } = useSelector((state) => state.entities);
-  const { isActive } = useSelector((state) => state.popup);
   const dispatch = useDispatch();
 
   return (

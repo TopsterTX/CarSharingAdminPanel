@@ -5,6 +5,8 @@ import order from "./reducers/order/order";
 import cars from "./reducers/cars/cars";
 import popup from "./reducers/popup/popup";
 import carCard from "./reducers/carCard/carCard";
+import warningPopup from "./reducers/warningPopup/warningPopup";
+import notice from "./reducers/notice/notice";
 
 export default {
   user,
@@ -14,4 +16,6 @@ export default {
   cars,
   popup,
   carCard,
+  warningPopup,
+  notice,
 };

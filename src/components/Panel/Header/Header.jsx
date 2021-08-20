@@ -11,6 +11,7 @@ import {
   changeUsername,
   userLogout,
 } from "./../../../redux/actions/user/user";
+import { Notice } from "../../UI/Notice/Notice";
 
 export const Header = () => {
   const { accessToken } = useSelector((state) => state.user);
@@ -25,6 +26,7 @@ export const Header = () => {
   return (
     <header className="header">
       <ul className="header__list">
+        <Notice></Notice>
         <div
           className="header__button"
           onClick={() => dispatch(changeIsOpenAsideMenu(true))}

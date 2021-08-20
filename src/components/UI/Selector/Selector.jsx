@@ -2,11 +2,11 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./Selector.scss";
 
-export function Selector({ text, array, arrayContent }) {
+export function Selector({ children, array, arrayContent }) {
   return (
     <div key={uuidv4()} className="selector">
       <ul className="selector__list">
-        <span>{text}</span>
+        <span>{children}</span>
         {array
           ? array.map((el) => {
               if (arrayContent === "point") {

@@ -1,0 +1,44 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.warning-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  &.active {
+    top: 0;
+    left: 0;
+    display: block;
+    position: fixed;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: rgba($color: $dotsGray, $alpha: 0.8);
+    transition: 0.2s all;
+    z-index: 1000;
+  }
+  &__container {
+    opacity: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 100vw;
+    min-height: 100vh;
+  }
+  &__block {
+    border-radius: 9px;
+    background-color: #fff;
+    opacity: 1;
+    padding: 20px 40px;
+    box-shadow: $boxShadowOnBlock;
+  }
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__text {
+    display: block;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+}

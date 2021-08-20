@@ -1,14 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import car from "../../images/car2.png";
-import carCreate from "../../images/carCreate.png";
-import { v4 as uuidv4 } from "uuid";
+
 import { useSelector, useDispatch } from "react-redux";
 import { ContentContainer } from "../UI/ContentContainer/ContentContainer";
 import { Title } from "../UI/Title/Title";
 import { Setting } from "../UI/Setting/Setting";
 import { Input } from "./../UI/Input/Input";
 import { InfoBlock } from "../UI/InfoBlock/InfoBlock";
-import { Checkbox } from "./../UI/Checkbox/Checkbox";
+
 import {
   changeModelCar,
   changeDescriptionCar,
@@ -16,25 +15,28 @@ import {
   changeColorsCar,
   changePriceMinCar,
   changePriceMaxCar,
-  changePhotoCar,
+  sendChangesCar,
+  cancelEditCar,
+  addColor,
 } from "../../redux/actions/carCard/carCard";
-import { getCars } from "../../redux/actions/cars/cars";
 import "./CarCard.scss";
+
+import {
+  openedCancelPopup,
+  openedApplyPopup,
+  openedDeletePopup,
+} from "../../redux/actions/warningPopup/warningPopup";
+import { WarningPopup } from "./../UI/WarningPopup/WarningPopup";
+import { CarColors } from "./CarColors/CarColors";
 
 export function CarCard() {
   let src;
   const warn = false;
   const dispatch = useDispatch();
-  const { page } = useSelector((state) => state.cars);
   const { editCar, inputs } = useSelector((state) => state.carCard);
   const { colors, thumbnail } = editCar;
 
-  useEffect(() => {
-    dispatch(getCars(page));
-    imageHandler();
-  }, []);
-
-  function imageHandler() {
+  (function imageHandler() {
     if (thumbnail.path === null) {
       return src;
     }
@@ -43,7 +45,7 @@ export function CarCard() {
     } else {
       src = thumbnail.path;
     }
-  }
+  })();
 
   return (
     <section className="car-card">
@@ -52,89 +54,113 @@ export function CarCard() {
         <div className="car-card__wrapper">
           <InfoBlock
             car={src ? src : car}
-            label={editCar.name}
-            subLabel={editCar.categoryId.name}
-            valueDescription={editCar.description}
+            label={editCar.name ? editCar.name : ""}
+            subLabel={editCar.categoryId != null ? editCar.categoryId.name : ""}
+            valueDescription={editCar.description ? editCar.description : ""}
             onChangeDescription={(e) =>
               dispatch(changeDescriptionCar(e.target.value))
             }
-            valueFile={inputs.file}
+            valueFile={inputs.file ? inputs.file : ""}
             onChangeFile={(e) => console.log(e.target.value)}
           />
-          <Setting title={"Настройка автомобиля"}>
+          <Setting
+            title={"Настройка автомобиля"}
+            onClickApply={() => {
+              dispatch(openedApplyPopup(true));
+            }}
+            onClickCancel={() => dispatch(openedCancelPopup(true))}
+            onClickDelete={() => dispatch(openedDeletePopup(true))}
+          >
             <div className="car-card__container">
               <div className="car-card__main">
                 <div className="car-card__main-wrapper">
                   <Input
-                    label={"Модель автомобиля"}
                     warning={warn}
                     warningText={"Неверно"}
                     required
-                    value={editCar.name}
+                    value={editCar.name ? editCar.name : ""}
                     onChange={(e) => dispatch(changeModelCar(e.target.value))}
-                  />
+                  >
+                    Модель автомобиля
+                  </Input>
                 </div>
                 <div className="car-card__main-wrapper">
                   <Input
-                    label={"Тип автомобиля"}
                     warningText={"Неверный тип автомобиля"}
                     warning={warn}
                     required
-                    value={editCar.categoryId.name}
+                    value={
+                      editCar.categoryId != null ? editCar.categoryId.name : ""
+                    }
                     onChange={(e) => dispatch(changeTypeCar(e.target.value))}
-                  />
+                  >
+                    Тип автомобиля
+                  </Input>
                 </div>
               </div>
               <div className="car-card__main">
                 <div className="car-card__main-wrapper">
                   <Input
-                    label={"Минимальная цена"}
                     warning={warn}
-                    warningText={"Неверно"}
+                    warningText={"Ошибка при добавлени цены"}
                     required
-                    value={editCar.priceMin}
+                    value={editCar.priceMin ? editCar.priceMin : ""}
                     onChange={(e) =>
                       dispatch(changePriceMinCar(e.target.value))
                     }
-                  />
+                  >
+                    Минимальная цена
+                  </Input>
                 </div>
                 <div className="car-card__main-wrapper">
                   <Input
-                    label={"Максимальная цена"}
-                    warningText={"Неверный тип автомобиля"}
+                    warningText={"Ошибка при добавлении цены"}
                     warning={warn}
                     required
-                    value={editCar.priceMax}
+                    value={editCar.priceMax ? editCar.priceMax : ""}
                     onChange={(e) =>
                       dispatch(changePriceMaxCar(e.target.value))
                     }
-                  />
+                  >
+                    Максимальная цена
+                  </Input>
                 </div>
               </div>
               <div className="car-card__color">
                 <div className="car-card__color-wrapper">
                   <Input
-                    label={"Доступные цвета"}
                     warningText={"Ошибка при добавлении цвета"}
                     warning={warn}
                     addButton
-                    value={inputs.colors}
+                    onClickButton={() => dispatch(addColor(inputs.color))}
+                    value={inputs.color}
                     onChange={(e) => dispatch(changeColorsCar(e.target.value))}
-                  />
+                  >
+                    Доступные цвета
+                  </Input>
 
-                  <div className="car-card__color-checkbox">
-                    {colors
-                      ? colors.map((el) => {
-                          return <Checkbox label={el} key={uuidv4()} />;
-                        })
-                      : null}
-                  </div>
+                  <CarColors arr={colors} />
                 </div>
               </div>
+              {/* <div className="car-card__color-button">
+                <Button type="link">Удалить выбранные</Button>
+              </div> */}
             </div>
           </Setting>
         </div>
       </ContentContainer>
+      <WarningPopup
+        type="apply"
+        onClick={() => dispatch(sendChangesCar(editCar.id, editCar))}
+      >
+        Вы действительно хотите изменить этот автомобиль?
+      </WarningPopup>
+      <WarningPopup type="cancel" onClick={() => dispatch(cancelEditCar())}>
+        Вы действительно хотите отменить изменение автомобиля?
+      </WarningPopup>
+      <WarningPopup type="delete">
+        Вы действительно хотите удалить автомобиль?
+      </WarningPopup>
     </section>
   );
 }

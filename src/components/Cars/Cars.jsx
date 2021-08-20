@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Table } from "../UI/Table/Table";

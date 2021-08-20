@@ -8,12 +8,12 @@ import Cars from "./../Cars/Cars";
 
 export const ContentRouter = () => {
   return (
-    <React.Fragment>
+    <>
       <Route path="/admin/panel/main" render={() => <Cars />} />
       <Route path="/admin/panel/address" render={() => <Address />} />
       <Route path="/admin/panel/orders" render={() => <Orders />} />
       <Route path="/admin/panel/card_car" render={() => <CarCard />} />
       <Route path="/admin/panel/card_order" render={() => <OrderCard />} />
-    </React.Fragment>
+    </>
   );
 };

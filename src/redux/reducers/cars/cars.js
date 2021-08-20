@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 const defaultState = {
-  page: 0,
+  page: 1,
   cars: [],
   configureFilter: {
     filterItems: [

@@ -8,7 +8,7 @@ export function Input(props) {
   return (
     <div className={`input ${props.addButton ? "plus" : null}`}>
       <label htmlFor={x} className={`input__label`}>
-        {props.label}
+        {props.children}
       </label>
       <div className="input__wrapper">
         <input
@@ -19,9 +19,13 @@ export function Input(props) {
           value={props.value}
           onChange={props.onChange}
         />
-        <div
+        <button
           className={`input__plus ${props.addButton ? "active" : null}`}
-        ></div>
+          onClick={(e) => {
+            e.preventDefault();
+            props.onClickButton();
+          }}
+        ></button>
       </div>
       <span className={`input__error ${props.warning ? "active" : null}`}>
         {props.warningText}
