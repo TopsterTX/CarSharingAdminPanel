@@ -7,7 +7,9 @@ import {
   CHANGE_COLORS_CAR,
   CHANGE_PRICE_MIN_CAR,
   CHANGE_PRICE_MAX_CAR,
+  DELETE_COLOR,
   ADD_COLOR,
+  ADD_IMAGE,
 } from "../../reducers/carCard/carCard";
 import api from "../../../axios/axios";
 import { OPEN } from "./../../reducers/notice/notice";
@@ -82,6 +84,13 @@ export const cancelEditCar = () => {
   };
 };
 
+export const deleteColor = (index) => {
+  return {
+    type: DELETE_COLOR,
+    payload: index,
+  };
+};
+
 export const sendChangesCar = (id, car) => async (dispatch) => {
   try {
     await api
@@ -99,10 +108,30 @@ export const sendChangesCar = (id, car) => async (dispatch) => {
           },
         }
       )
-      .then((res) => dispatch({ type: OPEN, payload: true }));
+      .then(
+        (res) =>
+          res.request.status === 200
+            ? dispatch({ type: OPEN, payload: true })
+            : null,
+        (err) => {
+          console.log(err);
+        }
+      );
   } catch (e) {
-    console.error(e);
+    console.log(e);
   }
+};
+
+export const addImage = (img) => {
+  return {
+    type: ADD_IMAGE,
+    payload: {
+      path: img.path,
+      mimetype: img.mimetype,
+      originalname: img.originalname,
+      size: img.size,
+    },
+  };
 };
 
 export const deleteChangesCar = (id, car) => async (dispatch) => {

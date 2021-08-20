@@ -1,5 +1,5 @@
 const defaultState = {
-  isOpenNotice: true,
+  isOpenNotice: false,
 };
 
 const reduce = "NOTICE__";

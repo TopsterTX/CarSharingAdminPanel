@@ -12,6 +12,7 @@ import {
   userLogout,
 } from "./../../../redux/actions/user/user";
 import { Notice } from "../../UI/Notice/Notice";
+import { Button } from "./../../UI/Button/Button";
 
 export const Header = () => {
   const { accessToken } = useSelector((state) => state.user);
@@ -56,15 +57,16 @@ export const Header = () => {
           </div>
           <ul className="header__account-sublist">
             <li className="header__account-item">
-              <button
+              <Button
                 className="header__account-button"
                 onClick={() => {
                   clickHandler();
                 }}
+                type="warning"
               >
                 <span className="header__account-text">Выйти</span>
                 <img src={exit} alt="" width="15px" height="15px" />
-              </button>
+              </Button>
             </li>
           </ul>
         </li>

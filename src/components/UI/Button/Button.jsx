@@ -6,13 +6,18 @@ export function Button({
   children,
   type,
   disabled,
+  className,
   onClick = () => null,
   ...props
 }) {
   let key = uuidv4();
   return (
     <button
-      className={`button ${type ? type : null}`}
+      className={`${
+        className
+          ? `${className} button ${type ? type : null}`
+          : `button ${type ? type : null}`
+      }`}
       disable={disabled ? "true" : "false"}
       onClick={(e) => {
         e.preventDefault();

@@ -1,5 +1,10 @@
 .car-card {
   padding-bottom: 100px;
+  &__button {
+    &-color {
+      margin-top: 20px;
+    }
+  }
   &__wrapper {
     display: flex;
     flex-direction: column;
@@ -28,7 +33,7 @@
       display: flex;
       flex-direction: column;
     }
-    
+
     &-item {
       margin-bottom: 8px;
       font-size: 11px;
@@ -36,8 +41,7 @@
         margin-right: 8px;
       }
     }
-    &-button{
-
+    &-button {
     }
   }
 }

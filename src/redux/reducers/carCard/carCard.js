@@ -24,16 +24,18 @@ const defaultState = {
 };
 
 const reduce = "CAR-CARD__";
+export const ADD_IMAGE = `${reduce}ADD_IMAGE`;
 export const ADD_COLOR = `${reduce}ADD_COLOR`;
-export const GET_EDIT_CAR = `${reduce}GET_CAR`;
-export const CHANGE_MODEL_CAR = `${reduce}CHANGE_MODEL_CAR`;
-export const CHANGE_DESCRIPTION_CAR = `${reduce}CHANGE_DESCRIPTION_CAR`;
+export const DELETE_COLOR = `${reduce}DELETE_COLOR`;
+export const GET_EDIT_CAR = `${reduce}GET_EDIT_CAR`;
+export const CANCEL_EDIT_CAR = `${reduce}CANCEL_EDIT_CAR`;
 export const CHANGE_TYPE_CAR = `${reduce}CHANGE_TYPE_CAR`;
+export const CHANGE_MODEL_CAR = `${reduce}CHANGE_MODEL_CAR`;
+export const CHANGE_PHOTO_CAR = `${reduce}CHANGE_PHOTO_CAR`;
 export const CHANGE_COLORS_CAR = `${reduce}CHANGE_COLORS_CAR`;
 export const CHANGE_PRICE_MIN_CAR = `${reduce}CHANGE_PRICE_MIN_CAR`;
 export const CHANGE_PRICE_MAX_CAR = `${reduce}CHANGE_PRICE_MAX_CAR`;
-export const CHANGE_PHOTO_CAR = `${reduce}CHANGE_PHOTO_CAR`;
-export const CANCEL_EDIT_CAR = `${reduce}CANCEL_EDIT_CAR`;
+export const CHANGE_DESCRIPTION_CAR = `${reduce}CHANGE_DESCRIPTION_CAR`;
 
 export default (state = defaultState, { type, payload }) => {
   switch (type) {
@@ -89,10 +91,32 @@ export default (state = defaultState, { type, payload }) => {
         ...state,
         editCar: {
           ...state.editCar,
-          colors: [...state.editCar.colors, ...payload],
+          colors: [...state.editCar.colors, payload],
         },
       };
     }
+    case ADD_IMAGE: {
+      return {
+        ...state,
+        editCar: {
+          ...state.editCar,
+          thumbnail: {
+            path: payload.path,
+            size: payload.size,
+            mimetype: payload.mimetype,
+            originalname: payload.originalname,
+          },
+        },
+      };
+    }
+    case DELETE_COLOR:
+      return {
+        ...state,
+        editCar: {
+          ...state.editCar,
+          colors: state.editCar.colors.slice(0, payload),
+        },
+      };
     default:
       return state;
   }

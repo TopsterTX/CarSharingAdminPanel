@@ -18,6 +18,7 @@ import {
   sendChangesCar,
   cancelEditCar,
   addColor,
+  deleteColor,
 } from "../../redux/actions/carCard/carCard";
 import "./CarCard.scss";
 
@@ -30,7 +31,7 @@ import { WarningPopup } from "./../UI/WarningPopup/WarningPopup";
 import { CarColors } from "./CarColors/CarColors";
 
 export function CarCard() {
-  let src;
+  let src = "";
   const warn = false;
   const dispatch = useDispatch();
   const { editCar, inputs } = useSelector((state) => state.carCard);
@@ -39,8 +40,7 @@ export function CarCard() {
   (function imageHandler() {
     if (thumbnail.path === null) {
       return src;
-    }
-    if (thumbnail.path.indexOf("/files") !== -1) {
+    } else if (thumbnail.path.indexOf("/files") !== -1) {
       src = `https://api-factory.simbirsoft1.com${thumbnail.path}`;
     } else {
       src = thumbnail.path;
@@ -53,7 +53,7 @@ export function CarCard() {
         <Title>Карточка автомобиля</Title>
         <div className="car-card__wrapper">
           <InfoBlock
-            car={src ? src : car}
+            car={src}
             label={editCar.name ? editCar.name : ""}
             subLabel={editCar.categoryId != null ? editCar.categoryId.name : ""}
             valueDescription={editCar.description ? editCar.description : ""}
@@ -139,7 +139,10 @@ export function CarCard() {
                     Доступные цвета
                   </Input>
 
-                  <CarColors arr={colors} />
+                  <CarColors
+                    arr={colors}
+                    onClick={() => dispatch(deleteColor(colors.length - 1))}
+                  />
                 </div>
               </div>
               {/* <div className="car-card__color-button">
