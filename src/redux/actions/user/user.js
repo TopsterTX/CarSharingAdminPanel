@@ -32,7 +32,6 @@ export const userAuthorize = (body, basicKey) => async (dispatch) => {
     await api
       .post("auth/login", body, {
         headers: {
-          "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
           "Content-Type": "application/json",
           Authorization: `Basic ${basicKey}`,
         },
@@ -57,16 +56,7 @@ export const userAuthorize = (body, basicKey) => async (dispatch) => {
 export const userLogout = (access) => async (dispatch) => {
   try {
     await api
-      .post(
-        "auth/logout",
-        {},
-        {
-          headers: {
-            "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
-            Authorization: `Bearer ${access}`,
-          },
-        }
-      )
+      .post("auth/logout")
       .then((res) => dispatch(userLogin(false, null, null, null, false, null)));
   } catch (e) {
     console.error(e);
@@ -97,7 +87,6 @@ export const userRefreshAuthorize = (refresh, basicKey) => async (dispatch) => {
         },
         {
           headers: {
-            "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
             Authorization: `Basic ${basicKey}`,
             "Content-Type": "application/json",
           },

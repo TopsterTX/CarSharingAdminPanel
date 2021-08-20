@@ -1,0 +1,12 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.selector {
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+  &__list {
+    @include filterList();
+    width: 100%;
+  }
+}

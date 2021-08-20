@@ -2,65 +2,7 @@
 @import "../../scss/vars.scss";
 
 .orders {
-  overflow: scroll;
+  min-width: 100vw;
   min-height: 100vh;
   padding: 0 0 67px 0;
-  &__container {
-    padding: 100px 0 0 0;
-  }
-
-  &__title {
-    padding-left: 15px;
-    font-size: 20px;
-    font-weight: 400;
-    color: $wordsColor;
-    margin-bottom: 15px;
-  }
-  &__block {
-    background-color: #fff;
-    box-shadow: $boxShadowOnBlock;
-    display: flex;
-    flex-direction: column;
-    border-radius: 9px;
-    padding: 16px 0 0 0;
-  }
-  &__filters {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0 22px 14px 22px;
-    border-bottom: 1px solid $grayBorderBottom;
-    margin-bottom: 16px;
-  }
-  &__main {
-    padding: 0 22px 14px 22px;
-    font-size: 12px;
-    flex: 1 1 100%;
-    border-bottom: 1px solid $grayBorderBottom;
-  }
-  &__button {
-    @include button();
-  }
-}
-
-@media (min-width: 768px) {
-  .orders {
-    &__container {
-      padding: 100px 32px;
-    }
-    &__title {
-      padding-left: 0;
-    }
-    &__main {
-      font-size: 15px;
-    }
-  }
-}
-
-@media (min-width: 1400px) {
-  .orders {
-    &__container {
-      padding: 100px 32px 100px 317px;
-    }
-  }
 }

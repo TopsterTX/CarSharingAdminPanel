@@ -1,0 +1,59 @@
+@import "../../scss/vars.scss";
+@import "../../scss/mixins.scss";
+
+.order-card {
+  padding: 0 0 100px 0;
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+  &__main {
+    margin-bottom: 20px;
+    align-items: center;
+    display: flex;
+    &-wrapper {
+      width: 100%;
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+  }
+  &__address {
+    margin-bottom: 20px;
+    display: flex;
+    &-wrapper {
+      width: 100%;
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+  }
+  &__date {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: $inputHalfWidth;
+  }
+  &__rate {
+    margin-bottom: 20px;
+    &-title {
+      font-size: 12px;
+      font-weight: 400;
+      color: $mainBlack;
+      margin-bottom: 15px;
+    }
+  }
+  &__price {
+    margin-bottom: 40px;
+    width: $inputHalfWidth;
+  }
+  &__addons{
+      margin-bottom: 20px;
+      &-title{
+          font-size: 12px;
+          font-weight: 400;
+          color: $mainBlack;
+          margin-bottom: 15px;
+      }
+  }
+}

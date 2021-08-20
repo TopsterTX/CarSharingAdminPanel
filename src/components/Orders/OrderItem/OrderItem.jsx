@@ -1,17 +1,14 @@
 import React from "react";
 import car from "../../../images/car.png";
-import { v4 as uuidv4 } from "uuid";
-import { Checkbox } from "./Checkbox/Checkbox";
+import { CheckboxOrder } from "./CheckboxOrder/CheckboxOrder";
 import { Info } from "./Info/Info";
-import { Buttons } from "./Buttons/Buttons";
+import { Buttons } from "../../UI/Buttons/Buttons";
 import "./OrderItem.scss";
 
 export const OrderItem = () => {
-  (function basicCreate() {
-    let random = uuidv4();
-    let secret = "4cbcea96de";
-    let basic = btoa(`${random}:${secret}`);
-  })();
+  const buttonsProps = {
+    buttons: [{ type: "primary" }, { type: "warning" }, { type: "default" }],
+  };
 
   return (
     <section className="order__item">
@@ -21,13 +18,13 @@ export const OrderItem = () => {
             <img src={car} alt="" className="order__item-image" />
             <Info />
           </div>
-          <Checkbox />
+          <CheckboxOrder />
         </li>
         <li className="order__item-part">
           <span className="order__item-price">4 300 ₽</span>
         </li>
         <li className="order__item-part">
-          <Buttons />
+          <Buttons buttonsProps={buttonsProps} />
         </li>
       </ul>
     </section>

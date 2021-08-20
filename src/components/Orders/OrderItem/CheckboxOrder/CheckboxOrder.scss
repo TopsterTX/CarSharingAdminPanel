@@ -1,16 +1,16 @@
 @import "../../../../scss/mixins.scss";
 @import "../../../../scss/vars.scss";
 
-.checkbox {
+.checkbox-order {
   &__item {
     display: flex;
     align-items: center;
     &.active {
-      .checkbox__label::before {
+      .checkbox-order__label::before {
         border: 1px solid $mainGreen;
         transition: 0.2s all;
       }
-      .checkbox__label::after {
+      .checkbox-order__label::after {
         transition: 0.2s all;
         opacity: 1;
         border-left: 2px solid $mainBlack;
@@ -36,7 +36,7 @@
 }
 
 @media (min-width: 1024px) {
-  .checkbox {
+  .checkbox-order {
     &__label {
       span {
         display: block;

@@ -1,5 +1,5 @@
-@import "../../../../scss/mixins.scss";
-@import "../../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
 
 .buttons {
   &__container {
@@ -32,8 +32,6 @@
   }
   &__text {
     display: block;
-    &::after {
-    }
   }
 }
 

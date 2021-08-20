@@ -1,0 +1,39 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.filter {
+  z-index: 10;
+  position: relative;
+  @include filterWrapper();
+
+  &__toggler {
+    @include filterToggler();
+  }
+  &__container {
+    @include filterContainer();
+  }
+  &__button {
+    @include button();
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+  &__button-wrapper {
+    display: flex;
+  }
+}
+
+@media (min-width: 768px) {
+  .filter {
+    &__wrapper {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .filter {
+    width: 100%;
+  }
+}

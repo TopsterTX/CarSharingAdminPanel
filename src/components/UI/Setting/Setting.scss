@@ -1,0 +1,44 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.setting {
+    display: flex;
+    flex: 1 1 auto;
+  &__block {
+    flex: 1 1 auto;
+    @include mainBlock();
+  }
+  &__container {
+    padding: 0 17px 17px 17px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+  &__title {
+    font-size: 16px;
+    font-weight: 500;
+    color: $wordsColor;
+    margin-bottom: 40px;
+  }
+  &__main {
+      display: flex;
+      flex-direction: column;
+    flex: 1 1 auto;
+
+  }
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    &-wrapper {
+      display: flex;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .setting {
+    &__title {
+      font-size: 18px;
+    }
+  }
+}

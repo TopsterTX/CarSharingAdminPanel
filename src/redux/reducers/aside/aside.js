@@ -10,15 +10,21 @@ const defaultState = {
   asideItems: [
     {
       id: v4(),
+      title: "Карточка заказа",
+      icon: forms,
+      path: "/admin/panel/card_order",
+    },
+    {
+      id: v4(),
       title: "Карточка автомобиля",
       icon: pen,
-      path: "/admin/panel/main",
+      path: "/admin/panel/card_car",
     },
     {
       id: v4(),
       title: "Список авто",
       icon: forms,
-      path: "/admin/panel/cars",
+      path: "/admin/panel/main",
     },
     {
       id: v4(),
@@ -28,15 +34,15 @@ const defaultState = {
     },
     {
       id: v4(),
-      title: "Меню 4",
+      title: "Адреса",
       icon: overview,
-      path: "/admin/panel/orders",
+      path: "/admin/panel/address",
     },
     {
       id: v4(),
       title: "Меню 5",
       icon: error,
-      path: "/admin/panel/orders",
+      path: "/admin/panel/xxx",
     },
   ],
 };

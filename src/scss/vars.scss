@@ -6,18 +6,19 @@ $mainRed: #c4183c;
 $dotsGray: #818ea3;
 $wordGray: #999;
 $grayBorderBottom: #e0e2e8;
-
 $wordsColor: #3d5170;
-$wordsFooterColor: #818ea3;
 
+$inputHalfWidth: calc(50% - 3px);
 $inputBorder: #becad6;
-$inputWarning: #c4183c;
 $inputActive: #1d6cc0;
 
 $borderAsideItemActive: #6facfc;
 
 $buttonPrimary: #007bff;
 $buttonHover: #0056b3;
+$buttonHoverWarning: #8a0623;
+$buttonCancel: #e9ecef;
+$buttonCancelHover: #bbbdc0;
 
 $boxShadowOnBlock: 1px 6px 20px 1px rgba(77, 83, 90, 0.171);
 $boxShadowInnerAsideItem: inset 0px -1px 0px #e1e5eb;

@@ -8,14 +8,28 @@ import { BrowserRouter } from "react-router-dom";
 import { configureStore } from "./redux/configureStore";
 import { Provider } from "react-redux";
 import { userRefreshAuthorize } from "./redux/actions/user/user";
+import { APP_ID } from "./constants";
 import api from "./axios/axios";
 
-const defaultState = loadState();
-// const defaultState = {};
+// const defaultState = loadState();
+const defaultState = {};
 
 const store = configureStore(defaultState);
+// store.subscribe(() => {
+//   saveState(store.getState());
+// });
+
 store.subscribe(() => {
-  saveState(store.getState());
+  api.interceptors.request.use((config) => {
+    if (store.getState().user.accessToken) {
+      config.headers.Authorization = `Bearer ${
+        store.getState().user.accessToken
+      }`;
+    }
+
+    config.headers["X-Api-Factory-Application-Id"] = APP_ID;
+    return config;
+  });
 });
 
 store.subscribe(() =>
