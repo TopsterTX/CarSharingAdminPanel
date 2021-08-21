@@ -6,14 +6,14 @@ import {
   openedCancelPopup,
   openedApplyPopup,
   openedDeletePopup,
+  openedCreatePopup,
 } from "../../../redux/actions/warningPopup/warningPopup";
 import "./WarningPopup.scss";
 
 export const WarningPopup = ({ children, onClick, type }) => {
   const dispatch = useDispatch();
-  const { popupIsCancel, popupIsApply, popupIsDelete } = useSelector(
-    (state) => state.warningPopup
-  );
+  const { popupIsCancel, popupIsApply, popupIsDelete, popupIsCreate } =
+    useSelector((state) => state.warningPopup);
 
   return ReactDom.createPortal(
     <div
@@ -21,6 +21,7 @@ export const WarningPopup = ({ children, onClick, type }) => {
         ${popupIsApply && type === "apply" ? "active" : null}
         ${popupIsCancel && type === "cancel" ? "active" : null}
         ${popupIsDelete && type === "delete" ? "active" : null}
+        ${popupIsCreate && type === "create" ? "active" : null}
         `}
     >
       <div className="warning-popup__container">
@@ -38,6 +39,9 @@ export const WarningPopup = ({ children, onClick, type }) => {
                 } else if (type === "delete") {
                   dispatch(openedDeletePopup(false));
                   onClick();
+                } else if (type === "create") {
+                  dispatch(openedCreatePopup(false));
+                  onClick();
                 } else {
                   return null;
                 }
@@ -54,6 +58,8 @@ export const WarningPopup = ({ children, onClick, type }) => {
                   ? dispatch(openedCancelPopup(false))
                   : type === "delete"
                   ? dispatch(openedDeletePopup(false))
+                  : type === "create"
+                  ? dispatch(openedCreatePopup(false))
                   : null
               }
             >

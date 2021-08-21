@@ -9,6 +9,7 @@ import { configureStore } from "./redux/configureStore";
 import { Provider } from "react-redux";
 import { userRefreshAuthorize } from "./redux/actions/user/user";
 import { APP_ID } from "./constants";
+import { Loader } from "./components/UI/Loader/Loader";
 import api from "./axios/axios";
 
 // const defaultState = loadState();
@@ -57,6 +58,7 @@ ReactDOM.render(
     <BrowserRouter>
       <Provider store={store}>
         <App />
+        <Loader />
       </Provider>
     </BrowserRouter>
   </React.StrictMode>,

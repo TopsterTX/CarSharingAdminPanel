@@ -13,6 +13,9 @@
   &.active {
     transform: translate(0, 42px);
   }
+  &.warning{
+    background-color: $mainRed;
+  }
   &__container {
     padding: 0 32px;
     display: flex;

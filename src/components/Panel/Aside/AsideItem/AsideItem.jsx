@@ -5,6 +5,7 @@ import { changeIsOpenAsideMenu } from "../../../../redux/actions/aside/aside";
 import "./AsideItem.scss";
 
 export const AsideItem = ({ item }) => {
+  const { icon } = item;
   const dispatch = useDispatch();
 
   const clickHandler = () => {
@@ -17,7 +18,7 @@ export const AsideItem = ({ item }) => {
       onClick={() => clickHandler()}
     >
       <NavLink to={item.path} className="aside__item-container">
-        <img src={item.icon} alt="" className="aside__item-icon" />
+        {icon}
         <span className="aside__item-title">{item.title}</span>
       </NavLink>
     </li>

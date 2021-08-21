@@ -2,11 +2,19 @@ import {
   CANCEL,
   APPLY,
   DELETE,
+  CREATE,
 } from "../../reducers/warningPopup/warningPopup";
 
 export const openedCancelPopup = (bool) => {
   return {
     type: CANCEL,
+    payload: bool,
+  };
+};
+
+export const openedCreatePopup = (bool) => {
+  return {
+    type: CREATE,
     payload: bool,
   };
 };

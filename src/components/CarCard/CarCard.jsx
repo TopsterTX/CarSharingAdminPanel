@@ -1,13 +1,10 @@
-import React from "react";
-import car from "../../images/car2.png";
-
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ContentContainer } from "../UI/ContentContainer/ContentContainer";
 import { Title } from "../UI/Title/Title";
 import { Setting } from "../UI/Setting/Setting";
 import { Input } from "./../UI/Input/Input";
 import { InfoBlock } from "../UI/InfoBlock/InfoBlock";
-
 import {
   changeModelCar,
   changeDescriptionCar,
@@ -19,22 +16,31 @@ import {
   cancelEditCar,
   addColor,
   deleteColor,
+  getCategories,
+  applyCategory,
+  deleteCar,
 } from "../../redux/actions/carCard/carCard";
 import "./CarCard.scss";
-
 import {
   openedCancelPopup,
   openedApplyPopup,
   openedDeletePopup,
+  openedCreatePopup,
 } from "../../redux/actions/warningPopup/warningPopup";
 import { WarningPopup } from "./../UI/WarningPopup/WarningPopup";
 import { CarColors } from "./CarColors/CarColors";
+import { Selector } from "./../UI/Selector/Selector";
+import { addCar } from "../../redux/actions/carCard/carCard";
 
 export function CarCard() {
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
+
   let src = "";
   const warn = false;
   const dispatch = useDispatch();
-  const { editCar, inputs } = useSelector((state) => state.carCard);
+  const { editCar, inputs, categories } = useSelector((state) => state.carCard);
   const { colors, thumbnail } = editCar;
 
   (function imageHandler() {
@@ -46,6 +52,15 @@ export function CarCard() {
       src = thumbnail.path;
     }
   })();
+
+  const clickOnPlusHandler = () => {
+    if (inputs.color.length > 0) {
+      dispatch(addColor(inputs.color));
+      dispatch(changeColorsCar(""));
+    } else {
+      return;
+    }
+  };
 
   return (
     <section className="car-card">
@@ -68,6 +83,7 @@ export function CarCard() {
             onClickApply={() => {
               dispatch(openedApplyPopup(true));
             }}
+            onClickCreate={() => dispatch(openedCreatePopup(true))}
             onClickCancel={() => dispatch(openedCancelPopup(true))}
             onClickDelete={() => dispatch(openedDeletePopup(true))}
           >
@@ -85,17 +101,13 @@ export function CarCard() {
                   </Input>
                 </div>
                 <div className="car-card__main-wrapper">
-                  <Input
-                    warningText={"Неверный тип автомобиля"}
-                    warning={warn}
-                    required
-                    value={
-                      editCar.categoryId != null ? editCar.categoryId.name : ""
-                    }
-                    onChange={(e) => dispatch(changeTypeCar(e.target.value))}
+                  <Selector
+                    array={categories}
+                    arrayContent={"name"}
+                    onClick={applyCategory}
                   >
                     Тип автомобиля
-                  </Input>
+                  </Selector>
                 </div>
               </div>
               <div className="car-card__main">
@@ -132,7 +144,7 @@ export function CarCard() {
                     warningText={"Ошибка при добавлении цвета"}
                     warning={warn}
                     addButton
-                    onClickButton={() => dispatch(addColor(inputs.color))}
+                    onClickButton={clickOnPlusHandler}
                     value={inputs.color}
                     onChange={(e) => dispatch(changeColorsCar(e.target.value))}
                   >
@@ -153,16 +165,25 @@ export function CarCard() {
         </div>
       </ContentContainer>
       <WarningPopup
+        type="create"
+        onClick={() => dispatch(addCar(editCar.id, editCar))}
+      >
+        Вы действительно хотите добавить автомобиль ?
+      </WarningPopup>
+      <WarningPopup
         type="apply"
         onClick={() => dispatch(sendChangesCar(editCar.id, editCar))}
       >
-        Вы действительно хотите изменить этот автомобиль?
+        Вы действительно хотите применить изменения ?
       </WarningPopup>
       <WarningPopup type="cancel" onClick={() => dispatch(cancelEditCar())}>
-        Вы действительно хотите отменить изменение автомобиля?
+        Вы действительно хотите отменить изменение автомобиля ?
       </WarningPopup>
-      <WarningPopup type="delete">
-        Вы действительно хотите удалить автомобиль?
+      <WarningPopup
+        type="delete"
+        onClick={() => dispatch(deleteCar(editCar.id))}
+      >
+        Вы действительно хотите удалить автомобиль ?
       </WarningPopup>
     </section>
   );

@@ -10,7 +10,13 @@ export function Button({
   onClick = () => null,
   ...props
 }) {
+  const clickHander = (e) => {
+    e.preventDefault();
+    onClick();
+  };
+
   let key = uuidv4();
+
   return (
     <button
       className={`${
@@ -19,10 +25,7 @@ export function Button({
           : `button ${type ? type : null}`
       }`}
       disable={disabled ? "true" : "false"}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick();
-      }}
+      onClick={(e) => clickHander(e)}
       key={key}
       {...props}
     >

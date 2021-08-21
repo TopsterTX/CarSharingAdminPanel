@@ -7,6 +7,7 @@ import popup from "./reducers/popup/popup";
 import carCard from "./reducers/carCard/carCard";
 import warningPopup from "./reducers/warningPopup/warningPopup";
 import notice from "./reducers/notice/notice";
+import loader from "./reducers/loader/loader";
 
 export default {
   user,
@@ -18,4 +19,5 @@ export default {
   carCard,
   warningPopup,
   notice,
+  loader,
 };

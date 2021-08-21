@@ -5,6 +5,11 @@ import "./Input.scss";
 export function Input(props) {
   let x = props.id ? props.id : uuidv4();
 
+  const clickHandler = (e) => {
+    e.preventDefault();
+    props.onClickButton();
+  };
+
   return (
     <div className={`input ${props.addButton ? "plus" : null}`}>
       <label htmlFor={x} className={`input__label`}>
@@ -22,8 +27,7 @@ export function Input(props) {
         <button
           className={`input__plus ${props.addButton ? "active" : null}`}
           onClick={(e) => {
-            e.preventDefault();
-            props.onClickButton();
+            clickHandler(e);
           }}
         ></button>
       </div>

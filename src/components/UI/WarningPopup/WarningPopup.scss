@@ -26,10 +26,10 @@
     min-height: 100vh;
   }
   &__block {
-    border-radius: 9px;
     background-color: #fff;
     opacity: 1;
-    padding: 20px 40px;
+    min-width: 100%;
+    padding: 20px calc((100vw / 2) - 100px);
     box-shadow: $boxShadowOnBlock;
   }
   &__buttons {
@@ -40,5 +40,15 @@
     display: block;
     text-align: center;
     margin-bottom: 30px;
+  }
+}
+
+@media (min-width: 768px) {
+  .warning-popup {
+    &__block {
+      border-radius: 9px;
+      padding: 20px 40px;
+      min-width: min-content;
+    }
   }
 }

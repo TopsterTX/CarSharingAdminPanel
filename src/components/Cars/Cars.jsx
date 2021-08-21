@@ -26,8 +26,6 @@ export default React.memo(function Cars() {
                 return <CarsItem key={uuidv4()} car={el} />;
               })
             : null}
-          
-          
         </Table>
       </ContentContainer>
     </section>

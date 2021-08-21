@@ -7,17 +7,27 @@ import {
   CHANGE_COLORS_CAR,
   CHANGE_PRICE_MIN_CAR,
   CHANGE_PRICE_MAX_CAR,
+  GET_CATEGORIES,
   DELETE_COLOR,
   ADD_COLOR,
   ADD_IMAGE,
+  APPLY_CATEGORY,
 } from "../../reducers/carCard/carCard";
 import api from "../../../axios/axios";
-import { OPEN } from "./../../reducers/notice/notice";
+import { warningNotice, openNotice } from "./../notice/notice";
+import { showLoader } from "../../loader/loader";
 
 export const addColor = (value) => {
   return {
     type: ADD_COLOR,
     payload: value,
+  };
+};
+
+export const applyCategory = (category) => {
+  return {
+    type: APPLY_CATEGORY,
+    payload: category,
   };
 };
 
@@ -91,8 +101,22 @@ export const deleteColor = (index) => {
   };
 };
 
+export const getCategories = () => async (dispatch) => {
+  try {
+    return await api("db/category").then((res) =>
+      dispatch({
+        type: GET_CATEGORIES,
+        payload: res.data.data,
+      })
+    );
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 export const sendChangesCar = (id, car) => async (dispatch) => {
   try {
+    dispatch(showLoader(true));
     await api
       .put(
         `db/car/${id}`,
@@ -108,17 +132,19 @@ export const sendChangesCar = (id, car) => async (dispatch) => {
           },
         }
       )
-      .then(
-        (res) =>
-          res.request.status === 200
-            ? dispatch({ type: OPEN, payload: true })
-            : null,
-        (err) => {
-          console.log(err);
+      .then((res) => {
+        if (res.request.status >= 200 && res.request.status < 400) {
+          dispatch(openNotice(true));
+          dispatch(showLoader(false));
         }
-      );
+      })
+      .catch((err) => {
+        dispatch(warningNotice(true));
+        dispatch(openNotice(true));
+        dispatch(showLoader(false));
+      });
   } catch (e) {
-    console.log(e);
+    console.log("e");
   }
 };
 
@@ -134,47 +160,45 @@ export const addImage = (img) => {
   };
 };
 
-export const deleteChangesCar = (id, car) => async (dispatch) => {
+export const deleteCar = (id) => (dispatch) => {
   try {
-    await api
-      .delete(
-        `db/car/${id}`,
-        JSON.stringify(car, (key, value) => {
-          if ((key === "createdAt") | "updatedAt") {
-            return undefined;
-          }
-          return value;
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+    dispatch(showLoader(true));
+    api
+      .delete(`db/car/${id}`)
+      .then((res) => {
+        if (res.request.status >= 200 && res.request.status < 400) {
+          dispatch(openNotice(true));
+          dispatch(showLoader(false));
         }
-      )
-      .then((res) => dispatch({ type: OPEN, payload: true }));
-  } catch (e) {
-    console.error(e);
-  }
+      })
+      .catch((err) => {
+        dispatch(showLoader(false));
+        dispatch(warningNotice(true));
+        dispatch(openNotice(true));
+      });
+  } catch (e) {}
 };
 
-export const addChangesCar = (id, car) => async (dispatch) => {
+export const addCar = (id, car) => async (dispatch) => {
   try {
+    dispatch(showLoader(true));
     await api
-      .post(
-        `db/car/${id}`,
-        JSON.stringify(car, (key, value) => {
-          if ((key === "createdAt") | "updatedAt") {
-            return undefined;
-          }
-          return value;
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
+      .post(`db/car/${id}`, JSON.stringify(car), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        if (res.request.status >= 200 && res.request.status < 400) {
+          dispatch(openNotice(true));
+          dispatch(showLoader(false));
         }
-      )
-      .then((res) => dispatch({ type: OPEN, payload: true }));
+      })
+      .catch((err) => {
+        dispatch(showLoader(false));
+        dispatch(warningNotice(true));
+        dispatch(openNotice(true));
+      });
   } catch (e) {
     console.error(e);
   }

@@ -5,12 +5,16 @@
   z-index: 10;
   position: relative;
   @include filterWrapper();
-  
+
   &__toggler {
     @include filterToggler();
   }
   &__container {
+    pointer-events: none;
     @include filterContainer();
+    &.active {
+      pointer-events: all;
+    }
   }
   &__button {
     @include button();
@@ -21,6 +25,9 @@
   &__button-wrapper {
     display: flex;
   }
+  &__item {
+    margin-bottom: 12px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -29,11 +36,22 @@
       display: flex;
       flex-wrap: wrap;
     }
+    &__item {
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
   }
 }
 
 @media (min-width: 1024px) {
   .filter {
     width: 100%;
+    &__item {
+      margin-bottom: 0;
+    }
+    &__container {
+      pointer-events: all;
+    }
   }
 }

@@ -18,14 +18,22 @@ export const Filter = ({ filterItems, buttons }) => {
         <div className="filter__wrapper">
           {filterItems
             ? filterItems.map((el) => {
-                return <Selector key={el.id}>{el.text}</Selector>;
+                return (
+                  <div className="filter__item" key={el.id}>
+                    <Selector>{el.text}</Selector>
+                  </div>
+                );
               })
             : ""}
         </div>
         <div className="filter__button-wrapper">
           {buttons
             ? buttons.map((el) => {
-                return <Button key={el.id} type={el.type} >{el.text}</Button>;
+                return (
+                  <Button key={el.id} type={el.type}>
+                    {el.text}
+                  </Button>
+                );
               })
             : ""}
         </div>
