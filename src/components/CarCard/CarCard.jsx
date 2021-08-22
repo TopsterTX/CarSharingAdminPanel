@@ -29,38 +29,37 @@ import {
 } from "../../redux/actions/warningPopup/warningPopup";
 import { WarningPopup } from "./../UI/WarningPopup/WarningPopup";
 import { CarColors } from "./CarColors/CarColors";
-import { Selector } from "./../UI/Selector/Selector";
+import { Selector } from "../UI/Selector/Selector";
 import { addCar } from "../../redux/actions/carCard/carCard";
+
+const imageHandler = (thumbnail) => {
+  if (thumbnail.path === null) {
+    return "";
+  } else if (thumbnail.path.indexOf("data:image/png;") !== -1) {
+    return thumbnail.path;
+  } else {
+    return `https://api-factory.simbirsoft1.com${thumbnail.path}`;
+  }
+};
+
+const clickOnPlusHandler = (dispatch, value) => {
+  if (value.length > 0) {
+    dispatch(addColor(value));
+    dispatch(changeColorsCar(""));
+  } else {
+    return;
+  }
+};
 
 export function CarCard() {
   useEffect(() => {
     dispatch(getCategories());
   }, []);
 
-  let src = "";
   const warn = false;
   const dispatch = useDispatch();
   const { editCar, inputs, categories } = useSelector((state) => state.carCard);
   const { colors, thumbnail } = editCar;
-
-  (function imageHandler() {
-    if (thumbnail.path === null) {
-      return src;
-    } else if (thumbnail.path.indexOf("/files") !== -1) {
-      src = `https://api-factory.simbirsoft1.com${thumbnail.path}`;
-    } else {
-      src = thumbnail.path;
-    }
-  })();
-
-  const clickOnPlusHandler = () => {
-    if (inputs.color.length > 0) {
-      dispatch(addColor(inputs.color));
-      dispatch(changeColorsCar(""));
-    } else {
-      return;
-    }
-  };
 
   return (
     <section className="car-card">
@@ -68,9 +67,9 @@ export function CarCard() {
         <Title>Карточка автомобиля</Title>
         <div className="car-card__wrapper">
           <InfoBlock
-            car={src}
+            car={imageHandler(thumbnail)}
             label={editCar.name ? editCar.name : ""}
-            subLabel={editCar.categoryId != null ? editCar.categoryId.name : ""}
+            subLabel={editCar.categoryId ? editCar.categoryId.name : ""}
             valueDescription={editCar.description ? editCar.description : ""}
             onChangeDescription={(e) =>
               dispatch(changeDescriptionCar(e.target.value))
@@ -103,10 +102,10 @@ export function CarCard() {
                 <div className="car-card__main-wrapper">
                   <Selector
                     array={categories}
-                    arrayContent={"name"}
+                    content={"name"}
                     onClick={applyCategory}
                   >
-                    Тип автомобиля
+                    {editCar.categoryId.name}
                   </Selector>
                 </div>
               </div>
@@ -144,7 +143,9 @@ export function CarCard() {
                     warningText={"Ошибка при добавлении цвета"}
                     warning={warn}
                     addButton
-                    onClickButton={clickOnPlusHandler}
+                    onClickButton={() =>
+                      clickOnPlusHandler(dispatch, inputs.color)
+                    }
                     value={inputs.color}
                     onChange={(e) => dispatch(changeColorsCar(e.target.value))}
                   >
@@ -157,9 +158,6 @@ export function CarCard() {
                   />
                 </div>
               </div>
-              {/* <div className="car-card__color-button">
-                <Button type="link">Удалить выбранные</Button>
-              </div> */}
             </div>
           </Setting>
         </div>

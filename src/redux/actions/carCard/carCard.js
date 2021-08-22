@@ -15,7 +15,7 @@ import {
 } from "../../reducers/carCard/carCard";
 import api from "../../../axios/axios";
 import { warningNotice, openNotice } from "./../notice/notice";
-import { showLoader } from "../../loader/loader";
+import { showLoader } from "../loader/loader";
 
 export const addColor = (value) => {
   return {

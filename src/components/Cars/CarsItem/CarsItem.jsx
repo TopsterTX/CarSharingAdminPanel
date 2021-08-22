@@ -1,22 +1,17 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { Buttons } from "../../UI/Buttons/Buttons";
+import { useDispatch, useSelector } from "react-redux";
+import { ButtonRoute } from "../../UI/ButtonRoute/ButtonRoute";
 import { v4 as uuidv4 } from "uuid";
 import { getEditCar } from "../../../redux/actions/carCard/carCard";
 import "./CarsItem.scss";
+import { ButtonsContainer } from "./../../UI/ButtonsContainer/ButtonsContainer";
+import { WarningPopup } from "./../../UI/WarningPopup/WarningPopup";
+import { openedDeletePopup } from "../../../redux/actions/warningPopup/warningPopup";
+import { deleteCar } from "../../../redux/actions/carCard/carCard";
 
 export function CarsItem({ car }) {
   const dispatch = useDispatch();
   let src;
-  const buttonsProps = {
-    buttons: [
-      {
-        type: "default",
-        to: "/admin/panel/card_car",
-        onClick: () => dispatch(getEditCar(car)),
-      },
-    ],
-  };
 
   (function imageHandler() {
     if (car.thumbnail.path.indexOf("/files") !== -1) {
@@ -57,9 +52,27 @@ export function CarsItem({ car }) {
           </span>
         </li>
         <li className="car__item-part">
-          <Buttons buttonsProps={buttonsProps} />
+          <ButtonsContainer>
+            <ButtonRoute
+              to={"/admin/panel/card_car"}
+              type={"default"}
+              onClick={() => dispatch(getEditCar(car))}
+            >
+              Изменить
+            </ButtonRoute>
+            <ButtonRoute
+              to={"/admin/panel/main"}
+              type={"warning"}
+              onClick={() => dispatch(openedDeletePopup(true))}
+            >
+              Удалить
+            </ButtonRoute>
+          </ButtonsContainer>
         </li>
       </ul>
+      <WarningPopup type={"delete"} onClick={() => dispatch(deleteCar(car.id))}>
+        Вы действительно хотите удалить машину ?
+      </WarningPopup>
     </section>
   );
 }

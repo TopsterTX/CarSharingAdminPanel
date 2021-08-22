@@ -1,15 +1,22 @@
 import React from "react";
 import "./Info.scss";
 
-export const Info = () => {
+export const Info = ({ order }) => {
+  const { color, carId, cityId, pointId, dateFrom, dateTo } = order;
+  const dateBeggin = new Date(dateFrom).toLocaleDateString("ru-RU");
+  const dateEnd = new Date(dateTo).toLocaleDateString("ru-RU");
+
   return (
     <div className="info">
       <span className="info__place">
-        <span>ELANTRA</span> в <span>Ульяновск</span> , Нариманова 42
+        <span>{carId.name}</span> в <span>{cityId.name}</span> ,
+        {pointId === null ? "" : pointId.address}
       </span>
-      <span className="info__date">12.06.2019 12:00 - 13.06.2019 12:00</span>
+      <span className="info__date">
+        {dateBeggin} - {dateEnd}
+      </span>
       <span className="info__color">
-        Цвет: <span>Голубой</span>
+        Цвет: <span>{color}</span>
       </span>
     </div>
   );

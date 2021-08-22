@@ -1,4 +1,4 @@
-import { SHOW } from "./../reducers/loader/loader";
+import { SHOW } from "../../reducers/loader/loader";
 
 export const showLoader = (bool) => {
   return {

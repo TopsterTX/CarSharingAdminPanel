@@ -2,13 +2,6 @@
 @import "../../../scss/vars.scss";
 
 .buttons {
-  &__container {
-    display: flex;
-    border-radius: 5px;
-    height: 24px;
-    border: 1px solid $mainGrayDark;
-    border-radius: 5px;
-  }
   &__item {
     cursor: pointer;
     width: 66px;

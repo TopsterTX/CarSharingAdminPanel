@@ -8,6 +8,8 @@ import carCard from "./reducers/carCard/carCard";
 import warningPopup from "./reducers/warningPopup/warningPopup";
 import notice from "./reducers/notice/notice";
 import loader from "./reducers/loader/loader";
+import orderCard from "./reducers/orderCard/orderCard";
+import address from "./reducers/address/address";
 
 export default {
   user,
@@ -20,4 +22,6 @@ export default {
   warningPopup,
   notice,
   loader,
+  orderCard,
+  address,
 };

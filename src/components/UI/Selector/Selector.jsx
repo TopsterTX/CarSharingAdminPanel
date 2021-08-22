@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { applyCategory } from "../../../redux/actions/carCard/carCard";
 import "./Selector.scss";
 
-export function Selector({ children, array, arrayContent, onClick }) {
-  const dispatch = useDispatch();
-  const [text, setText] = useState(null);
+export function Selector({ children, array = [], sortId, content, onClick }) {
   const [active, setActive] = useState(false);
+  const [text, setText] = useState(null);
 
   const clickHandler = (el) => {
-    setText((t) => el[`${arrayContent}`]);
-    dispatch(onClick(el));
+    setText((t) => el[`${content}`]);
+    onClick();
   };
 
   return (
@@ -22,19 +19,31 @@ export function Selector({ children, array, arrayContent, onClick }) {
       >
         <span>{text ? text : children}</span>
         <ul className={`selector__list ${active ? "active" : null}`}>
-          {array
+          {sortId
             ? array.map((el) => {
+                if (el.cityId.id === sortId) {
+                  return (
+                    <li
+                      className="selector__item"
+                      onClick={() => clickHandler(el)}
+                    >
+                      {el[`${content}`]}
+                    </li>
+                  );
+                } else {
+                  return;
+                }
+              })
+            : array.map((el) => {
                 return (
                   <li
                     className="selector__item"
-                    key={el.id}
                     onClick={() => clickHandler(el)}
                   >
-                    {el[`${arrayContent}`]}
+                    {el[`${content}`]}
                   </li>
                 );
-              })
-            : null}
+              })}
         </ul>
       </div>
     </div>
