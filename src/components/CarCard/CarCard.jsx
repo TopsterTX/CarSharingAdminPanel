@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import { ContentContainer } from "../UI/ContentContainer/ContentContainer";
 import { Title } from "../UI/Title/Title";
@@ -28,19 +29,9 @@ import {
   openedCreatePopup,
 } from "../../redux/actions/warningPopup/warningPopup";
 import { WarningPopup } from "./../UI/WarningPopup/WarningPopup";
-import { CarColors } from "./CarColors/CarColors";
+import CarColors from "./CarColors/CarColors";
 import { Selector } from "../UI/Selector/Selector";
 import { addCar } from "../../redux/actions/carCard/carCard";
-
-const imageHandler = (thumbnail) => {
-  if (thumbnail.path === null) {
-    return "";
-  } else if (thumbnail.path.indexOf("data:image/png;") !== -1) {
-    return thumbnail.path;
-  } else {
-    return `https://api-factory.simbirsoft1.com${thumbnail.path}`;
-  }
-};
 
 const clickOnPlusHandler = (dispatch, value) => {
   if (value.length > 0) {

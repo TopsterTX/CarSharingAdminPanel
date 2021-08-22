@@ -1,4 +1,6 @@
 import React from "react";
+import PropTypes from "prop-types";
+import Image from "../../UI/Image/Image";
 import { useDispatch, useSelector } from "react-redux";
 import { ButtonRoute } from "../../UI/ButtonRoute/ButtonRoute";
 import { v4 as uuidv4 } from "uuid";
@@ -9,33 +11,27 @@ import { WarningPopup } from "./../../UI/WarningPopup/WarningPopup";
 import { openedDeletePopup } from "../../../redux/actions/warningPopup/warningPopup";
 import { deleteCar } from "../../../redux/actions/carCard/carCard";
 
-export function CarsItem({ car }) {
+function CarsItem({ car }) {
   const dispatch = useDispatch();
-  let src;
-
-  (function imageHandler() {
-    if (car.thumbnail.path.indexOf("/files") !== -1) {
-      src = `https://api-factory.simbirsoft1.com${car.thumbnail.path}`;
-    } else {
-      src = car.thumbnail.path;
-    }
-  })();
-
-  return (
+  
+  const { thumbnail, colors, name, description, priceMax, priceMin } = car;
+  const { path } = thumbnail;
+  
+    return (
     <section className="car__item">
       <ul className="car__item-container">
         <li className="car__item-part car__item-part --full-width">
           <div className="car__item-part --first-block">
-            <img src={src} alt="image" className="car__image" />
+            <Image path={path} />
             <div className="car__info">
-              <p className="car__model">{car.name}</p>
-              <p className="car__description">{car.description}</p>
+              <p className="car__model">{name}</p>
+              <p className="car__description">{description}</p>
             </div>
           </div>
           <div>
             <ul className="car__colors">
               <span>Цвета:</span>
-              {car.colors.map((el) => {
+              {colors.map((el) => {
                 return (
                   <li className="car__colors-item" key={uuidv4()}>
                     {el}
@@ -48,7 +44,7 @@ export function CarsItem({ car }) {
 
         <li className="car__item-part">
           <span className="car__price">
-            {car.priceMin} ₽ - {car.priceMax} ₽
+            {priceMin} ₽ - {priceMax} ₽
           </span>
         </li>
         <li className="car__item-part">
@@ -76,3 +72,23 @@ export function CarsItem({ car }) {
     </section>
   );
 }
+
+CarsItem.propTypes = {
+  car: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+    description: PropTypes.string.isRequired,
+    categoryId: PropTypes.objectOf(PropTypes.string).isRequired,
+    name: PropTypes.string.isRequired,
+    priceMin: PropTypes.number.isRequired,
+    priceMax: PropTypes.number.isRequired,
+    thumbnail: PropTypes.shape({
+      size: PropTypes.number.isRequired,
+      originalname: PropTypes.string.isRequired,
+      mimetype: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
+
+export default CarsItem;

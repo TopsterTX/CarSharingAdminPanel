@@ -1,8 +1,17 @@
 const defaultState = {
   editOrder: {
-    orderStatusId: {},
-    cityId: {},
-    pointId: {},
+    orderStatusId: {
+      id: "",
+      name: "",
+    },
+    cityId: {
+      id: "",
+      name: "",
+    },
+    pointId: {
+      id: '',
+      cityId: ''
+    },
     carId: {},
     color: "",
     dateFrom: "",

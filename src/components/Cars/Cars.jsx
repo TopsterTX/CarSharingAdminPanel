@@ -4,7 +4,7 @@ import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Table } from "../UI/Table/Table";
 import { Title } from "./../UI/Title/Title";
 import { getCarsOnPage } from "../../redux/actions/cars/cars";
-import { CarsItem } from "./CarsItem/CarsItem";
+import  CarsItem  from "./CarsItem/CarsItem";
 import { v4 as uuidv4 } from "uuid";
 import "./Cars.scss";
 

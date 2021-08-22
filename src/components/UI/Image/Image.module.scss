@@ -1,0 +1,21 @@
+.image {
+  display: none;
+  &__wrapper {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .image {
+    align-self: center;
+    max-height: 63px;
+    max-width: 138px;
+    &__wrapper {
+      width: 63px;
+      height: 138px;
+      margin-right: 10px;
+      align-self: center;
+      display: block;
+    }
+  }
+}

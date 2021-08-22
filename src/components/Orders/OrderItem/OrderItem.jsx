@@ -1,5 +1,6 @@
 import React from "react";
-import car from "../../../images/car.png";
+import Image from "../../UI/Image/Image";
+import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { CheckboxOrder } from "./CheckboxOrder/CheckboxOrder";
 import { Info } from "./Info/Info";
@@ -13,29 +14,17 @@ import {
   openedDeletePopup,
 } from "../../../redux/actions/warningPopup/warningPopup";
 
-const imageHandler = (thumbnail) => {
-  if (thumbnail.path === null) {
-    return "";
-  } else if (thumbnail.path.indexOf("data:image/png;") !== -1) {
-    return thumbnail.path;
-  } else {
-    return `https://api-factory.simbirsoft1.com${thumbnail.path}`;
-  }
-};
-
-export const OrderItem = ({ order }) => {
+const OrderItem = ({ order }) => {
   const dispatch = useDispatch();
+
+  // const {}
 
   return (
     <section className="order__item">
       <ul className="order__item-container">
         <li className="order__item-part order__item-part--wrapper">
           <div className="order__item-part order__item-part--full-width">
-            <img
-              src={imageHandler(order.carId.thumbnail)}
-              alt=""
-              className="order__item-image"
-            />
+            <Image path={order.carId.thumbnail.path} />
             <Info order={order} />
           </div>
           <CheckboxOrder order={order} />
@@ -79,3 +68,36 @@ export const OrderItem = ({ order }) => {
     </section>
   );
 };
+
+OrderItem.propTypes = {
+  order: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    dateFrom: PropTypes.number.isRequired,
+    dateTo: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    isFullTank: PropTypes.bool.isRequired,
+    isNeedChildChair: PropTypes.bool.isRequired,
+    isRightWheel: PropTypes.bool.isRequired,
+    orderStatusId: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+    cityId: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+    pointId: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      address: Prop,
+    }),
+    carId: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
+    rateId: PropTypes.objectOf(PropTypes.string),
+  }),
+};
+
+export default OrderItem;

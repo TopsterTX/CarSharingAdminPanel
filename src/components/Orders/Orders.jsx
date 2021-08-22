@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { OrderItem } from "./OrderItem/OrderItem";
+import OrderItem  from "./OrderItem/OrderItem";
 import { Table } from "../UI/Table/Table";
 import { getOrder } from "../../redux/actions/order/order";
 import "./Orders.scss";
