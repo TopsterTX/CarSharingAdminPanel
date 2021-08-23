@@ -1,8 +1,8 @@
 import React from "react";
-import { Checkbox } from "../../UI/Checkbox/Checkbox";
+import Checkbox from "../../UI/Checkbox/Checkbox";
 import "./CarColors.scss";
 import { Button } from "./../../UI/Button/Button";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
 const CarColors = ({ arr, onClick }) => {
   return (
@@ -22,7 +22,7 @@ const CarColors = ({ arr, onClick }) => {
 
 CarColors.propTypes = {
   arr: PropTypes.array.isRequired,
-  onClick: PropTypes.func.isRequired
-}
+  onClick: PropTypes.func.isRequired,
+};
 
 export default CarColors;

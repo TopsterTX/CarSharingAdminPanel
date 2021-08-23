@@ -3,7 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { addImage } from "../../../redux/actions/carCard/carCard";
 import "./InfoBlock.scss";
 
-export function InfoBlock(props) {
+export function InfoBlock({
+  label,
+  subLabel,
+  valueDescription,
+  onChangeDescription,
+  car,
+}) {
   const dispatch = useDispatch();
 
   const image = useRef();
@@ -36,16 +42,9 @@ export function InfoBlock(props) {
   return (
     <section className="info-block">
       <div className="info-block__picture">
-        <img
-          src={props.car}
-          alt=""
-          className="info-block__picture-image"
-          width="240px"
-          height="110px"
-          ref={image}
-        />
-        <h2 className="info-block__picture-label">{props.label}</h2>
-        <h3 className="info-block__picture-sublabel">{props.subLabel}</h3>
+        {car}
+        <h2 className="info-block__picture-label">{label}</h2>
+        <h3 className="info-block__picture-sublabel">{subLabel}</h3>
         <div className="info-block__picture-review">
           <input
             type="file"
@@ -77,8 +76,8 @@ export function InfoBlock(props) {
         <span className="info-block__description-label">Описание</span>
         <textarea
           className="info-block__description-text"
-          value={props.valueDescription}
-          onChange={props.onChangeDescription}
+          value={valueDescription}
+          onChange={onChangeDescription}
         />
       </div>
     </section>

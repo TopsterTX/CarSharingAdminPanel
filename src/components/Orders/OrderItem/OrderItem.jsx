@@ -3,10 +3,10 @@ import Image from "../../UI/Image/Image";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { CheckboxOrder } from "./CheckboxOrder/CheckboxOrder";
-import { Info } from "./Info/Info";
+import Info from "./Info/Info";
 import { ButtonsContainer } from "./../../UI/ButtonsContainer/ButtonsContainer";
 import { ButtonRoute } from "../../UI/ButtonRoute/ButtonRoute";
-import { getOrder } from "../../../redux/actions/order/order";
+import { getOrder } from "../../../redux/actions/orderCard/orderCard";
 import "./OrderItem.scss";
 import { WarningPopup } from "./../../UI/WarningPopup/WarningPopup";
 import {
@@ -17,20 +17,34 @@ import {
 const OrderItem = ({ order }) => {
   const dispatch = useDispatch();
 
-  // const {}
+  const {
+    carId,
+    pointId,
+    cityId,
+    color,
+    rateId,
+    orderStatusId,
+    dateFrom,
+    dateTo,
+    price,
+    isFullTank,
+    isRightWheel,
+    isNeedChildChair,
+  } = order;
+  const { thumbnail } = carId;
 
   return (
     <section className="order__item">
       <ul className="order__item-container">
         <li className="order__item-part order__item-part--wrapper">
           <div className="order__item-part order__item-part--full-width">
-            <Image path={order.carId.thumbnail.path} />
-            <Info order={order} />
+            <Image path={thumbnail.path} />
+            <Info {...order} />
           </div>
           <CheckboxOrder order={order} />
         </li>
         <li className="order__item-part">
-          <span className="order__item-price">{order.price} ₽</span>
+          <span className="order__item-price">{price} ₽</span>
         </li>
         <li className="order__item-part">
           <ButtonsContainer>
@@ -79,24 +93,34 @@ OrderItem.propTypes = {
     isFullTank: PropTypes.bool.isRequired,
     isNeedChildChair: PropTypes.bool.isRequired,
     isRightWheel: PropTypes.bool.isRequired,
-    orderStatusId: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
-    cityId: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-    }),
+    orderStatusId: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
+    cityId: PropTypes.objectOf(PropTypes.string).isRequired,
     pointId: PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      address: Prop,
+      address: PropTypes.string.isRequired,
+      cityId: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
     }),
     carId: PropTypes.shape({
       id: PropTypes.string.isRequired,
+      colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+      description: PropTypes.string.isRequired,
+      categoryId: PropTypes.objectOf(PropTypes.string).isRequired,
       name: PropTypes.string.isRequired,
-    }),
-    rateId: PropTypes.objectOf(PropTypes.string),
+      priceMin: PropTypes.number.isRequired,
+      priceMax: PropTypes.number.isRequired,
+      thumbnail: PropTypes.shape({
+        size: PropTypes.number.isRequired,
+        originalname: PropTypes.string.isRequired,
+        mimetype: PropTypes.string.isRequired,
+        path: PropTypes.string.isRequired,
+      }).isRequired,
+    }).isRequired,
+    rateId: PropTypes.shape({
+      rateTypeId: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
+      price: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
+    }).isRequired,
   }),
 };
 

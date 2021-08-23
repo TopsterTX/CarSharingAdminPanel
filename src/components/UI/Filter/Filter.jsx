@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Selector } from "../Selector/Selector";
+import PropTypes from "prop-types";
+import Selector from "../Selector/Selector";
 import { Button } from "../Button/Button";
 import "./Filter.scss";
 
-export const Filter = ({ filterItems, buttons }) => {
+const Filter = ({ filterItems, buttons }) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -17,10 +18,10 @@ export const Filter = ({ filterItems, buttons }) => {
       <div className={`filter__container ${active ? "active" : ""}`}>
         <div className="filter__wrapper">
           {filterItems
-            ? filterItems.map((el) => {
+            ? filterItems.map(({ text, id }) => {
                 return (
-                  <div className="filter__item" key={el.id}>
-                    <Selector>{el.text}</Selector>
+                  <div className="filter__item" key={id}>
+                    <Selector>{text}</Selector>
                   </div>
                 );
               })
@@ -28,10 +29,10 @@ export const Filter = ({ filterItems, buttons }) => {
         </div>
         <div className="filter__button-wrapper">
           {buttons
-            ? buttons.map((el) => {
+            ? buttons.map(({ text, id, type }) => {
                 return (
-                  <Button key={el.id} type={el.type}>
-                    {el.text}
+                  <Button key={id} type={type}>
+                    {text}
                   </Button>
                 );
               })
@@ -41,3 +42,14 @@ export const Filter = ({ filterItems, buttons }) => {
     </section>
   );
 };
+
+Filter.propTypes = {
+  filterItems: PropTypes.arrayOf(
+    PropTypes.objectOf(PropTypes.string.isRequired).isRequired
+  ).isRequired,
+  buttons: PropTypes.arrayOf(
+    PropTypes.objectOf(PropTypes.string.isRequired).isRequired
+  ).isRequired,
+};
+
+export default Filter;

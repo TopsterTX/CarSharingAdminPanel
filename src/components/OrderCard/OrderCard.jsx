@@ -2,11 +2,12 @@ import React, { useEffect, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Setting } from "../UI/Setting/Setting";
-import { Input } from "../UI/Input/Input";
+import Input from "../UI/Input/Input";
 import { Title } from "../UI/Title/Title";
 import "./OrderCard.scss";
-import { Selector } from "../UI/Selector/Selector";
-import { Checkbox } from "./../UI/Checkbox/Checkbox";
+import Radio from "../UI/Radio/Radio";
+import Selector from "../UI/Selector/Selector";
+import Checkbox from "./../UI/Checkbox/Checkbox";
 import { getCars } from "../../redux/actions/cars/cars";
 import { getCities, getPoints } from "../../redux/actions/address/address";
 import {
@@ -14,7 +15,15 @@ import {
   getRates,
   getRatesType,
 } from "../../redux/actions/order/order";
-import { changeDateFrom } from "../../redux/actions/orderCard/orderCard";
+import {
+  changeDateFrom,
+  changeDateTo,
+  changeCar,
+  changeColor,
+  changeCity,
+  changePoint,
+  changePrice,
+} from "../../redux/actions/orderCard/orderCard";
 
 export function OrderCard() {
   const dispatch = useDispatch();
@@ -24,18 +33,13 @@ export function OrderCard() {
   const { editOrder } = useSelector((state) => state.orderCard);
   const { cities, points } = useSelector((state) => state.address);
 
-  const carsResult = useMemo(async () => await dispatch(getCars()), []);
-  const citiesResult = useMemo(async () => await dispatch(getCities()), []);
-  const pointsResult = useMemo(async () => await dispatch(getPoints()), []);
-  const ratesResult = useMemo(async () => await dispatch(getRates()), []);
-  const ratesTypeResult = useMemo(
-    async () => await dispatch(getRatesType()),
-    []
-  );
-  const orderStatusResult = useMemo(
-    async () => await dispatch(getOrderStatus()),
-    []
-  );
+  useEffect(() => {
+    dispatch(getCars());
+    dispatch(getCities());
+    dispatch(getPoints());
+    dispatch(getRates());
+    dispatch(getOrderStatus());
+  }, []);
 
   const {
     orderStatusId,
@@ -52,8 +56,12 @@ export function OrderCard() {
     isRightWheel,
   } = editOrder;
 
-  const dateBeggin = new Date(dateFrom).toLocaleDateString("ru-RU");
-  const dateEnd = new Date(dateTo).toLocaleDateString("ru-RU");
+  const dateBeggin = dateFrom
+    ? new Date(dateFrom).toISOString().substr(0, 10)
+    : "0000-00-00";
+  const dateEnd = dateTo
+    ? new Date(dateTo).toISOString().substr(0, 10)
+    : "0000-00-00";
 
   const sortPoints = (point, city) => {
     if (point.cityId.id === city.id) return true;
@@ -68,19 +76,31 @@ export function OrderCard() {
           <div className="order-card__container">
             <div className="order-card__main">
               <div className="order-card__main-wrapper">
-                <Selector array={cars} content={"name"}>
+                <Selector
+                  array={cars}
+                  content={"name"}
+                  onClick={(car) => dispatch(changeCar(car))}
+                >
                   {carId.name ? carId.name : "Модель машины"}
                 </Selector>
               </div>
               <div className="order-card__main-wrapper">
-                <Selector array={carId.colors} content={"el"}>
+                <Selector
+                  array={carId.colors}
+                  content={"el"}
+                  onClick={(value) => dispatch(changeColor(value))}
+                >
                   {color ? color : "Цвет"}
                 </Selector>
               </div>
             </div>
             <div className="order-card__address">
               <div className="order-card__address-wrapper">
-                <Selector array={cities} content={"name"}>
+                <Selector
+                  array={cities}
+                  content={"name"}
+                  onClick={(city) => dispatch(changeCity(city))}
+                >
                   {cityId.name ? cityId.name : "Город"}
                 </Selector>
               </div>
@@ -88,7 +108,8 @@ export function OrderCard() {
                 <Selector
                   array={points}
                   content={"address"}
-                  sort={editOrder.cityId.id}
+                  sortId={cityId.id ? cityId.id : ""}
+                  onClick={(point) => dispatch(changePoint(point))}
                 >
                   {`${pointId.name ? pointId.name : "Пункт выдачи"} ,${
                     pointId.address ? pointId.address : "Адресс"
@@ -100,6 +121,7 @@ export function OrderCard() {
               <div className="order-card__date-wrapper">
                 <Input
                   type={"date"}
+                  required
                   value={dateBeggin ? dateBeggin : ""}
                   onChange={(e) => dispatch(changeDateFrom(e.target.value))}
                 >
@@ -107,7 +129,12 @@ export function OrderCard() {
                 </Input>
               </div>
               <div className="order-card__date-wrapper">
-                <Input type={"date"} value={dateEnd ? dateEnd : ""}>
+                <Input
+                  type={"date"}
+                  value={dateEnd ? dateEnd : ""}
+                  required
+                  onChange={(e) => dispatch(changeDateTo(e.target.value))}
+                >
                   Дата конца аренды
                 </Input>
               </div>
@@ -115,7 +142,15 @@ export function OrderCard() {
             </div>
             <div className="order-card__rate">
               <h2 className="order-card__rate-title">Тарифы</h2>
-              {rates ? rates.map((el) => <Checkbox>{el.name}</Checkbox>) : ""}
+              <div className="order-card__rate-block">
+                {rates
+                  ? rates.map((el) => (
+                      <Radio>
+                        {el.rateTypeId.name}, {el.price}
+                      </Radio>
+                    ))
+                  : ""}
+              </div>
             </div>
             <div className="order-card__addons">
               <h2 className="order-card__addons-title">Дополнительные опции</h2>
@@ -124,7 +159,12 @@ export function OrderCard() {
               <Checkbox active={isRightWheel}>Правый руль</Checkbox>
             </div>
             <div className="order-card__price">
-              <Input value={price}>Цена</Input>
+              <Input
+                value={price}
+                onChange={(e) => dispatch(changePrice(e.target.value))}
+              >
+                Цена
+              </Input>
             </div>
           </div>
         </Setting>

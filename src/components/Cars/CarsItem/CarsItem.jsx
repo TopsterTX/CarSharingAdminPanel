@@ -13,11 +13,11 @@ import { deleteCar } from "../../../redux/actions/carCard/carCard";
 
 function CarsItem({ car }) {
   const dispatch = useDispatch();
-  
+
   const { thumbnail, colors, name, description, priceMax, priceMin } = car;
   const { path } = thumbnail;
-  
-    return (
+
+  return (
     <section className="car__item">
       <ul className="car__item-container">
         <li className="car__item-part car__item-part --full-width">
@@ -76,6 +76,8 @@ function CarsItem({ car }) {
 CarsItem.propTypes = {
   car: PropTypes.shape({
     id: PropTypes.string.isRequired,
+    tank: PropTypes.number.isRequired,
+    number: PropTypes.string.isRequired,
     colors: PropTypes.arrayOf(PropTypes.string).isRequired,
     description: PropTypes.string.isRequired,
     categoryId: PropTypes.objectOf(PropTypes.string).isRequired,
@@ -83,12 +85,12 @@ CarsItem.propTypes = {
     priceMin: PropTypes.number.isRequired,
     priceMax: PropTypes.number.isRequired,
     thumbnail: PropTypes.shape({
-      size: PropTypes.number.isRequired,
+      size: PropTypes.any.isRequired,
       originalname: PropTypes.string.isRequired,
       mimetype: PropTypes.string.isRequired,
       path: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
+    }),
+  }),
 };
 
 export default CarsItem;

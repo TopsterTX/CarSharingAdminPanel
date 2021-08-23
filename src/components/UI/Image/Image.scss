@@ -1,0 +1,32 @@
+.image {
+  display: none;
+  &__wrapper {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .image {
+    align-self: center;
+    max-height: 63px;
+    max-width: 138px;
+    display: block;
+    &--card {
+      .image {
+        min-width: 243px;
+        min-height: 110px;
+      }
+      min-width: 243px;
+      min-height: 110px;
+    }
+    &__wrapper {
+      width: 138px;
+      height: 63px;
+      margin-right: 10px;
+      align-self: center;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    }
+  }
+}

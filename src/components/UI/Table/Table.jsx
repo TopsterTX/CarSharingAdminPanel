@@ -1,6 +1,6 @@
 import React from "react";
 import { Pages } from "./../Pages/Pages";
-import { Filter } from "./../Filter/Filter";
+import Filter from "../Filter/Filter";
 import "./Table.scss";
 
 export function Table({ children, configureFilter }) {

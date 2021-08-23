@@ -5,7 +5,7 @@ import { Title } from "../UI/Title/Title";
 import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { AddressItem } from "./AddressItem/AddressItem";
 import { Popup } from "./../UI/Popup/Popup";
-import { Input } from "../UI/Input/Input";
+import  Input  from "../UI/Input/Input";
 import { Button } from "../UI/Button/Button";
 import { changePopup } from "../../redux/actions/popup/popup";
 import "./Address.scss";

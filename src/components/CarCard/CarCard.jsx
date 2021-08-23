@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-
+import Image from "../UI/Image/Image";
 import { useSelector, useDispatch } from "react-redux";
 import { ContentContainer } from "../UI/ContentContainer/ContentContainer";
 import { Title } from "../UI/Title/Title";
 import { Setting } from "../UI/Setting/Setting";
-import { Input } from "./../UI/Input/Input";
+import  Input  from "./../UI/Input/Input";
 import { InfoBlock } from "../UI/InfoBlock/InfoBlock";
 import {
   changeModelCar,
@@ -30,7 +30,7 @@ import {
 } from "../../redux/actions/warningPopup/warningPopup";
 import { WarningPopup } from "./../UI/WarningPopup/WarningPopup";
 import CarColors from "./CarColors/CarColors";
-import { Selector } from "../UI/Selector/Selector";
+import  Selector  from "../UI/Selector/Selector";
 import { addCar } from "../../redux/actions/carCard/carCard";
 
 const clickOnPlusHandler = (dispatch, value) => {
@@ -51,6 +51,7 @@ export function CarCard() {
   const dispatch = useDispatch();
   const { editCar, inputs, categories } = useSelector((state) => state.carCard);
   const { colors, thumbnail } = editCar;
+  const { path } = thumbnail;
 
   return (
     <section className="car-card">
@@ -58,7 +59,7 @@ export function CarCard() {
         <Title>Карточка автомобиля</Title>
         <div className="car-card__wrapper">
           <InfoBlock
-            car={imageHandler(thumbnail)}
+            car={<Image path={path} className="image image--card" />}
             label={editCar.name ? editCar.name : ""}
             subLabel={editCar.categoryId ? editCar.categoryId.name : ""}
             valueDescription={editCar.description ? editCar.description : ""}

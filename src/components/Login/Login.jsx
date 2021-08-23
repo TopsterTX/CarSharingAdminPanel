@@ -9,7 +9,7 @@ import {
   changePassword,
 } from "../../redux/actions/user/user";
 import { Button } from "../UI/Button/Button";
-import { Input } from "../UI/Input/Input";
+import  Input  from "../UI/Input/Input";
 import "./Login.scss";
 
 export const Login = () => {

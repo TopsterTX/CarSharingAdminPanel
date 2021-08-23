@@ -2,9 +2,8 @@
 @import "../../../scss/vars.scss";
 
 .header {
-  z-index: 5;
   position: fixed;
-  z-index: 20;
+  z-index: 40;
   box-shadow: $boxShadowOnBlock;
   background-color: #fff;
   &__button {
@@ -35,6 +34,7 @@
       align-items: center;
       justify-content: flex-start;
       position: relative;
+      z-index: 40;
     }
     &-account:hover {
       .header__account-sublist {
