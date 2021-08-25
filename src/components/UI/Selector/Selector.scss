@@ -8,6 +8,7 @@
   &__block {
     @include filterList();
     width: 100%;
+    height: 30px;
   }
   &__list {
     position: absolute;

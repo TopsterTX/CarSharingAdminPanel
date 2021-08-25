@@ -1,28 +1,43 @@
-import React from "react";
-import Checkbox from "../../UI/Checkbox/Checkbox";
-import "./CarColors.scss";
+import React, { memo, useCallback } from "react";
+import { CheckboxPrimary } from "../../UI/CheckboxPrimary/CheckboxPrimary";
 import { Button } from "./../../UI/Button/Button";
 import PropTypes from "prop-types";
+import "./CarColors.scss";
 
-const CarColors = ({ arr, onClick }) => {
+const CarColorsInner = ({ arr, onClick }) => {
+  const clickHandler = useCallback(
+    (arr) => {
+      onClick(arr.length - 1);
+    },
+    [arr, onClick]
+  );
+
   return (
     <div className="car-card__color-checkbox">
       {arr
         ? arr.map((el) => {
-            return <Checkbox key={el.id}>{el}</Checkbox>;
+            return (
+              <CheckboxPrimary key={el.id} onClick={() => {}}>
+                {el}
+              </CheckboxPrimary>
+            );
           })
         : ""}
 
-      <Button onClick={onClick} type="link" className="car-card__button-color">
+      <Button
+        onClick={() => clickHandler(arr)}
+        type="link"
+        className="car-card__button-color"
+      >
         Удалить последний
       </Button>
     </div>
   );
 };
 
-CarColors.propTypes = {
+CarColorsInner.propTypes = {
   arr: PropTypes.array.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
-export default CarColors;
+export const CarColors = memo(CarColorsInner);

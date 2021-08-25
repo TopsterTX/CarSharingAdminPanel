@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useCallback, memo } from "react";
+import { Button } from "../UI/Button/Button";
+import { Input } from "../UI/Input/Input";
 import { SECRET_KEY } from "../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
@@ -8,17 +10,15 @@ import {
   userAuthorize,
   changePassword,
 } from "../../redux/actions/user/user";
-import { Button } from "../UI/Button/Button";
-import  Input  from "../UI/Input/Input";
 import "./Login.scss";
 
-export const Login = () => {
+const LoginInner = () => {
   const { username, password, isUserLoginFailed } = useSelector(
     (state) => state.user
   );
   const dispatch = useDispatch();
 
-  const authUser = () => {
+  const authUser = useCallback(() => {
     let secret = SECRET_KEY;
     let random = uuidv4();
     let basicKey = btoa(`${random}:${secret}`);
@@ -28,7 +28,21 @@ export const Login = () => {
     };
 
     dispatch(userAuthorize(body, basicKey));
-  };
+  }, [password, username]);
+
+  const changeUsernameHandler = useCallback(
+    (val) => {
+      return dispatch(changeUsername(val));
+    },
+    [username, changeUsername]
+  );
+
+  const changePasswordHandler = useCallback(
+    (val) => {
+      return dispatch(changePassword(val));
+    },
+    [password, changeUsername]
+  );
 
   return (
     <section className="login">
@@ -45,7 +59,7 @@ export const Login = () => {
                 label={"Логин"}
                 warning={isUserLoginFailed}
                 warningText={"Не правильный логин"}
-                onChange={(e) => dispatch(changeUsername(e.target.value))}
+                onChange={changeUsernameHandler}
                 value={username}
                 required
               />
@@ -55,7 +69,7 @@ export const Login = () => {
                 type={"password"}
                 required
                 value={password}
-                onChange={(e) => dispatch(changePassword(e.target.value))}
+                onChange={changePasswordHandler}
                 warningText={"Не правильный пароль"}
               />
               <div className="login__buttons">
@@ -69,3 +83,4 @@ export const Login = () => {
     </section>
   );
 };
+export const Login = memo(LoginInner);

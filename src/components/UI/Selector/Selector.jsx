@@ -1,18 +1,28 @@
-import React, { useState } from "react";
+import React, { useCallback, useState, memo } from "react";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import "./Selector.scss";
 
-const Selector = ({ children, array = [], sortId, content, onClick }) => {
+const SelectorInner = ({
+  children = "",
+  array = [],
+  sortId = "",
+  content = "",
+  onClick = () => {},
+}) => {
   const [active, setActive] = useState(false);
-  const [text, setText] = useState(null);
-  const clickHandler = (el) => {
-    if (content === "el") {
-      setText((t) => el);
-    }
-    setText((t) => el[`${content}`]);
-    onClick(el);
-  };
+  const [text, setText] = useState("");
+
+  const clickHandler = useCallback(
+    (el) => {
+      if (content === "el") {
+        setText((t) => el);
+      }
+      setText((t) => el[`${content}`]);
+      onClick(el);
+    },
+    [content, onClick]
+  );
 
   const displayHeandler = () => {
     if (sortId) {
@@ -52,7 +62,7 @@ const Selector = ({ children, array = [], sortId, content, onClick }) => {
         className="selector__block"
         onClick={() => setActive((active) => !active)}
       >
-        <span>{text ? text : children}</span>
+        <span>{children ? children : text}</span>
         <ul className={`selector__list ${active ? "active" : null}`}>
           {displayHeandler()}
         </ul>
@@ -61,7 +71,7 @@ const Selector = ({ children, array = [], sortId, content, onClick }) => {
   );
 };
 
-Selector.propTypes = {
+SelectorInner.propTypes = {
   sortId: PropTypes.string,
   content: PropTypes.string,
   array: PropTypes.array,
@@ -69,4 +79,4 @@ Selector.propTypes = {
   children: PropTypes.elementType,
 };
 
-export default Selector;
+export const Selector = memo(SelectorInner);

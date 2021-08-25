@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import PropTypes from "prop-types";
-import Selector from "../Selector/Selector";
+import { Selector } from "../Selector/Selector";
 import { Button } from "../Button/Button";
 import "./Filter.scss";
 
-const Filter = ({ filterItems, buttons }) => {
+const FilterInner = ({ filterItems, buttons, addonComponent = <></> }) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -15,6 +15,7 @@ const Filter = ({ filterItems, buttons }) => {
       >
         Фильтры
       </button>
+
       <div className={`filter__container ${active ? "active" : ""}`}>
         <div className="filter__wrapper">
           {filterItems
@@ -29,9 +30,9 @@ const Filter = ({ filterItems, buttons }) => {
         </div>
         <div className="filter__button-wrapper">
           {buttons
-            ? buttons.map(({ text, id, type }) => {
+            ? buttons.map(({ text, id, type, onClick }) => {
                 return (
-                  <Button key={id} type={type}>
+                  <Button key={id} type={type} onClick={onClick}>
                     {text}
                   </Button>
                 );
@@ -39,11 +40,12 @@ const Filter = ({ filterItems, buttons }) => {
             : ""}
         </div>
       </div>
+      {addonComponent}
     </section>
   );
 };
 
-Filter.propTypes = {
+FilterInner.propTypes = {
   filterItems: PropTypes.arrayOf(
     PropTypes.objectOf(PropTypes.string.isRequired).isRequired
   ).isRequired,
@@ -52,4 +54,4 @@ Filter.propTypes = {
   ).isRequired,
 };
 
-export default Filter;
+export const Filter = memo(FilterInner);

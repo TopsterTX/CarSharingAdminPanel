@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import { useSelector } from "react-redux";
 import { AsideItem } from "./AsideItem/AsideItem";
 import logo from "../../../icons/Logo.svg";
 import "./Aside.scss";
 
-export const Aside = () => {
+const AsideInner = () => {
   const { asideItems, asideMenuIsOpen } = useSelector((state) => state.aside);
 
   return (
@@ -25,3 +25,5 @@ export const Aside = () => {
     </aside>
   );
 };
+
+export const Aside = memo(AsideInner);

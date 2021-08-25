@@ -10,7 +10,20 @@ import {
   CHANGE_IS_FULL_TANK,
   CHANGE_IS_RIGHT_WHEEL,
   CHANGE_IS_NEED_CHILD_CHAIR,
+  CHANGE_RATE,
+  CANCEL_CHANGE_ORDER,
+  CHANGE_ORDER_STATUS,
 } from "../../reducers/orderCard/orderCard";
+import api from "../../../axios/axios";
+import { showLoader } from "../loader/loader";
+import { openNotice, warningNotice } from "../notice/notice";
+
+export const changeOrderStatus = (status) => {
+  return {
+    type: CHANGE_ORDER_STATUS,
+    payload: status,
+  };
+};
 
 export const changeIsFullTank = (bool) => {
   return {
@@ -18,6 +31,14 @@ export const changeIsFullTank = (bool) => {
     payload: bool,
   };
 };
+
+export const changeRate = (rate) => {
+  return {
+    type: CHANGE_RATE,
+    payload: rate,
+  };
+};
+
 export const changeIsNeedChildChair = (bool) => {
   return {
     type: CHANGE_IS_NEED_CHILD_CHAIR,
@@ -84,5 +105,90 @@ export const changeDateFrom = (value) => {
   return {
     type: CHANGE_DATE_FROM,
     payload: value,
+  };
+};
+
+export const addOrder = (order) => async (dispatch) => {
+  try {
+    dispatch(showLoader(true));
+    await api
+      .post(`db/order/`, JSON.stringify(order), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        if (res.request.status >= 200 && res.request.status < 400) {
+          dispatch(openNotice(true));
+        } else {
+          throw new Error();
+        }
+      })
+      .catch((err) => {
+        dispatch(warningNotice(true));
+        dispatch(openNotice(true));
+      })
+      .finally((res) => {
+        dispatch(showLoader(false));
+      });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const deleteOrder = (id) => async (dispatch) => {
+  try {
+    dispatch(showLoader(true));
+    await api
+      .delete(`db/order/${id}`)
+      .then((res) => {
+        if (res.request.status >= 200 && res.request.status < 400) {
+          dispatch(openNotice(true));
+        } else {
+          throw new Error();
+        }
+      })
+      .catch((err) => {
+        dispatch(warningNotice(true));
+        dispatch(openNotice(true));
+      })
+      .finally((res) => {
+        dispatch(showLoader(false));
+      });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const changeOrder = (id, order) => async (dispatch) => {
+  try {
+    dispatch(showLoader(true));
+    await api
+      .put(`db/order/${id}`, JSON.stringify(order), {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((res) => {
+        if (res.request.status >= 200 && res.request.status < 400) {
+          dispatch(openNotice(true));
+        } else {
+          throw new Error();
+        }
+      })
+      .catch((err) => {
+        dispatch(warningNotice(true));
+        dispatch(openNotice(true));
+      })
+      .finally((res) => {
+        dispatch(showLoader(false));
+      });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const cancelChangeOrder = () => {
+  return {
+    type: CANCEL_CHANGE_ORDER,
+    payload: null,
   };
 };

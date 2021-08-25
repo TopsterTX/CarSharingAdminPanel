@@ -42,7 +42,7 @@ const defaultState = {
       id: v4(),
       title: "Меню 5",
       icon: <ErrorIcon className="aside__item-icon"></ErrorIcon>,
-      path: "/admin/panel/xxx",
+      path: "/admin/panel/cities",
     },
   ],
 };

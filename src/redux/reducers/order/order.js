@@ -33,7 +33,7 @@ const defaultState = {
   orderStatus: [],
 };
 
-const reduce = "ORDER";
+const reduce = "ORDER__";
 export const GET_RATES = `${reduce}GET_RATES`;
 export const GET_ORDERS = `${reduce}GET_ORDERS`;
 export const GET_RATES_TYPE = `${reduce}GET_RATES_TYPE`;

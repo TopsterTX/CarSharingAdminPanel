@@ -1,4 +1,5 @@
-import React from "react";
+import React, { memo } from "react";
+import { Button } from "./../../UI/Button/Button";
 import { changeIsOpenAsideMenu } from "../../../redux/actions/aside/aside";
 import { useSelector, useDispatch } from "react-redux";
 import search from "../../../icons/header/Shape.svg";
@@ -12,9 +13,8 @@ import {
   userLogout,
 } from "./../../../redux/actions/user/user";
 import { Notice } from "../../UI/Notice/Notice";
-import { Button } from "./../../UI/Button/Button";
 
-export const Header = () => {
+const HeaderInner = () => {
   const { accessToken } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -74,3 +74,5 @@ export const Header = () => {
     </header>
   );
 };
+
+export const Header = memo(HeaderInner);

@@ -3,6 +3,19 @@
 
 .order-card {
   padding: 0 0 100px 0;
+  &__status {
+    &-block {
+      display: flex;
+      flex-direction: column;
+    }
+    margin-bottom: 40px;
+  }
+  &__title {
+    font-size: 12px;
+    font-weight: 400;
+    color: $mainBlack;
+    margin-bottom: 15px;
+  }
   &__container {
     display: flex;
     flex-direction: column;
@@ -38,12 +51,6 @@
   }
   &__rate {
     margin-bottom: 20px;
-    &-title {
-      font-size: 12px;
-      font-weight: 400;
-      color: $mainBlack;
-      margin-bottom: 15px;
-    }
     &-block {
       display: flex;
       flex-direction: column;
@@ -52,16 +59,10 @@
     }
   }
   &__price {
-    margin-bottom: 40px;
+    margin-bottom: 5px;
     width: $inputHalfWidth;
   }
   &__addons {
     margin-bottom: 20px;
-    &-title {
-      font-size: 12px;
-      font-weight: 400;
-      color: $mainBlack;
-      margin-bottom: 15px;
-    }
   }
 }

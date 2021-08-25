@@ -1,34 +1,40 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { memo, useCallback } from "react";
+import PropTypes from "prop-types";
 import { Button } from "../Button/Button";
+import { useSelector } from "react-redux";
 import "./Setting.scss";
 
-export function Setting({
-  title,
-  type,
-  children,
-  onClickApply,
-  onClickCancel,
-  onClickDelete,
-  onClickCreate,
-}) {
+const SettingInner = ({
+  title = "",
+  type = "",
+  children = "",
+  checkTextKey = "",
+  checkTextObj = {},
+  onClickApply = () => {},
+  onClickCancel = () => {},
+  onClickDelete = () => {},
+  onClickCreate = () => {},
+}) => {
   const { editCar } = useSelector((state) => state.carCard);
 
-  const checkText = (key, obj) => {
-    if (key in obj) {
-      return "Применить";
-    } else {
-      return "Создать";
-    }
-  };
+  const checkText = useCallback(
+    (key, obj) => {
+      if (key in obj) {
+        return "Применить";
+      } else {
+        return "Создать";
+      }
+    },
+    [checkTextKey, checkTextObj]
+  );
 
-  const applyOrCreateHandler = () => {
-    if (checkText("updatedAt", editCar) === "Применить") {
+  const applyOrCreateHandler = useCallback(() => {
+    if (checkText(checkTextKey, checkTextObj) === "Применить") {
       return onClickApply;
     } else {
       return onClickCreate;
     }
-  };
+  }, [checkTextKey, checkTextObj]);
 
   return (
     <form action="#" type="submit" className="setting">
@@ -39,7 +45,7 @@ export function Setting({
           <div className="setting__buttons">
             <div className="setting__buttons-wrapper">
               <Button onClick={applyOrCreateHandler()}>
-                {checkText("updatedAt", editCar)}
+                {checkText(checkTextKey, checkTextObj)}
               </Button>
               <Button type={"cancel"} onClick={onClickCancel}>
                 Отменить
@@ -53,4 +59,18 @@ export function Setting({
       </div>
     </form>
   );
-}
+};
+
+SettingInner.propTypes = {
+  title: PropTypes.string.isRequired,
+  type: PropTypes.string,
+  children: PropTypes.any.isRequired,
+  onClickApply: PropTypes.func.isRequired,
+  onClickCancel: PropTypes.func.isRequired,
+  onClickDelete: PropTypes.func.isRequired,
+  onClickCreate: PropTypes.func.isRequired,
+  checkTextKey: PropTypes.string,
+  checkTextObj: PropTypes.object,
+};
+
+export const Setting = memo(SettingInner);

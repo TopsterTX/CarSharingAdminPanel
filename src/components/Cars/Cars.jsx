@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { CarsItem } from "./CarsItem/CarsItem";
 import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Table } from "../UI/Table/Table";
 import { Title } from "./../UI/Title/Title";
+import { useSelector, useDispatch } from "react-redux";
 import { getCarsOnPage } from "../../redux/actions/cars/cars";
-import  CarsItem  from "./CarsItem/CarsItem";
-import { v4 as uuidv4 } from "uuid";
+import { getCategories } from "../../redux/actions/carCard/carCard";
 import "./Cars.scss";
 
 export default React.memo(function Cars() {
@@ -16,6 +16,7 @@ export default React.memo(function Cars() {
 
   useEffect(() => {
     dispatch(getCarsOnPage(page));
+    dispatch(getCategories());
   }, [page]);
 
   return (
@@ -25,7 +26,7 @@ export default React.memo(function Cars() {
         <Table configureFilter={configureFilter}>
           {carsOnPage
             ? carsOnPage.map((el) => {
-                return <CarsItem key={uuidv4()} car={el} />;
+                return <CarsItem key={el.id} car={el} />;
               })
             : null}
         </Table>

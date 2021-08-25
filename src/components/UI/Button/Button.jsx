@@ -1,19 +1,24 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
+import PropTypes from "prop-types";
+import plus from "./plus.svg";
 import { v4 as uuidv4 } from "uuid";
 import "./Button.scss";
 
-export function Button({
-  children,
-  type,
+const ButtonInner = ({
+  children = "",
+  type = "",
   disabled,
-  className,
-  onClick = () => null,
+  className = "",
+  onClick = () => {},
   ...props
-}) {
-  const clickHander = (e) => {
-    e.preventDefault();
-    onClick();
-  };
+}) => {
+  const clickHander = useCallback(
+    (e) => {
+      e.preventDefault();
+      onClick();
+    },
+    [onClick]
+  );
 
   let key = uuidv4();
 
@@ -29,7 +34,18 @@ export function Button({
       key={key}
       {...props}
     >
+      {type === "add" ? <img className="button__image" src={plus} /> : ""}
       {children}
     </button>
   );
-}
+};
+
+ButtonInner.propTypes = {
+  children: PropTypes.any.isRequired,
+  type: PropTypes.string,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+};
+
+export const Button = memo(ButtonInner);

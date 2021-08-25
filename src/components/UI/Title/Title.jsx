@@ -1,6 +1,13 @@
-import React from "react";
+import React, { memo } from "react";
+import PropTypes from "prop-types";
 import "./Title.scss";
 
-export function Title({ children }) {
+const TitleInner = ({ children = "" }) => {
   return <h2 className="title">{children}</h2>;
-}
+};
+
+TitleInner.propTypes = {
+  children: PropTypes.elementType.isRequired,
+};
+
+export const Title = memo(TitleInner);

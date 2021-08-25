@@ -103,12 +103,20 @@ export const deleteColor = (index) => {
 
 export const getCategories = () => async (dispatch) => {
   try {
-    return await api("db/category").then((res) =>
-      dispatch({
-        type: GET_CATEGORIES,
-        payload: res.data.data,
+    return await api("db/category")
+      .then((res) =>
+        dispatch({
+          type: GET_CATEGORIES,
+          payload: res.data.data,
+        })
+      )
+      .catch((err) => {
+        dispatch(warningNotice(true));
+        dispatch(openNotice(true));
       })
-    );
+      .finally((res) => {
+        dispatch(showLoader(false));
+      });
   } catch (e) {
     console.error(e);
   }
@@ -141,6 +149,8 @@ export const sendChangesCar = (id, car) => async (dispatch) => {
       .catch((err) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
+      })
+      .finally((res) => {
         dispatch(showLoader(false));
       });
   } catch (e) {
@@ -174,16 +184,18 @@ export const deleteCar = (id) => (dispatch) => {
       .catch((err) => {
         dispatch(showLoader(false));
         dispatch(warningNotice(true));
-        dispatch(openNotice(true));
+      })
+      .finally((res) => {
+        dispatch(showLoader(false));
       });
   } catch (e) {}
 };
 
-export const addCar = (id, car) => async (dispatch) => {
+export const addCar = (car) => async (dispatch) => {
   try {
     dispatch(showLoader(true));
     await api
-      .post(`db/car/${id}`, JSON.stringify(car), {
+      .post(`db/car/`, JSON.stringify(car), {
         headers: {
           "Content-Type": "application/json",
         },
@@ -197,7 +209,9 @@ export const addCar = (id, car) => async (dispatch) => {
       .catch((err) => {
         dispatch(showLoader(false));
         dispatch(warningNotice(true));
-        dispatch(openNotice(true));
+      })
+      .finally((res) => {
+        dispatch(showLoader(false));
       });
   } catch (e) {
     console.error(e);

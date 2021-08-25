@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import { Aside } from "./Aside/Aside";
 import { Header } from "./Header/Header";
 import { Footer } from "./Footer/Footer";
 import { ContentRouter } from "./../ContentRouter/ContentRouter";
 
-export const Panel = () => {
+export const PanelInner = () => {
   return (
     <main className="panel">
       <Header />
@@ -14,3 +14,5 @@ export const Panel = () => {
     </main>
   );
 };
+
+export const Panel = memo(PanelInner);
