@@ -5,6 +5,7 @@ import {
   GET_TOKENS,
 } from "../../reducers/user/user";
 import api from "../../../axios/axios";
+import { showLoader } from "./../loader/loader";
 
 export const userLogin = (
   isUserLogin,
@@ -29,6 +30,7 @@ export const userLogin = (
 
 export const userAuthorize = (body, basicKey) => async (dispatch) => {
   try {
+    dispatch(showLoader(true));
     await api
       .post("auth/login", body, {
         headers: {
@@ -47,7 +49,13 @@ export const userAuthorize = (body, basicKey) => async (dispatch) => {
             basicKey
           )
         )
-      );
+      )
+      .catch((err) => {
+        dispatch(userLogin(false, null, null, null, true));
+      })
+      .finally((res) => {
+        dispatch(showLoader(false));
+      });
   } catch (e) {
     dispatch(userLogin(false, null, null, null, true));
   }

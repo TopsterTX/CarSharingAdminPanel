@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
-import Image from "../UI/Image/Image";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useCallback, memo } from "react";
 import { ContentContainer } from "../UI/ContentContainer/ContentContainer";
 import { Title } from "../UI/Title/Title";
 import { Setting } from "../UI/Setting/Setting";
-import  Input  from "./../UI/Input/Input";
 import { InfoBlock } from "../UI/InfoBlock/InfoBlock";
+import { Input } from "./../UI/Input/Input";
+import { useSelector, useDispatch } from "react-redux";
 import {
   changeModelCar,
   changeDescriptionCar,
-  changeTypeCar,
   changeColorsCar,
   changePriceMinCar,
   changePriceMaxCar,
@@ -29,48 +27,109 @@ import {
   openedCreatePopup,
 } from "../../redux/actions/warningPopup/warningPopup";
 import { WarningPopup } from "./../UI/WarningPopup/WarningPopup";
-import CarColors from "./CarColors/CarColors";
-import  Selector  from "../UI/Selector/Selector";
+import { CarColors } from "./CarColors/CarColors";
+import { Selector } from "../UI/Selector/Selector";
 import { addCar } from "../../redux/actions/carCard/carCard";
 
-const clickOnPlusHandler = (dispatch, value) => {
-  if (value.length > 0) {
-    dispatch(addColor(value));
-    dispatch(changeColorsCar(""));
-  } else {
-    return;
-  }
-};
-
-export function CarCard() {
-  useEffect(() => {
-    dispatch(getCategories());
-  }, []);
-
+function CarCardInner() {
   const warn = false;
   const dispatch = useDispatch();
-  const { editCar, inputs, categories } = useSelector((state) => state.carCard);
-  const { colors, thumbnail } = editCar;
-  const { path } = thumbnail;
+  const {
+    editCar = {},
+    inputs = {},
+    categories = [],
+  } = useSelector((state) => state.carCard);
+  const {
+    colors = [],
+    thumbnail = {},
+    categoryId = {},
+    name = "",
+    description = "",
+    id = "",
+    priceMin = 0,
+    priceMax = 0,
+  } = editCar;
+  const { path = "" } = thumbnail;
 
+  const changeDescriptionCarHandler = useCallback(
+    (val) => {
+      return dispatch(changeDescriptionCar(val));
+    },
+    [description, changeDescriptionCar]
+  );
+
+  const changeModelCarHandler = useCallback(
+    (val) => {
+      return dispatch(dispatch(changeModelCar(val)));
+    },
+    [name, changeModelCar]
+  );
+
+  const changePriceMinHandler = useCallback(
+    (val) => {
+      return dispatch(changePriceMinCar(val));
+    },
+    [priceMin, changePriceMinCar]
+  );
+
+  const changePriceMaxHandler = useCallback(
+    (val) => {
+      return dispatch(changePriceMaxCar(val));
+    },
+    [priceMax, changePriceMaxCar]
+  );
+
+  const clickOnPlusHandler = useCallback(
+    (dispatch, value) => {
+      if (value.length > 0) {
+        dispatch(addColor(value));
+        dispatch(changeColorsCar(""));
+      } else {
+        return;
+      }
+    },
+    [addColor, inputs.color]
+  );
+
+  const changeCarColorHandler = useCallback(
+    (val) => {
+      return dispatch(changeColorsCar(val));
+    },
+    [inputs.color, changeColorsCar]
+  );
+
+  const deleteCarColorHandler = useCallback(
+    (val) => {
+      return dispatch(deleteColor(val));
+    },
+    [colors, deleteColor]
+  );
+
+  const applyCategoryHandler = useCallback(
+    (el) => {
+      return dispatch(applyCategory(el));
+    },
+    [categories, applyCategory]
+  );
+
+  console.log(editCar);
   return (
     <section className="car-card">
       <ContentContainer>
         <Title>Карточка автомобиля</Title>
         <div className="car-card__wrapper">
           <InfoBlock
-            car={<Image path={path} className="image image--card" />}
-            label={editCar.name ? editCar.name : ""}
-            subLabel={editCar.categoryId ? editCar.categoryId.name : ""}
-            valueDescription={editCar.description ? editCar.description : ""}
-            onChangeDescription={(e) =>
-              dispatch(changeDescriptionCar(e.target.value))
-            }
+            path={path}
+            label={name ? name : ""}
+            subLabel={categoryId ? categoryId.name : ""}
+            valueDescription={description ? description : ""}
+            onChangeDescription={changeDescriptionCarHandler}
             valueFile={inputs.file ? inputs.file : ""}
-            onChangeFile={(e) => console.log(e.target.value)}
           />
           <Setting
             title={"Настройка автомобиля"}
+            checkTextKey="updatedAt"
+            checkTextObj={editCar}
             onClickApply={() => {
               dispatch(openedApplyPopup(true));
             }}
@@ -85,19 +144,19 @@ export function CarCard() {
                     warning={warn}
                     warningText={"Неверно"}
                     required
-                    value={editCar.name ? editCar.name : ""}
-                    onChange={(e) => dispatch(changeModelCar(e.target.value))}
+                    value={name ? name : ""}
+                    onChange={changeModelCarHandler}
                   >
                     Модель автомобиля
                   </Input>
                 </div>
                 <div className="car-card__main-wrapper">
                   <Selector
-                    array={categories}
+                    array={categories ? categories : ""}
                     content={"name"}
-                    onClick={applyCategory}
+                    onClick={applyCategoryHandler}
                   >
-                    {editCar.categoryId.name}
+                    {categoryId ? categoryId.name : "Нет категории"}
                   </Selector>
                 </div>
               </div>
@@ -107,10 +166,8 @@ export function CarCard() {
                     warning={warn}
                     warningText={"Ошибка при добавлени цены"}
                     required
-                    value={editCar.priceMin ? editCar.priceMin : ""}
-                    onChange={(e) =>
-                      dispatch(changePriceMinCar(e.target.value))
-                    }
+                    value={priceMin ? priceMin : ""}
+                    onChange={changePriceMinHandler}
                   >
                     Минимальная цена
                   </Input>
@@ -121,9 +178,7 @@ export function CarCard() {
                     warning={warn}
                     required
                     value={editCar.priceMax ? editCar.priceMax : ""}
-                    onChange={(e) =>
-                      dispatch(changePriceMaxCar(e.target.value))
-                    }
+                    onChange={changePriceMaxHandler}
                   >
                     Максимальная цена
                   </Input>
@@ -135,29 +190,21 @@ export function CarCard() {
                     warningText={"Ошибка при добавлении цвета"}
                     warning={warn}
                     addButton
-                    onClickButton={() =>
-                      clickOnPlusHandler(dispatch, inputs.color)
-                    }
+                    onClickButton={clickOnPlusHandler}
                     value={inputs.color}
-                    onChange={(e) => dispatch(changeColorsCar(e.target.value))}
+                    onChange={changeCarColorHandler}
                   >
                     Доступные цвета
                   </Input>
 
-                  <CarColors
-                    arr={colors}
-                    onClick={() => dispatch(deleteColor(colors.length - 1))}
-                  />
+                  <CarColors arr={colors} onClick={deleteCarColorHandler} />
                 </div>
               </div>
             </div>
           </Setting>
         </div>
       </ContentContainer>
-      <WarningPopup
-        type="create"
-        onClick={() => dispatch(addCar(editCar.id, editCar))}
-      >
+      <WarningPopup type="create" onClick={() => dispatch(addCar(editCar))}>
         Вы действительно хотите добавить автомобиль ?
       </WarningPopup>
       <WarningPopup
@@ -178,3 +225,5 @@ export function CarCard() {
     </section>
   );
 }
+
+export const CarCard = memo(CarCardInner);

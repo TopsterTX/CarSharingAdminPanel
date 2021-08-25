@@ -1,47 +1,57 @@
-import React from "react";
-import Image from "../../UI/Image/Image";
-import PropTypes from "prop-types";
-import { useSelector, useDispatch } from "react-redux";
-import { CheckboxOrder } from "./CheckboxOrder/CheckboxOrder";
+import React, { memo } from "react";
+import { WarningPopup } from "./../../UI/WarningPopup/WarningPopup";
+import { Image } from "../../UI/Image/Image";
 import Info from "./Info/Info";
 import { ButtonsContainer } from "./../../UI/ButtonsContainer/ButtonsContainer";
 import { ButtonRoute } from "../../UI/ButtonRoute/ButtonRoute";
-import { getOrder } from "../../../redux/actions/orderCard/orderCard";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { CheckboxOrder } from "./CheckboxOrder/CheckboxOrder";
+import {
+  getOrder,
+  deleteOrder,
+} from "../../../redux/actions/orderCard/orderCard";
 import "./OrderItem.scss";
-import { WarningPopup } from "./../../UI/WarningPopup/WarningPopup";
 import {
   openedApplyPopup,
   openedDeletePopup,
 } from "../../../redux/actions/warningPopup/warningPopup";
 
-const OrderItem = ({ order }) => {
+export const OrderItem = ({ order, id }) => {
   const dispatch = useDispatch();
 
   const {
-    carId,
-    pointId,
-    cityId,
-    color,
-    rateId,
-    orderStatusId,
-    dateFrom,
-    dateTo,
-    price,
-    isFullTank,
-    isRightWheel,
-    isNeedChildChair,
+    carId = {},
+    pointId = {},
+    cityId = {},
+    color = "",
+    rateId = {},
+    orderStatusId = {},
+    dateFrom = "",
+    dateTo = "",
+    price = 0,
+    isFullTank = false,
+    isRightWheel = false,
+    isNeedChildChair = false,
   } = order;
-  const { thumbnail } = carId;
+
+  const clickDeleteHandler = (id) => {
+    return console.log(id);
+  };
 
   return (
     <section className="order__item">
       <ul className="order__item-container">
         <li className="order__item-part order__item-part--wrapper">
           <div className="order__item-part order__item-part--full-width">
-            <Image path={thumbnail.path} />
+            <Image path={carId ? carId.thumbnail.path : ""} />
             <Info {...order} />
           </div>
-          <CheckboxOrder order={order} />
+          <CheckboxOrder
+            isFullTank={isFullTank}
+            isNeedChildChair={isNeedChildChair}
+            isRightWheel={isRightWheel}
+          />
         </li>
         <li className="order__item-part">
           <span className="order__item-price">{price} ₽</span>
@@ -51,7 +61,7 @@ const OrderItem = ({ order }) => {
             <ButtonRoute
               to={"/admin/panel/orders"}
               type={"primary"}
-              onClick={() => dispatch(openedApplyPopup(true))}
+              onClick={() => console.log(id)}
             >
               Готово
             </ButtonRoute>
@@ -65,20 +75,13 @@ const OrderItem = ({ order }) => {
             <ButtonRoute
               to={"/admin/panel/orders"}
               type={"warning"}
-              onClick={() => dispatch(openedDeletePopup(true))}
+              onClick={() => dispatch(deleteOrder(id))}
             >
               Удалить
             </ButtonRoute>
           </ButtonsContainer>
         </li>
       </ul>
-      <WarningPopup type="apply">
-        Вы действительно потдверждаете заказ ?
-      </WarningPopup>
-
-      <WarningPopup type="delete">
-        Вы действительно хотите удалить заказ ?
-      </WarningPopup>
     </section>
   );
 };
@@ -123,5 +126,3 @@ OrderItem.propTypes = {
     }).isRequired,
   }),
 };
-
-export default OrderItem;

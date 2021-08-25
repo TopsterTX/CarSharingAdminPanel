@@ -1,20 +1,17 @@
-import React from "react";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
-import Image from "../../UI/Image/Image";
-import { useDispatch, useSelector } from "react-redux";
-import { ButtonRoute } from "../../UI/ButtonRoute/ButtonRoute";
-import { v4 as uuidv4 } from "uuid";
-import { getEditCar } from "../../../redux/actions/carCard/carCard";
-import "./CarsItem.scss";
+import { Image } from "../../UI/Image/Image";
 import { ButtonsContainer } from "./../../UI/ButtonsContainer/ButtonsContainer";
-import { WarningPopup } from "./../../UI/WarningPopup/WarningPopup";
-import { openedDeletePopup } from "../../../redux/actions/warningPopup/warningPopup";
-import { deleteCar } from "../../../redux/actions/carCard/carCard";
+import { ButtonRoute } from "../../UI/ButtonRoute/ButtonRoute";
+import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+import { getEditCar, deleteCar } from "../../../redux/actions/carCard/carCard";
+import "./CarsItem.scss";
 
-function CarsItem({ car }) {
+function CarsItemInner({ car }) {
   const dispatch = useDispatch();
 
-  const { thumbnail, colors, name, description, priceMax, priceMin } = car;
+  const { thumbnail, colors, name, description, priceMax, priceMin, id } = car;
   const { path } = thumbnail;
 
   return (
@@ -59,21 +56,18 @@ function CarsItem({ car }) {
             <ButtonRoute
               to={"/admin/panel/main"}
               type={"warning"}
-              onClick={() => dispatch(openedDeletePopup(true))}
+              onClick={() => dispatch(deleteCar(id))}
             >
               Удалить
             </ButtonRoute>
           </ButtonsContainer>
         </li>
       </ul>
-      <WarningPopup type={"delete"} onClick={() => dispatch(deleteCar(car.id))}>
-        Вы действительно хотите удалить машину ?
-      </WarningPopup>
     </section>
   );
 }
 
-CarsItem.propTypes = {
+CarsItemInner.propTypes = {
   car: PropTypes.shape({
     id: PropTypes.string.isRequired,
     tank: PropTypes.number.isRequired,
@@ -93,4 +87,4 @@ CarsItem.propTypes = {
   }),
 };
 
-export default CarsItem;
+export const CarsItem = memo(CarsItemInner);

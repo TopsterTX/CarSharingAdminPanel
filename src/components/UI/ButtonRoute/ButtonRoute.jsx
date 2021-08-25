@@ -1,13 +1,18 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { memo, useCallback } from "react";
+import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import "./ButtonRoute.scss";
 
-export const ButtonRoute = ({ to, type, onClick, children }) => {
-  const clickHadler = () => {
+const ButtonRouteInner = ({
+  to = "",
+  type = "",
+  onClick = () => {},
+  children,
+}) => {
+  const clickHadler = useCallback(() => {
     onClick();
-  };
+  }, [onClick]);
 
   return (
     <NavLink
@@ -20,3 +25,12 @@ export const ButtonRoute = ({ to, type, onClick, children }) => {
     </NavLink>
   );
 };
+
+ButtonRouteInner.propTypes = {
+  to: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  children: PropTypes.any.isRequired,
+};
+
+export const ButtonRoute = memo(ButtonRouteInner);

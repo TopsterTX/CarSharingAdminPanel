@@ -1,0 +1,22 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.checkbox-primary {
+  &__block {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 8px;
+  }
+  &__label {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 11px;
+    color: $radioGray;
+    position: relative;
+    padding-left: 21px;
+    @include checkboxPrimary();
+  }
+  &__input {
+    display: none;
+  }
+}

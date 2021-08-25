@@ -8,6 +8,7 @@
 
   &__toggler {
     @include filterToggler();
+    margin-right: 8px;
   }
   &__container {
     pointer-events: none;
@@ -20,6 +21,13 @@
     @include button();
     &:not(:last-child) {
       margin-right: 10px;
+    }
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 100px;
     }
   }
   &__button-wrapper {
@@ -39,6 +47,12 @@
     &__item {
       &:not(:last-child) {
         margin-right: 10px;
+      }
+    }
+    &__button {
+      &-wrapper {
+        flex-direction: row;
+        justify-content: flex-start;
       }
     }
   }

@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import OrderItem  from "./OrderItem/OrderItem";
-import { Table } from "../UI/Table/Table";
-import { getOrder } from "../../redux/actions/order/order";
-import "./Orders.scss";
+import React, { useEffect, memo } from "react";
 import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Title } from "./../UI/Title/Title";
+import { OrderItem } from "./OrderItem/OrderItem";
+import { Table } from "../UI/Table/Table";
+import { useSelector, useDispatch } from "react-redux";
+import { getOrder } from "../../redux/actions/order/order";
+import "./Orders.scss";
 
-export const Orders = () => {
+const OrdersInner = () => {
   const { configureFilter, orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
 
@@ -21,10 +21,12 @@ export const Orders = () => {
         <Title>Заказы</Title>
         <Table configureFilter={configureFilter}>
           {orders.map((el) => {
-            return <OrderItem order={el} />;
+            return <OrderItem order={el} key={el.id} id={el.id} />;
           })}
         </Table>
       </ContentContainer>
     </section>
   );
 };
+
+export const Orders = memo(OrdersInner);

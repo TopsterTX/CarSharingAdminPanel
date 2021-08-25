@@ -12,7 +12,8 @@
       width: 100%;
     }
     &--full-width {
-      flex: 1 1 auto;
+      flex: 1 1 100%;
+      min-width: 338px;
     }
 
     &--column {
@@ -49,6 +50,11 @@
   .order__item {
     &-price {
       font-size: 24px;
+    }
+    &-part {
+      &--full-width {
+        min-width: 398px;
+      }
     }
     &-image {
       display: block;

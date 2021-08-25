@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback, memo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   openNotice,
@@ -9,20 +9,24 @@ import check from "../../../icons/notice/Check.svg";
 import close from "../../../icons/notice/Close.svg";
 import "./Notice.scss";
 
-export const Notice = () => {
+const NoticeInner = () => {
   const dispatch = useDispatch();
   const { isOpenNotice, isWarning } = useSelector((state) => state.notice);
 
-  const clickHandler = () => {
+  const clickHandler = useCallback(() => {
     dispatch(openNotice(false));
-    dispatch(warningNotice(false));
-  };
+  }, [openNotice]);
 
   useEffect(() => {
     if (isOpenNotice) {
       setTimeout(() => {
         clickHandler();
       }, 3000);
+    }
+    if (isWarning) {
+      setTimeout(() => {
+        dispatch(warningNotice(false));
+      }, 5000);
     }
   }, [isOpenNotice]);
 
@@ -54,3 +58,5 @@ export const Notice = () => {
     document.getElementById("notice")
   );
 };
+
+export const Notice = memo(NoticeInner);

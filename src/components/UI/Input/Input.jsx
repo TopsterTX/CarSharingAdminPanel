@@ -1,26 +1,38 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import "./Input.scss";
 
-const Input = ({
+function InputInner({
   id,
   addButton,
-  children,
+  children = "",
   warning,
   warningText,
-  onChange,
-  value,
+  onChange = () => {},
+  value = "",
   required,
-  type,
-  onClickButton,
-}) => {
+  type = "",
+  onClickButton = () => {},
+}) {
   let x = id ? id : uuidv4();
+  const dispatch = useDispatch();
 
-  const clickHandler = (e) => {
-    e.preventDefault();
-    onClickButton();
-  };
+  const clickHandler = useCallback(
+    (e) => {
+      e.preventDefault();
+      onClickButton(dispatch, value);
+    },
+    [onClickButton]
+  );
+
+  const changeHandler = useCallback(
+    (val) => {
+      onChange(val);
+    },
+    [value, onChange]
+  );
 
   return (
     <div className={`input ${addButton ? "plus" : null}`}>
@@ -34,13 +46,11 @@ const Input = ({
           id={x}
           require={required ? "true" : "false"}
           value={value}
-          onChange={onChange}
+          onChange={(e) => changeHandler(e.target.value)}
         />
         <button
           className={`input__plus ${addButton ? "active" : null}`}
-          onClick={(e) => {
-            clickHandler(e);
-          }}
+          onClick={(e) => clickHandler(e)}
         ></button>
       </div>
       <span className={`input__error ${warning ? "active" : null}`}>
@@ -48,11 +58,11 @@ const Input = ({
       </span>
     </div>
   );
-};
+}
 
-Input.propTypes = {
-  id: PropTypes.string.isRequired,
-  addButton: PropTypes.func,
+InputInner.propTypes = {
+  id: PropTypes.string,
+  addButton: PropTypes.bool,
   warning: PropTypes.bool,
   warningText: PropTypes.string,
   onChange: PropTypes.func.isRequired,
@@ -63,4 +73,4 @@ Input.propTypes = {
   children: PropTypes.elementType.isRequired,
 };
 
-export default Input;
+export const Input = memo(InputInner);

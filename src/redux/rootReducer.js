@@ -1,6 +1,5 @@
 import user from "./reducers/user/user";
 import aside from "./reducers/aside/aside";
-import entities from "./reducers/entities/entities";
 import order from "./reducers/order/order";
 import cars from "./reducers/cars/cars";
 import popup from "./reducers/popup/popup";
@@ -10,11 +9,13 @@ import notice from "./reducers/notice/notice";
 import loader from "./reducers/loader/loader";
 import orderCard from "./reducers/orderCard/orderCard";
 import address from "./reducers/address/address";
+import addressCard from "./reducers/addressCard/addressCard";
+import cities from "./reducers/cities/cities";
+import citiesCard from "./reducers/citiesCard/citiesCard";
 
 export default {
   user,
   aside,
-  entities,
   order,
   cars,
   popup,
@@ -24,4 +25,7 @@ export default {
   loader,
   orderCard,
   address,
+  cities,
+  addressCard,
+  citiesCard,
 };

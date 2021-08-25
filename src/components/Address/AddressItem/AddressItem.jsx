@@ -1,24 +1,32 @@
-import React from "react";
+import React, { memo } from "react";
+import PropTypes from "prop-types";
 import { ButtonRoute } from "./../../UI/ButtonRoute/ButtonRoute";
 import { ButtonsContainer } from "../../UI/ButtonsContainer/ButtonsContainer";
-import { useDispatch } from "react-redux";
-import { changePopup } from "../../../redux/actions/popup/popup";
-import "./AddressItem.scss";
 import { WarningPopup } from "./../../UI/WarningPopup/WarningPopup";
+import { useDispatch } from "react-redux";
+import { deletePoint } from "../../../redux/actions/addressCard/addressCard";
 import { openedDeletePopup } from "../../../redux/actions/warningPopup/warningPopup";
+import "./AddressItem.scss";
 
-export function AddressItem() {
+function AddressItemInner({ point = {}, onClick = () => {} }) {
   const dispatch = useDispatch();
+  const { name, address, id, cityId } = point;
 
   return (
     <div className="address-item">
       <ul className="address-item__container">
-        <li className="address-item__part">
-          <span className="address-item__city">Краснодар</span>
-        </li>
-        <li className="address-item__part">
-          <span className="address-item__point">ТЦ Галерея</span>
-          <span className="address-item__address">ул. Северная 233</span>
+        <li className="address-item__part address-item__part--sub">
+          <div className="address-item__part-block">
+            <span className="address-item__city">
+              {cityId ? cityId.name : "Город не указан"}
+            </span>
+          </div>
+          <div className="address-item__part-block">
+            <span className="address-item__point">{name ? name : ""}</span>
+            <span className="address-item__address">
+              {address ? address : ""}
+            </span>
+          </div>
         </li>
         <li className="address-item__part">
           <ButtonsContainer>
@@ -28,7 +36,7 @@ export function AddressItem() {
             <ButtonRoute
               to={"/admin/panel/address"}
               type={"warning"}
-              onClick={() => dispatch(openedDeletePopup(true))}
+              onClick={() => dispatch(deletePoint(id))}
             >
               Удалить
             </ButtonRoute>
@@ -41,3 +49,13 @@ export function AddressItem() {
     </div>
   );
 }
+
+AddressItemInner.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  address: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  cityId: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
+};
+
+export const AddressItem = memo(AddressItemInner);
