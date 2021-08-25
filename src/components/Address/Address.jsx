@@ -14,17 +14,22 @@ import { getCities } from "../../redux/actions/cities/cities";
 import "./Address.scss";
 import { Selector } from "./../UI/Selector/Selector";
 import { createPopup } from "../../redux/actions/popup/popup";
-import {changePointName} from '../../redux/actions/addressCard/addressCard'
+import {
+  changePointName,
+  changeAddressName,
+  changeCityInPoint,
+} from "../../redux/actions/addressCard/addressCard";
 
 const AddressInner = () => {
   const {
     configureFilter,
     pointsOnPage,
     points = [],
-    cities = [],
   } = useSelector((state) => state.address);
   const { editAddress } = useSelector((state) => state.addressCard);
   const { name, cityId, address, id } = editAddress;
+  const { cities = [] } = useSelector((state) => state.cities);
+  console.log(cities)
 
   const dispatch = useDispatch();
 
@@ -45,6 +50,20 @@ const AddressInner = () => {
       return dispatch(changePointName(val));
     },
     [name, changePointName]
+  );
+
+  const changeAddressHandler = useCallback(
+    (val) => {
+      return dispatch(changeAddressName(val));
+    },
+    [address, changeAddressName]
+  );
+
+  const changeCityInPointHandler = useCallback(
+    (val) => {
+      return dispatch(changeCityInPoint(val));
+    },
+    [cityId, changeCityInPoint]
   );
 
   return (
@@ -70,8 +89,14 @@ const AddressInner = () => {
         <Input value={name} onChange={changeNameHandler}>
           Название пункта выдачи
         </Input>
-        <Input value={address}>Пункт выдачи</Input>
-        <Selector arr={cities} content="name">
+        <Input value={address} onChange={changeAddressHandler}>
+          Пункт выдачи
+        </Input>
+        <Selector
+          arr={cities}
+          content="name"
+          onClick={changeCityInPointHandler}
+        >
           {"Выберите город"}
         </Selector>
         <Button>Создать</Button>
@@ -79,7 +104,6 @@ const AddressInner = () => {
           Отменить
         </Button>
       </Popup>
-      <Popup type="change"></Popup>
     </section>
   );
 };
