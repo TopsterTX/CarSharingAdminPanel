@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { ButtonRoute } from "../../UI/ButtonRoute/ButtonRoute";
 import { v4 as uuidv4 } from "uuid";
 import { getEditCar } from "../../../redux/actions/carCard/carCard";
-import "./CarsItem.scss";
 import { ButtonsContainer } from "./../../UI/ButtonsContainer/ButtonsContainer";
 import { WarningPopup } from "./../../UI/WarningPopup/WarningPopup";
 import { openedDeletePopup } from "../../../redux/actions/warningPopup/warningPopup";
 import { deleteCar } from "../../../redux/actions/carCard/carCard";
+import "./CarsItem.scss";
 
 function CarsItem({ car }) {
   const dispatch = useDispatch();

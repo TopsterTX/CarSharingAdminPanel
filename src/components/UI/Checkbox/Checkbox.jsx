@@ -13,11 +13,12 @@ const Checkbox = ({ children, ID, key, active, onClick }) => {
       <input
         type="checkbox"
         id={id}
-        className="checkbox__input"
-        checked={active}
-        onClick={(e) => onClick(!e.target.checked)}
       />
-      <label htmlFor={id} className="checkbox__label">
+      <label 
+        htmlFor={id} 
+        className={`checkbox__label ${active ? 'active' : null}`}
+        onClick={() => onClick(!active)}
+      >
         {children}
       </label>
     </div>
