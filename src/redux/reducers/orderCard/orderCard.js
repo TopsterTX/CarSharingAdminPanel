@@ -44,7 +44,7 @@ const defaultState = {
     isNeedChildChair: false,
     isRightWheel: false,
   },
-  copyOrder: {
+  emptyOrder: {
     orderStatusId: {
       id: "",
       name: "",

@@ -14,10 +14,10 @@ export default React.memo(function Cars() {
   );
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(getCarsOnPage(page));
-  //   dispatch(getCategories());
-  // }, [page]);
+  useEffect(() => {
+    dispatch(getCarsOnPage(page));
+    dispatch(getCategories());
+  }, [page]);
 
   return (
     <section className="cars">

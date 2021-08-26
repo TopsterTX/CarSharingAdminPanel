@@ -32,12 +32,6 @@ const defaultState = {
         id: uuidv4(),
         text: "Применить",
       },
-      {
-        id: uuidv4(),
-        text: "Город",
-        type: "add",
-        onClick: () => {},
-      },
     ],
   },
 };

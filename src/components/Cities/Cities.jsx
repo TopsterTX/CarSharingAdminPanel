@@ -1,11 +1,20 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Title } from "../UI/Title/Title";
 import { Table } from "../UI/Table/Table";
+import { Input } from "../UI/Input/Input";
+import { Button } from "../UI/Button/Button";
 import { ContentContainer } from "../UI/ContentContainer/ContentContainer";
 import Popup from "./../UI/Popup/Popup";
 import { CitiesItem } from "./CitiesItem/CitiesItem";
 import { getCitiesOnPage } from "../../redux/actions/cities/cities";
+import { changePopup, createPopup } from "../../redux/actions/popup/popup";
+import {
+  getEditCity,
+  changeCity,
+  changeCityName,
+  addCity,
+} from "../../redux/actions/citiesCard/citiesCard";
 
 const CitiesInner = () => {
   const dispatch = useDispatch();
@@ -15,20 +24,69 @@ const CitiesInner = () => {
     configureFilter,
   } = useSelector((state) => state.cities);
   const { editCity } = useSelector((state) => state.citiesCard);
-  const { name } = editCity;
+  const { name, id } = editCity;
 
-  // useEffect(() => {
-  //   if (!citiesOnPage.length) {
-  //     dispatch(getCitiesOnPage(1));
-  //   }
-  //   console.log(citiesOnPage);
-  // }, []);
+  useEffect(() => {
+    if (!citiesOnPage.length) {
+      dispatch(getCitiesOnPage(1));
+    }
+  }, []);
+
+  const changeCityHandler = useCallback(
+    (val, ID) => {
+      dispatch(changeCity(val, ID));
+      dispatch(changePopup(false));
+    },
+    [editCity, changeCity]
+  );
+
+  const createCityHandler = useCallback(
+    (val) => {
+      dispatch(addCity(val));
+      dispatch(createPopup(false));
+    },
+    [editCity, addCity]
+  );
+
+  const closeChangePopupHandler = useCallback(() => {
+    dispatch(
+      getEditCity({
+        id: "",
+        name: "",
+      })
+    );
+    dispatch(changePopup(false));
+  }, [getEditCity, changePopup]);
+
+  const closeCreatePopupHandler = useCallback(() => {
+    dispatch(
+      getEditCity({
+        id: "",
+        name: "",
+      })
+    );
+    dispatch(createPopup(false));
+  }, [getEditCity, createPopup]);
+
+  const changeCityNameHandler = useCallback(
+    (val) => {
+      return dispatch(changeCityName(val));
+    },
+    [name, changeCityName]
+  );
 
   return (
     <section className="cities">
       <ContentContainer>
         <Title>Города</Title>
-        <Table configureFilter={configureFilter} addonComponent={<></>}>
+        <Table
+          configureFilter={configureFilter}
+          addonComponent={
+            <Button onClick={() => dispatch(createPopup(true))} type="add">
+              Город
+            </Button>
+          }
+        >
           {citiesOnPage
             ? citiesOnPage.map((el) => {
                 return <CitiesItem city={el} key={el.id} />;
@@ -36,9 +94,30 @@ const CitiesInner = () => {
             : ""}
         </Table>
       </ContentContainer>
-      <Popup type="city"></Popup>
-      <Popup type="point"></Popup>
-      <Popup type="change"></Popup>
+      <Popup type="change">
+        <Input value={name} onChange={changeCityNameHandler}>
+          Название города
+        </Input>
+        <div className="popup__buttons">
+          <Button onClick={() => changeCityHandler(editCity, id)}>
+            Применить
+          </Button>
+          <Button type="warning" onClick={() => closeChangePopupHandler()}>
+            Отменить
+          </Button>
+        </div>
+      </Popup>
+      <Popup type="create">
+        <Input value={name} onChange={changeCityNameHandler}>
+          Название города
+        </Input>
+        <div className="popup__buttons">
+          <Button onClick={() => createCityHandler(editCity)}>Применить</Button>
+          <Button type="warning" onClick={() => closeCreatePopupHandler()}>
+            Отменить
+          </Button>
+        </div>
+      </Popup>
     </section>
   );
 };

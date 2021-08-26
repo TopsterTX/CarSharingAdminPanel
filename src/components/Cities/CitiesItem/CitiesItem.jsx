@@ -1,13 +1,23 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { ButtonsContainer } from "../../UI/ButtonsContainer/ButtonsContainer";
 import { ButtonRoute } from "../../UI/ButtonRoute/ButtonRoute";
 import { deleteCity } from "../../../redux/actions/citiesCard/citiesCard";
+import { changePopup } from "../../../redux/actions/popup/popup";
+import { getEditCity } from "../../../redux/actions/citiesCard/citiesCard";
 
 const CitiesItemInner = ({ city }) => {
   const dispatch = useDispatch();
   const { name } = city;
+
+  const changePopupHandler = useCallback(
+    (val) => {
+      dispatch(changePopup(true));
+      dispatch(getEditCity(val));
+    },
+    [city, getEditCity, changePopup]
+  );
 
   return (
     <div className="cities-item">
@@ -17,7 +27,11 @@ const CitiesItemInner = ({ city }) => {
         </li>
         <li className="cities-item__part">
           <ButtonsContainer>
-            <ButtonRoute to={"/admin/panel/cities"} type={"default"}>
+            <ButtonRoute
+              to={"/admin/panel/cities"}
+              type={"default"}
+              onClick={() => changePopupHandler(city)}
+            >
               Изменить
             </ButtonRoute>
             <ButtonRoute

@@ -26,12 +26,6 @@
     display: flex;
     position: relative;
     z-index: 30;
-    &-wrapper {
-      width: 100%;
-      &:not(:last-child) {
-        margin-right: 20px;
-      }
-    }
   }
   &__address {
     margin-bottom: 20px;

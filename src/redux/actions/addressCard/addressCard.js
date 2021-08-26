@@ -51,7 +51,19 @@ export const addPoint = (point) => async (dispatch) => {
         headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
+        if (res.status >= 200 && res.status < 300)
+          return dispatch(openNotice(true));
+        else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
+      })
+      .catch((err) => {
+        dispatch(warningNotice(true));
         dispatch(openNotice(true));
+      })
+      .finally((res) => {
         dispatch(
           getEditPoint({
             id: "",
@@ -63,12 +75,6 @@ export const addPoint = (point) => async (dispatch) => {
             },
           })
         );
-      })
-      .catch((err) => {
-        dispatch(warningNotice(true));
-        dispatch(openNotice(true));
-      })
-      .finally((res) => {
         dispatch(showLoader(false));
       });
   } catch (e) {
@@ -82,13 +88,30 @@ export const deletePoint = (id) => async (dispatch) => {
     return await api
       .delete(`db/point/${id}`)
       .then((res) => {
-        dispatch(openNotice(true));
+        if (res.status >= 200 && res.status < 300)
+          return dispatch(openNotice(true));
+        else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
       })
       .catch((err) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
       })
       .finally((res) => {
+        dispatch(
+          getEditPoint({
+            id: "",
+            address: "",
+            name: "",
+            cityId: {
+              name: "",
+              id: "",
+            },
+          })
+        );
         dispatch(showLoader(false));
       });
   } catch (e) {
@@ -100,15 +123,34 @@ export const changePoint = (point, id) => async (dispatch) => {
   try {
     dispatch(showLoader(true));
     return await api
-      .put(`db/point${id}`, JSON.stringify(point), {
+      .put(`db/point/${id}`, JSON.stringify(point), {
         headers: { "Content-Type": "application/json" },
       })
-      .then((res) => {})
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300)
+          return dispatch(openNotice(true));
+        else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
+      })
       .catch((err) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
       })
       .finally((res) => {
+        dispatch(
+          getEditPoint({
+            id: "",
+            address: "",
+            name: "",
+            cityId: {
+              name: "",
+              id: "",
+            },
+          })
+        );
         dispatch(showLoader(false));
       });
   } catch (e) {

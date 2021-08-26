@@ -8,8 +8,10 @@ import { Input } from "../UI/Input/Input";
 import { useSelector, useDispatch } from "react-redux";
 import { AddressItem } from "./AddressItem/AddressItem";
 import { showPopup } from "../../redux/actions/popup/popup";
-import { getPointsOnPage } from "../../redux/actions/address/address";
-import { getPoints } from "./../../redux/actions/address/address";
+import {
+  getPointsOnPage,
+  getPoints,
+} from "../../redux/actions/address/address";
 import { getCities } from "../../redux/actions/cities/cities";
 import "./Address.scss";
 import { Selector } from "./../UI/Selector/Selector";
@@ -20,6 +22,7 @@ import {
   changeCityInPoint,
   addPoint,
   changePoint,
+  getEditPoint,
 } from "../../redux/actions/addressCard/addressCard";
 
 const AddressInner = () => {
@@ -35,17 +38,17 @@ const AddressInner = () => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (!pointsOnPage.length) {
-  //     dispatch(getPointsOnPage());
-  //   }
-  //   if (!points.length) {
-  //     dispatch(getPoints());
-  //   }
-  //   if (!cities.length) {
-  //     dispatch(getCities());
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!pointsOnPage.length) {
+      dispatch(getPointsOnPage());
+    }
+    if (!points.length) {
+      dispatch(getPoints());
+    }
+    if (!cities.length) {
+      dispatch(getCities());
+    }
+  }, []);
 
   const changeNameHandler = useCallback(
     (val) => {
@@ -77,18 +80,41 @@ const AddressInner = () => {
   );
 
   const closeCreatePopup = useCallback(() => {
-    return createPopup(false);
+    dispatch(createPopup(false));
+    dispatch(
+      getEditPoint({
+        id: "",
+        address: "",
+        name: "",
+        cityId: {
+          name: "",
+          id: "",
+        },
+      })
+    );
   }, [createPopup]);
 
   const changePointHandler = useCallback(
-    (val) => {
-      return dispatch(changePoint(val));
+    (val, id) => {
+      dispatch(changePoint(val, id));
+      dispatch(changePopup(false));
     },
-    [editAddress, changePoint]
+    [editAddress, changePoint, changePopup]
   );
 
   const closeChangePopup = useCallback(() => {
-    return changePopup(false);
+    dispatch(changePopup(false));
+    dispatch(
+      getEditPoint({
+        id: "",
+        address: "",
+        name: "",
+        cityId: {
+          name: "",
+          id: "",
+        },
+      })
+    );
   }, [editAddress, changePopup]);
 
   return (
@@ -115,7 +141,7 @@ const AddressInner = () => {
           Название пункта выдачи
         </Input>
         <Input value={address} onChange={changeAddressHandler}>
-          Пункт выдачи
+          Адресс пункта выдачи
         </Input>
         <Selector
           array={cities}
@@ -124,10 +150,14 @@ const AddressInner = () => {
         >
           {cityId.name.length > 0 ? cityId.name : "Выберите город"}
         </Selector>
-        <Button onClick={() => createPointHandler(editAddress)}>Создать</Button>
-        <Button type="warning" onClick={closeCreatePopup}>
-          Отменить
-        </Button>
+        <div className="popup__buttons">
+          <Button onClick={() => createPointHandler(editAddress)}>
+            Создать
+          </Button>
+          <Button type="warning" onClick={() => closeCreatePopup()}>
+            Отменить
+          </Button>
+        </div>
       </Popup>
       <Popup type="change">
         <Input value={name} onChange={changeNameHandler}>
@@ -143,10 +173,16 @@ const AddressInner = () => {
         >
           {cityId.name.length > 0 ? cityId.name : "Выберите город"}
         </Selector>
-        <Button onClick={changePointHandler}>Применить</Button>
-        <Button type="warning" onClick={closeChangePopup}>
-          Отменить
-        </Button>
+        <div className="popup__buttons">
+          <Button
+            onClick={() => changePointHandler(editAddress, editAddress.id)}
+          >
+            Применить
+          </Button>
+          <Button type="warning" onClick={() => closeChangePopup()}>
+            Отменить
+          </Button>
+        </div>
       </Popup>
     </section>
   );

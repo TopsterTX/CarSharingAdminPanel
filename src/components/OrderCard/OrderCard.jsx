@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback, memo } from "react";
+import { OrderCardCar } from "./OrderCardCar/OrderCardCar";
 import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Setting } from "../UI/Setting/Setting";
 import { Title } from "../UI/Title/Title";
@@ -19,8 +20,6 @@ import {
 import {
   changeDateFrom,
   changeDateTo,
-  changeCar,
-  changeColor,
   changeCity,
   changePoint,
   changePrice,
@@ -33,6 +32,9 @@ import {
   changeIsFullTank,
   changeIsNeedChildChair,
   changeIsRightWheel,
+  getOrder,
+  changeCar,
+  changeColor,
 } from "../../redux/actions/orderCard/orderCard";
 import {
   openedApplyPopup,
@@ -51,10 +53,9 @@ export function OrderCardInner() {
     ratesType = [],
     orderStatus = [],
   } = useSelector((state) => state.order);
-  const { editOrder } = useSelector((state) => state.orderCard);
+  const { editOrder, emptyOrder } = useSelector((state) => state.orderCard);
   const { points = [] } = useSelector((state) => state.address);
   const { cities = [] } = useSelector((state) => state.cities);
-
   const {
     orderStatusId = {},
     cityId = {},
@@ -69,6 +70,7 @@ export function OrderCardInner() {
     isNeedChildChair = false,
     isRightWheel = false,
   } = editOrder;
+  const { colors } = carId;
 
   const dateBeggin = dateFrom
     ? new Date(dateFrom).toISOString().substr(0, 10)
@@ -77,13 +79,28 @@ export function OrderCardInner() {
     ? new Date(dateTo).toISOString().substr(0, 10)
     : "0000-00-00";
 
-  // useEffect(() => {
-  //   if (!cars.length) dispatch(getCars());
-  //   if (!cities.length) dispatch(getCities());
-  //   dispatch(getPoints());
-  //   dispatch(getRates());
-  //   dispatch(getOrderStatus());
-  // }, []);
+  useEffect(() => {
+    dispatch(getCars());
+    dispatch(getCities());
+    dispatch(getPoints());
+    dispatch(getRates());
+    dispatch(getOrderStatus());
+    dispatch(getOrder(emptyOrder));
+  }, []);
+
+  const changeCarHandler = useCallback(
+    (value) => {
+      return dispatch(changeCar(value));
+    },
+    [carId, changeCar]
+  );
+
+  const changeColorHandler = useCallback(
+    (value) => {
+      return dispatch(changeColor(value));
+    },
+    [color, changeColor]
+  );
 
   const changeDateFromHandler = useCallback(
     (value) => {
@@ -99,13 +116,6 @@ export function OrderCardInner() {
     [dateTo, changeDateTo]
   );
 
-  const changeColorHandler = useCallback(
-    (value) => {
-      return dispatch(changeColor(value));
-    },
-    [color, changeColor]
-  );
-
   const changePointHandler = useCallback(
     (value) => {
       return dispatch(changePoint(value));
@@ -118,13 +128,6 @@ export function OrderCardInner() {
       return dispatch(changeCity(value));
     },
     [cityId, changeCity]
-  );
-
-  const changeCarHandler = useCallback(
-    (value) => {
-      return dispatch(changeCar(value));
-    },
-    [carId, changeCar]
   );
 
   const changePriceHandler = useCallback(
@@ -169,6 +172,12 @@ export function OrderCardInner() {
     [isRightWheel, changeIsRightWheel]
   );
 
+  const onClickCancelHandler = useCallback(
+    (val) => {
+      return dispatch(getOrder(val));
+    },
+    [getOrder, openedCancelPopup, emptyOrder]
+  );
   return (
     <section className="order-card">
       <ContentContainer>
@@ -184,24 +193,7 @@ export function OrderCardInner() {
         >
           <div className="order-card__container">
             <div className="order-card__main">
-              <div className="order-card__main-wrapper">
-                <Selector
-                  array={cars}
-                  content={"name"}
-                  onClick={changeCarHandler}
-                >
-                  {carId ? carId.name : "Модель машины"}
-                </Selector>
-              </div>
-              <div className="order-card__main-wrapper">
-                <Selector
-                  array={carId ? carId.colors : []}
-                  content={"el"}
-                  onClick={changeColorHandler}
-                >
-                  {color ? color : "Цвет"}
-                </Selector>
-              </div>
+              
             </div>
             <div className="order-card__address">
               <div className="order-card__address-wrapper">
@@ -210,7 +202,11 @@ export function OrderCardInner() {
                   content={"name"}
                   onClick={changeCityHandler}
                 >
-                  {cityId ? cityId.name : "Город"}
+                  {cityId
+                    ? cityId.name.length
+                      ? cityId.name
+                      : "Город"
+                    : "Город"}
                 </Selector>
               </div>
               <div className="order-card__address-wrapper">
@@ -222,11 +218,17 @@ export function OrderCardInner() {
                 >
                   {`${
                     pointId
-                      ? pointId.name
-                      : pointId.name === ""
-                      ? "Пункт выдачи ,"
-                      : pointId.name
-                  } ${pointId ? pointId.address : "Адресс"}`}
+                      ? pointId.name.length
+                        ? pointId.name
+                        : "Пункт выдачи ,"
+                      : "Пункт выдачи ,"
+                  } ${
+                    pointId
+                      ? pointId.address.length
+                        ? pointId.address
+                        : "Адресс"
+                      : "Адресс"
+                  }`}
                 </Selector>
               </div>
             </div>
@@ -318,12 +320,17 @@ export function OrderCardInner() {
           </div>
         </Setting>
       </ContentContainer>
-      <WarningPopup type="create" onClick={() => dispatch(addOrder(editOrder))}>
+      <WarningPopup
+        type="create"
+        onClick={() => dispatch(addOrder(editOrder, emptyOrder))}
+      >
         Вы действительно хотите добавить заказ ?
       </WarningPopup>
       <WarningPopup
         type="apply"
-        onClick={() => dispatch(changeOrder(editOrder.id, editOrder))}
+        onClick={() =>
+          dispatch(changeOrder(editOrder.id, editOrder, emptyOrder))
+        }
       >
         Вы действительно хотите применить изменения ?
       </WarningPopup>
@@ -332,7 +339,7 @@ export function OrderCardInner() {
       </WarningPopup>
       <WarningPopup
         type="delete"
-        onClick={() => dispatch(deleteOrder(editOrder.id))}
+        onClick={() => dispatch(deleteOrder(editOrder.id, emptyOrder))}
       >
         Вы действительно хотите удалить заказ ?
       </WarningPopup>

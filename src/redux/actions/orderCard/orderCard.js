@@ -108,7 +108,7 @@ export const changeDateFrom = (value) => {
   };
 };
 
-export const addOrder = (order) => async (dispatch) => {
+export const addOrder = (order, empty) => async (dispatch) => {
   try {
     dispatch(showLoader(true));
     await api
@@ -118,10 +118,12 @@ export const addOrder = (order) => async (dispatch) => {
         },
       })
       .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 400) {
-          dispatch(openNotice(true));
-        } else {
-          throw new Error();
+        if (res.status >= 200 && res.status < 300)
+          return dispatch(openNotice(true));
+        else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
         }
       })
       .catch((err) => {
@@ -129,6 +131,7 @@ export const addOrder = (order) => async (dispatch) => {
         dispatch(openNotice(true));
       })
       .finally((res) => {
+        dispatch(getOrder(empty));
         dispatch(showLoader(false));
       });
   } catch (e) {
@@ -136,16 +139,18 @@ export const addOrder = (order) => async (dispatch) => {
   }
 };
 
-export const deleteOrder = (id) => async (dispatch) => {
+export const deleteOrder = (id, empty) => async (dispatch) => {
   try {
     dispatch(showLoader(true));
     await api
       .delete(`db/order/${id}`)
       .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 400) {
-          dispatch(openNotice(true));
-        } else {
-          throw new Error();
+        if (res.status >= 200 && res.status < 300)
+          return dispatch(openNotice(true));
+        else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
         }
       })
       .catch((err) => {
@@ -153,6 +158,7 @@ export const deleteOrder = (id) => async (dispatch) => {
         dispatch(openNotice(true));
       })
       .finally((res) => {
+        dispatch(getOrder(empty));
         dispatch(showLoader(false));
       });
   } catch (e) {
@@ -160,7 +166,7 @@ export const deleteOrder = (id) => async (dispatch) => {
   }
 };
 
-export const changeOrder = (id, order) => async (dispatch) => {
+export const changeOrder = (id, order, empty) => async (dispatch) => {
   try {
     dispatch(showLoader(true));
     await api
@@ -168,10 +174,12 @@ export const changeOrder = (id, order) => async (dispatch) => {
         headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 400) {
-          dispatch(openNotice(true));
-        } else {
-          throw new Error();
+        if (res.status >= 200 && res.status < 300)
+          return dispatch(openNotice(true));
+        else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
         }
       })
       .catch((err) => {
@@ -179,6 +187,7 @@ export const changeOrder = (id, order) => async (dispatch) => {
         dispatch(openNotice(true));
       })
       .finally((res) => {
+        dispatch(getOrder(empty));
         dispatch(showLoader(false));
       });
   } catch (e) {
