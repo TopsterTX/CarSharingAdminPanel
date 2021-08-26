@@ -52,7 +52,8 @@ export function OrderCardInner() {
     orderStatus = [],
   } = useSelector((state) => state.order);
   const { editOrder } = useSelector((state) => state.orderCard);
-  const { cities = [], points = [] } = useSelector((state) => state.address);
+  const { points = [] } = useSelector((state) => state.address);
+  const { cities = [] } = useSelector((state) => state.cities);
 
   const {
     orderStatusId = {},
@@ -76,13 +77,13 @@ export function OrderCardInner() {
     ? new Date(dateTo).toISOString().substr(0, 10)
     : "0000-00-00";
 
-  useEffect(() => {
-    dispatch(getCars());
-    dispatch(getCities());
-    dispatch(getPoints());
-    dispatch(getRates());
-    dispatch(getOrderStatus());
-  }, []);
+  // useEffect(() => {
+  //   if (!cars.length) dispatch(getCars());
+  //   if (!cities.length) dispatch(getCities());
+  //   dispatch(getPoints());
+  //   dispatch(getRates());
+  //   dispatch(getOrderStatus());
+  // }, []);
 
   const changeDateFromHandler = useCallback(
     (value) => {

@@ -112,7 +112,6 @@ function CarCardInner() {
     [categories, applyCategory]
   );
 
-  console.log(editCar);
   return (
     <section className="car-card">
       <ContentContainer>

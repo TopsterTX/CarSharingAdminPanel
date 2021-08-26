@@ -17,12 +17,12 @@ const CitiesInner = () => {
   const { editCity } = useSelector((state) => state.citiesCard);
   const { name } = editCity;
 
-  useEffect(() => {
-    if (!citiesOnPage.length) {
-      dispatch(getCitiesOnPage(1));
-    }
-    console.log(citiesOnPage);
-  }, []);
+  // useEffect(() => {
+  //   if (!citiesOnPage.length) {
+  //     dispatch(getCitiesOnPage(1));
+  //   }
+  //   console.log(citiesOnPage);
+  // }, []);
 
   return (
     <section className="cities">

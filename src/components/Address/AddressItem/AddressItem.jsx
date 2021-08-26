@@ -1,16 +1,35 @@
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
 import PropTypes from "prop-types";
 import { ButtonRoute } from "./../../UI/ButtonRoute/ButtonRoute";
 import { ButtonsContainer } from "../../UI/ButtonsContainer/ButtonsContainer";
 import { WarningPopup } from "./../../UI/WarningPopup/WarningPopup";
 import { useDispatch } from "react-redux";
-import { deletePoint } from "../../../redux/actions/addressCard/addressCard";
+import {
+  deletePoint,
+  getEditPoint,
+} from "../../../redux/actions/addressCard/addressCard";
 import { openedDeletePopup } from "../../../redux/actions/warningPopup/warningPopup";
 import "./AddressItem.scss";
+import { changePopup } from "./../../../redux/actions/popup/popup";
 
 function AddressItemInner({ point = {}, onClick = () => {} }) {
   const dispatch = useDispatch();
   const { name, address, id, cityId } = point;
+
+  const getEditPointHandler = useCallback(
+    (val) => {
+      dispatch(changePopup(true));
+      dispatch(getEditPoint(point));
+    },
+    [changePopup, getEditPoint, point]
+  );
+
+  const deletePointHandler = useCallback(
+    (ID) => {
+      return dispatch(deletePoint(ID));
+    },
+    [deletePoint, id]
+  );
 
   return (
     <div className="address-item">
@@ -30,13 +49,17 @@ function AddressItemInner({ point = {}, onClick = () => {} }) {
         </li>
         <li className="address-item__part">
           <ButtonsContainer>
-            <ButtonRoute to={"/admin/panel/address"} type={"default"}>
+            <ButtonRoute
+              to={"/admin/panel/address"}
+              type={"default"}
+              onClick={getEditPointHandler}
+            >
               Изменить
             </ButtonRoute>
             <ButtonRoute
               to={"/admin/panel/address"}
               type={"warning"}
-              onClick={() => dispatch(deletePoint(id))}
+              onClick={() => deletePointHandler(id)}
             >
               Удалить
             </ButtonRoute>

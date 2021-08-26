@@ -24,9 +24,16 @@ export const CHANGE_POINT_NAME = `${reduce}CHANGE_POINT_NAME`;
 export const CHANGE_ADDRESS_NAME = `${reduce}CHANGE_ADDRESS_NAME`;
 export const CHANGE_CITY_IN_POINT = `${reduce}CHANGE_CITY_IN_POINT`;
 export const CANCEL_EDIT_POINT = `${reduce}CANCEL_EDIT_POINT`;
+export const GET_EDIT_POINT = `${reduce}GET_EDIT_POINT`;
 
 export default (state = defaultState, { type, payload }) => {
   switch (type) {
+    case GET_EDIT_POINT:
+      return {
+        ...state,
+        editAddress: payload,
+        copyAddress: payload,
+      };
     case CHANGE_ADDRESS_NAME:
       return {
         ...state,

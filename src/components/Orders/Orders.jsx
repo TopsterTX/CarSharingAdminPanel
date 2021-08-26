@@ -11,9 +11,9 @@ const OrdersInner = () => {
   const { configureFilter, orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getOrder());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getOrder());
+  // }, []);
 
   return (
     <section className="orders">
