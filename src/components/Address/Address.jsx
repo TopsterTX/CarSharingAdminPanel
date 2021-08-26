@@ -31,21 +31,20 @@ const AddressInner = () => {
   const { editAddress } = useSelector((state) => state.addressCard);
   const { name, cityId, address, id } = editAddress;
   const { cities = [] } = useSelector((state) => state.cities);
-  console.log(cities);
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (!pointsOnPage.length) {
-  //     dispatch(getPointsOnPage());
-  //   }
-  //   if (!points.length) {
-  //     dispatch(getPoints());
-  //   }
-  //   if (!cities.length) {
-  //     dispatch(getCities());
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!pointsOnPage.length) {
+      dispatch(getPointsOnPage());
+    }
+    if (!points.length) {
+      dispatch(getPoints());
+    }
+    if (!cities.length) {
+      dispatch(getCities());
+    }
+  }, []);
 
   const changeNameHandler = useCallback(
     (val) => {
@@ -70,8 +69,7 @@ const AddressInner = () => {
 
   const createPointHandler = useCallback(
     (point) => {
-      dispatch(createPopup(false));
-      dispatch(addPoint(point));
+      return dispatch(addPoint(point));
     },
     [editAddress, createPopup, addPoint]
   );

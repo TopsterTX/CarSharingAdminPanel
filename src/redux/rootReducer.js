@@ -12,6 +12,7 @@ import address from "./reducers/address/address";
 import addressCard from "./reducers/addressCard/addressCard";
 import cities from "./reducers/cities/cities";
 import citiesCard from "./reducers/citiesCard/citiesCard";
+import error from "./reducers/error/error";
 
 export default {
   user,
@@ -28,4 +29,5 @@ export default {
   cities,
   addressCard,
   citiesCard,
+  error,
 };

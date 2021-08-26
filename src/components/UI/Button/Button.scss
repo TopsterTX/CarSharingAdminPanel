@@ -2,7 +2,8 @@
 @import "../../../scss/vars.scss";
 
 .button {
-  align-items: flex-start;
+  width: 100%;
+  text-align: center;
   &:not(:last-child) {
     margin-right: 8px;
     margin-bottom: 8px;
@@ -18,9 +19,9 @@
   }
 }
 
-@media(min-width: 768px){
-  .button{
-    &:not(:last-child){
+@media (min-width: 768px) {
+  .button {
+    &:not(:last-child) {
       margin-bottom: 0;
     }
   }
