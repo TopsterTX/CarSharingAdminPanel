@@ -17,7 +17,13 @@ export const getCarsOnPage = (page) => async (dispatch) => {
         },
       })
       .then((res) => {
-        dispatch({ type: GET_CARS_ON_PAGE, payload: res.data.data });
+        if (res.status >= 200 && res.status < 300) {
+          return dispatch({ type: GET_CARS_ON_PAGE, payload: res.data.data });
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
       })
       .catch((err) => {
         dispatch(warningNotice(true));
@@ -41,7 +47,13 @@ export const getCars = () => async (dispatch) => {
         },
       })
       .then((res) => {
-        dispatch({ type: GET_CARS, payload: res.data.data });
+        if (res.status >= 200 && res.status < 300) {
+          return dispatch({ type: GET_CARS, payload: res.data.data });
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
       })
       .catch((err) => {
         dispatch(warningNotice(true));

@@ -41,12 +41,30 @@ const defaultState = {
     },
     colors: [],
   },
+  emptyCar: {
+    id: "",
+    priceMax: 0,
+    priceMin: 0,
+    name: "Название автомобиля",
+    thumbnail: {
+      size: 0,
+      originalname: "",
+      mimetype: "",
+      path: "",
+    },
+    description: "Описание машины",
+    categoryId: {
+      name: "Категория",
+      description: "",
+      id: "",
+    },
+    colors: [],
+  },
 };
 
 const reduce = "CAR-CARD__";
 export const ADD_IMAGE = `${reduce}ADD_IMAGE`;
 export const ADD_COLOR = `${reduce}ADD_COLOR`;
-
 export const DELETE_COLOR = `${reduce}DELETE_COLOR`;
 export const GET_EDIT_CAR = `${reduce}GET_EDIT_CAR`;
 export const APPLY_CATEGORY = `${reduce}APPLY_CATEGORY`;

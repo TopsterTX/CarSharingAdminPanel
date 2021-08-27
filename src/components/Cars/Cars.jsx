@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { AddButton } from "../UI/AddButton/AddButton";
+import { getEditCar } from "../../redux/actions/carCard/carCard";
 import { CarsItem } from "./CarsItem/CarsItem";
 import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Table } from "../UI/Table/Table";
@@ -12,18 +14,34 @@ export default React.memo(function Cars() {
   const { carsOnPage, configureFilter, page } = useSelector(
     (state) => state.cars
   );
+  const { categories } = useSelector((state) => state.carCard);
+  const { emptyCar } = useSelector((state) => state.carCard);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCarsOnPage(page));
-    dispatch(getCategories());
+    if (!carsOnPage.length ) {
+      dispatch(getCarsOnPage(page));
+    }
+    if (!categories.length ) {
+      dispatch(getCategories());
+    }
   }, [page]);
 
   return (
     <section className="cars">
       <ContentContainer>
         <Title>Список автомобилей</Title>
-        <Table configureFilter={configureFilter}>
+        <Table
+          configureFilter={configureFilter}
+          addonComponent={
+            <AddButton
+              onClick={() => dispatch(getEditCar(emptyCar))}
+              to="/admin/panel/card_car"
+            >
+              Автомобиль
+            </AddButton>
+          }
+        >
           {carsOnPage
             ? carsOnPage.map((el) => {
                 return <CarsItem key={el.id} car={el} />;

@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, memo } from "react";
+import React, { useCallback, useState, memo } from "react";
 import { ContentContainer } from "../UI/ContentContainer/ContentContainer";
 import { Title } from "../UI/Title/Title";
 import { Setting } from "../UI/Setting/Setting";
@@ -15,7 +15,6 @@ import {
   cancelEditCar,
   addColor,
   deleteColor,
-  getCategories,
   applyCategory,
   deleteCar,
 } from "../../redux/actions/carCard/carCard";
@@ -30,6 +29,16 @@ import { WarningPopup } from "./../UI/WarningPopup/WarningPopup";
 import { CarColors } from "./CarColors/CarColors";
 import { Selector } from "../UI/Selector/Selector";
 import { addCar } from "../../redux/actions/carCard/carCard";
+
+export const validateHandler = (setState, string = "", regExp) => {
+  return string
+    ? setState(
+        () =>
+          JSON.stringify(String(string).match(regExp).join("")) !==
+          JSON.stringify(String(string))
+      )
+    : false;
+};
 
 function CarCardInner() {
   const warn = false;
@@ -46,38 +55,16 @@ function CarCardInner() {
     name = "",
     description = "",
     id = "",
-    priceMin = 0,
-    priceMax = 0,
+    priceMin = "",
+    priceMax = "",
   } = editCar;
   const { path = "" } = thumbnail;
+  const { color } = inputs;
 
-  const changeDescriptionCarHandler = useCallback(
-    (val) => {
-      return dispatch(changeDescriptionCar(val));
-    },
-    [description, changeDescriptionCar]
-  );
-
-  const changeModelCarHandler = useCallback(
-    (val) => {
-      return dispatch(dispatch(changeModelCar(val)));
-    },
-    [name, changeModelCar]
-  );
-
-  const changePriceMinHandler = useCallback(
-    (val) => {
-      return dispatch(changePriceMinCar(val));
-    },
-    [priceMin, changePriceMinCar]
-  );
-
-  const changePriceMaxHandler = useCallback(
-    (val) => {
-      return dispatch(changePriceMaxCar(val));
-    },
-    [priceMax, changePriceMaxCar]
-  );
+  const [priceMinWarn, setPriceMinWarn] = useState(false);
+  const [priceMaxWarn, setPriceMaxWarn] = useState(false);
+  const [colorWarn, setColorWarn] = useState(false);
+  const disabledButtons = priceMaxWarn || priceMinWarn;
 
   const clickOnPlusHandler = useCallback(
     (dispatch, value) => {
@@ -91,25 +78,28 @@ function CarCardInner() {
     [addColor, inputs.color]
   );
 
-  const changeCarColorHandler = useCallback(
-    (val) => {
-      return dispatch(changeColorsCar(val));
+  const changePriceMinHandler = useCallback(
+    (e) => {
+      validateHandler(setPriceMinWarn, e.target.value, /\d/g);
+      dispatch(changePriceMinCar(e.target.value));
     },
-    [inputs.color, changeColorsCar]
+    [priceMin]
   );
 
-  const deleteCarColorHandler = useCallback(
-    (val) => {
-      return dispatch(deleteColor(val));
+  const changeColorCarHandler = useCallback(
+    (e) => {
+      validateHandler(setColorWarn, e.target.value, /\D/g);
+      dispatch(changeColorsCar(e.target.value));
     },
-    [colors, deleteColor]
+    [color]
   );
 
-  const applyCategoryHandler = useCallback(
-    (el) => {
-      return dispatch(applyCategory(el));
+  const changePriceMaxHandler = useCallback(
+    (e) => {
+      validateHandler(setPriceMaxWarn, e.target.value, /\d/g);
+      dispatch(changePriceMaxCar(e.target.value));
     },
-    [categories, applyCategory]
+    [priceMax]
   );
 
   return (
@@ -122,17 +112,20 @@ function CarCardInner() {
             label={name ? name : ""}
             subLabel={categoryId ? categoryId.name : ""}
             valueDescription={description ? description : ""}
-            onChangeDescription={changeDescriptionCarHandler}
+            onChangeDescription={changeDescriptionCar}
             valueFile={inputs.file ? inputs.file : ""}
           />
           <Setting
             title={"Настройка автомобиля"}
             checkTextKey="updatedAt"
             checkTextObj={editCar}
-            onClickApply={() => {
-              dispatch(openedApplyPopup(true));
-            }}
-            onClickCreate={() => dispatch(openedCreatePopup(true))}
+            onClickApply={() =>
+              disabledButtons ? () => {} : dispatch(openedApplyPopup(true))
+            }
+            buttonsDisabled={false}
+            onClickCreate={() =>
+              disabledButtons ? () => {} : dispatch(openedCreatePopup(true))
+            }
             onClickCancel={() => dispatch(openedCancelPopup(true))}
             onClickDelete={() => dispatch(openedDeletePopup(true))}
           >
@@ -144,7 +137,7 @@ function CarCardInner() {
                     warningText={"Неверно"}
                     required
                     value={name ? name : ""}
-                    onChange={changeModelCarHandler}
+                    onChange={(e) => dispatch(changeModelCar(e.target.value))}
                   >
                     Модель автомобиля
                   </Input>
@@ -153,7 +146,7 @@ function CarCardInner() {
                   <Selector
                     array={categories ? categories : ""}
                     content={"name"}
-                    onClick={applyCategoryHandler}
+                    onClick={applyCategory}
                   >
                     {categoryId ? categoryId.name : "Нет категории"}
                   </Selector>
@@ -162,22 +155,22 @@ function CarCardInner() {
               <div className="car-card__main">
                 <div className="car-card__main-wrapper">
                   <Input
-                    warning={warn}
-                    warningText={"Ошибка при добавлени цены"}
+                    warning={priceMinWarn}
+                    warningText={"Недопустимый символ"}
                     required
                     value={priceMin ? priceMin : ""}
-                    onChange={changePriceMinHandler}
+                    onChange={(e) => changePriceMinHandler(e)}
                   >
                     Минимальная цена
                   </Input>
                 </div>
                 <div className="car-card__main-wrapper">
                   <Input
-                    warningText={"Ошибка при добавлении цены"}
-                    warning={warn}
+                    warningText={"Недопустимый символ"}
+                    warning={priceMaxWarn}
                     required
-                    value={editCar.priceMax ? editCar.priceMax : ""}
-                    onChange={changePriceMaxHandler}
+                    value={priceMax ? priceMax : ""}
+                    onChange={(e) => changePriceMaxHandler(e)}
                   >
                     Максимальная цена
                   </Input>
@@ -186,17 +179,17 @@ function CarCardInner() {
               <div className="car-card__color">
                 <div className="car-card__color-wrapper">
                   <Input
-                    warningText={"Ошибка при добавлении цвета"}
-                    warning={warn}
+                    warningText={"Недопустимый символ"}
+                    warning={colorWarn}
                     addButton
                     onClickButton={clickOnPlusHandler}
-                    value={inputs.color}
-                    onChange={changeCarColorHandler}
+                    value={color}
+                    onChange={(e) => changeColorCarHandler(e)}
                   >
                     Доступные цвета
                   </Input>
 
-                  <CarColors arr={colors} onClick={deleteCarColorHandler} />
+                  <CarColors arr={colors} onClick={deleteColor} />
                 </div>
               </div>
             </div>
@@ -213,7 +206,7 @@ function CarCardInner() {
         Вы действительно хотите применить изменения ?
       </WarningPopup>
       <WarningPopup type="cancel" onClick={() => dispatch(cancelEditCar())}>
-        Вы действительно хотите отменить изменение автомобиля ?
+        Вы действительно хотите отменить внесённые изменения ?
       </WarningPopup>
       <WarningPopup
         type="delete"

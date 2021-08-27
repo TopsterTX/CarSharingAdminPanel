@@ -68,13 +68,6 @@ const CitiesInner = () => {
     dispatch(createPopup(false));
   }, [getEditCity, createPopup]);
 
-  const changeCityNameHandler = useCallback(
-    (val) => {
-      return dispatch(changeCityName(val));
-    },
-    [name, changeCityName]
-  );
-
   return (
     <section className="cities">
       <ContentContainer>
@@ -95,7 +88,10 @@ const CitiesInner = () => {
         </Table>
       </ContentContainer>
       <Popup type="change">
-        <Input value={name} onChange={changeCityNameHandler}>
+        <Input
+          value={name}
+          onChange={(e) => dispatch(changeCityName(e.target.value))}
+        >
           Название города
         </Input>
         <div className="popup__buttons">
@@ -108,7 +104,10 @@ const CitiesInner = () => {
         </div>
       </Popup>
       <Popup type="create">
-        <Input value={name} onChange={changeCityNameHandler}>
+        <Input
+          value={name}
+          onChange={(e) => dispatch(changeCityName(e.target.value))}
+        >
           Название города
         </Input>
         <div className="popup__buttons">

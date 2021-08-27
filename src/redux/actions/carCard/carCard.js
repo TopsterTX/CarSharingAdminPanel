@@ -103,13 +103,20 @@ export const deleteColor = (index) => {
 
 export const getCategories = () => async (dispatch) => {
   try {
+    dispatch(showLoader(true));
     return await api("db/category")
-      .then((res) =>
-        dispatch({
-          type: GET_CATEGORIES,
-          payload: res.data.data,
-        })
-      )
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          dispatch({
+            type: GET_CATEGORIES,
+            payload: res.data.data,
+          });
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
+      })
       .catch((err) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
@@ -122,18 +129,13 @@ export const getCategories = () => async (dispatch) => {
   }
 };
 
-export const sendChangesCar = (id, car) => async (dispatch) => {
+export const sendChangesCar = (id, car, emptyCar) => async (dispatch) => {
   try {
     dispatch(showLoader(true));
     await api
       .put(
         `db/car/${id}`,
-        JSON.stringify(car, (key, value) => {
-          if ((key === "createdAt") | "updatedAt") {
-            return undefined;
-          }
-          return value;
-        }),
+        JSON.stringify(car),
         {
           headers: {
             "Content-Type": "application/json",
@@ -141,9 +143,12 @@ export const sendChangesCar = (id, car) => async (dispatch) => {
         }
       )
       .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 400) {
+        if (res.request.status >= 200 && res.request.status < 300) {
           dispatch(openNotice(true));
-          dispatch(showLoader(false));
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
         }
       })
       .catch((err) => {
@@ -151,10 +156,11 @@ export const sendChangesCar = (id, car) => async (dispatch) => {
         dispatch(openNotice(true));
       })
       .finally((res) => {
+        dispatch(getEditCar(emptyCar));
         dispatch(showLoader(false));
       });
   } catch (e) {
-    console.log("e");
+    console.error(e);
   }
 };
 
@@ -170,28 +176,32 @@ export const addImage = (img) => {
   };
 };
 
-export const deleteCar = (id) => (dispatch) => {
+export const deleteCar = (id, emptyCar) => (dispatch) => {
   try {
     dispatch(showLoader(true));
     api
       .delete(`db/car/${id}`)
       .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 400) {
+        if (res.request.status >= 200 && res.request.status < 300) {
           dispatch(openNotice(true));
-          dispatch(showLoader(false));
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
         }
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(showLoader(false));
         dispatch(warningNotice(true));
       })
-      .finally((res) => {
+      .finally(() => {
+        dispatch(getEditCar(emptyCar));
         dispatch(showLoader(false));
       });
   } catch (e) {}
 };
 
-export const addCar = (car) => async (dispatch) => {
+export const addCar = (car, emptyCar) => async (dispatch) => {
   try {
     dispatch(showLoader(true));
     await api
@@ -201,16 +211,20 @@ export const addCar = (car) => async (dispatch) => {
         },
       })
       .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 400) {
+        if (res.request.status >= 200 && res.request.status < 300) {
           dispatch(openNotice(true));
-          dispatch(showLoader(false));
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
         }
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch(showLoader(false));
         dispatch(warningNotice(true));
       })
-      .finally((res) => {
+      .finally(() => {
+        dispatch(getEditCar(emptyCar));
         dispatch(showLoader(false));
       });
   } catch (e) {

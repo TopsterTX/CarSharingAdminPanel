@@ -1,5 +1,4 @@
-import React, { useEffect, useCallback, memo } from "react";
-import { OrderCardCar } from "./OrderCardCar/OrderCardCar";
+import React, { useEffect, useState, useCallback, memo } from "react";
 import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Setting } from "../UI/Setting/Setting";
 import { Title } from "../UI/Title/Title";
@@ -12,11 +11,7 @@ import { getCars } from "../../redux/actions/cars/cars";
 import { getPoints } from "../../redux/actions/address/address";
 import { getCities } from "../../redux/actions/cities/cities";
 import { CheckboxPrimary } from "../UI/CheckboxPrimary/CheckboxPrimary";
-import {
-  getOrderStatus,
-  getRates,
-  getRatesType,
-} from "../../redux/actions/order/order";
+import { getOrderStatus, getRates } from "../../redux/actions/order/order";
 import {
   changeDateFrom,
   changeDateTo,
@@ -32,7 +27,6 @@ import {
   changeIsFullTank,
   changeIsNeedChildChair,
   changeIsRightWheel,
-  getOrder,
   changeCar,
   changeColor,
 } from "../../redux/actions/orderCard/orderCard";
@@ -42,6 +36,7 @@ import {
   openedDeletePopup,
   openedCancelPopup,
 } from "../../redux/actions/warningPopup/warningPopup";
+import { validateHandler } from "../CarCard/CarCard";
 import "./OrderCard.scss";
 
 export function OrderCardInner() {
@@ -70,7 +65,9 @@ export function OrderCardInner() {
     isNeedChildChair = false,
     isRightWheel = false,
   } = editOrder;
-  const { colors } = carId;
+  const { colors } = carId ? carId : [];
+
+  const [priceWarn, setPriceWarn] = useState(false);
 
   const dateBeggin = dateFrom
     ? new Date(dateFrom).toISOString().substr(0, 10)
@@ -80,104 +77,31 @@ export function OrderCardInner() {
     : "0000-00-00";
 
   useEffect(() => {
-    dispatch(getCars());
-    dispatch(getCities());
-    dispatch(getPoints());
-    dispatch(getRates());
-    dispatch(getOrderStatus());
-    dispatch(getOrder(emptyOrder));
+    if (!cars.length) {
+      dispatch(getCars());
+    }
+    if (!cities.length) {
+      dispatch(getCities());
+    }
+    if (!points.length) {
+      dispatch(getPoints());
+    }
+    if (!rates.length) {
+      dispatch(getRates());
+    }
+    if (!orderStatus.length) {
+      dispatch(getOrderStatus());
+    }
   }, []);
 
-  const changeCarHandler = useCallback(
-    (value) => {
-      return dispatch(changeCar(value));
-    },
-    [carId, changeCar]
-  );
-
-  const changeColorHandler = useCallback(
-    (value) => {
-      return dispatch(changeColor(value));
-    },
-    [color, changeColor]
-  );
-
-  const changeDateFromHandler = useCallback(
-    (value) => {
-      return dispatch(changeDateFrom(value));
-    },
-    [dateFrom, changeDateFrom]
-  );
-
-  const changeDateToHandler = useCallback(
-    (value) => {
-      return dispatch(changeDateTo(value));
-    },
-    [dateTo, changeDateTo]
-  );
-
-  const changePointHandler = useCallback(
-    (value) => {
-      return dispatch(changePoint(value));
-    },
-    [pointId, changePoint]
-  );
-
-  const changeCityHandler = useCallback(
-    (value) => {
-      return dispatch(changeCity(value));
-    },
-    [cityId, changeCity]
-  );
-
   const changePriceHandler = useCallback(
-    (value) => {
-      return dispatch(changePrice(value));
+    (e) => {
+      validateHandler(setPriceWarn, e.target.value, /\d/g);
+      dispatch(changePrice(e.target.value));
     },
-    [price, changePrice]
+    [price]
   );
 
-  const changeRateHandler = useCallback(
-    (el) => {
-      return dispatch(changeRate(el));
-    },
-    [rateId, changeRate]
-  );
-
-  const changeStatusHandler = useCallback(
-    (el) => {
-      return dispatch(changeOrderStatus(el));
-    },
-    [orderStatusId, changeOrderStatus]
-  );
-
-  const changeIsNeedChildChairHandler = useCallback(
-    (active) => {
-      return dispatch(changeIsNeedChildChair(active));
-    },
-    [isNeedChildChair, changeIsNeedChildChair]
-  );
-
-  const changeIsFullTankHandler = useCallback(
-    (active) => {
-      return dispatch(changeIsFullTank(active));
-    },
-    [isFullTank, changeIsFullTank]
-  );
-
-  const changeIsRightWheelHandler = useCallback(
-    (active) => {
-      return dispatch(changeIsRightWheel(active));
-    },
-    [isRightWheel, changeIsRightWheel]
-  );
-
-  const onClickCancelHandler = useCallback(
-    (val) => {
-      return dispatch(getOrder(val));
-    },
-    [getOrder, openedCancelPopup, emptyOrder]
-  );
   return (
     <section className="order-card">
       <ContentContainer>
@@ -186,22 +110,35 @@ export function OrderCardInner() {
           title={"Настройка заказа"}
           checkTextObj={editOrder}
           checkTextKey="updatedAt"
-          onClickApply={() => dispatch(openedApplyPopup(true))}
-          onClickCreate={() => dispatch(openedCreatePopup(true))}
+          onClickApply={() =>
+            priceWarn ? () => {} : dispatch(openedApplyPopup(true))
+          }
+          onClickCreate={() =>
+            priceWarn ? () => {} : dispatch(openedCreatePopup(true))
+          }
           onClickCancel={() => dispatch(openedCancelPopup(true))}
           onClickDelete={() => dispatch(openedDeletePopup(true))}
         >
           <div className="order-card__container">
             <div className="order-card__main">
-              
+              <div className="order-card__main-wrapper">
+                <Selector array={cars} content={"name"} onClick={changeCar}>
+                  {carId
+                    ? carId.name.length
+                      ? carId.name
+                      : "Модель машины"
+                    : "Модель машины"}
+                </Selector>
+              </div>
+              <div className="order-card__main-wrapper">
+                <Selector array={colors} content={"el"} onClick={changeColor}>
+                  {color ? color : "Цвет"}
+                </Selector>
+              </div>
             </div>
             <div className="order-card__address">
               <div className="order-card__address-wrapper">
-                <Selector
-                  array={cities}
-                  content={"name"}
-                  onClick={changeCityHandler}
-                >
+                <Selector array={cities} content={"name"} onClick={changeCity}>
                   {cityId
                     ? cityId.name.length
                       ? cityId.name
@@ -214,7 +151,7 @@ export function OrderCardInner() {
                   array={points ? points : []}
                   content={"address"}
                   sortId={cityId ? cityId.id : ""}
-                  onClick={changePointHandler}
+                  onClick={changePoint}
                 >
                   {`${
                     pointId
@@ -238,7 +175,9 @@ export function OrderCardInner() {
                   type={"date"}
                   required
                   value={dateBeggin ? dateBeggin : ""}
-                  onChange={changeDateFromHandler}
+                  onChange={(e) =>
+                    dispatch(changeDateFrom(new Date(e.target.value).getTime()))
+                  }
                 >
                   Дата начала аренды
                 </Input>
@@ -248,7 +187,9 @@ export function OrderCardInner() {
                   type={"date"}
                   value={dateEnd ? dateEnd : ""}
                   required
-                  onChange={changeDateToHandler}
+                  onChange={(e) =>
+                    dispatch(changeDateTo(new Date(e.target.value).getTime()))
+                  }
                 >
                   Дата конца аренды
                 </Input>
@@ -264,7 +205,7 @@ export function OrderCardInner() {
                         key={el.id}
                         item={el}
                         active={rateId ? el.id === rateId.id : null}
-                        onClick={changeRateHandler}
+                        onClick={changeRate}
                       >
                         {el.rateTypeId.name}, {el.price} ₽
                       </Radio>
@@ -274,27 +215,29 @@ export function OrderCardInner() {
             </div>
             <div className="order-card__addons">
               <h2 className="order-card__title">Дополнительные опции</h2>
-              <CheckboxPrimary
-                active={isFullTank}
-                onClick={changeIsFullTankHandler}
-              >
+              <CheckboxPrimary active={isFullTank} onClick={changeIsFullTank}>
                 Полный бак
               </CheckboxPrimary>
               <CheckboxPrimary
                 active={isNeedChildChair}
-                onClick={changeIsNeedChildChairHandler}
+                onClick={changeIsNeedChildChair}
               >
                 Детское кресло
               </CheckboxPrimary>
               <CheckboxPrimary
                 active={isRightWheel}
-                onClick={changeIsRightWheelHandler}
+                onClick={changeIsRightWheel}
               >
                 Правый руль
               </CheckboxPrimary>
             </div>
             <div className="order-card__price">
-              <Input value={price} onChange={changePriceHandler}>
+              <Input
+                value={price}
+                warning={priceWarn}
+                warningText={"Недопустимый символ"}
+                onChange={(e) => changePriceHandler(e)}
+              >
                 Цена
               </Input>
             </div>
@@ -308,7 +251,7 @@ export function OrderCardInner() {
                           key={el.id}
                           item={el}
                           active={el.id === orderStatusId.id}
-                          onClick={changeStatusHandler}
+                          onClick={changeOrderStatus}
                         >
                           {el.name}
                         </Radio>

@@ -50,20 +50,6 @@ const AddressInner = () => {
     }
   }, []);
 
-  const changeNameHandler = useCallback(
-    (val) => {
-      return dispatch(changePointName(val));
-    },
-    [name, changePointName]
-  );
-
-  const changeAddressHandler = useCallback(
-    (val) => {
-      return dispatch(changeAddressName(val));
-    },
-    [address, changeAddressName]
-  );
-
   const changeCityInPointHandler = useCallback(
     (val) => {
       return dispatch(changeCityInPoint(val));
@@ -137,10 +123,16 @@ const AddressInner = () => {
         </Table>
       </ContentContainer>
       <Popup type="create">
-        <Input value={name} onChange={changeNameHandler}>
+        <Input
+          value={name}
+          onChange={(e) => dispatch(changePointName(e.target.value))}
+        >
           Название пункта выдачи
         </Input>
-        <Input value={address} onChange={changeAddressHandler}>
+        <Input
+          value={address}
+          onChange={(e) => dispatch(changeAddressName(e.target.value))}
+        >
           Адресс пункта выдачи
         </Input>
         <Selector
@@ -160,10 +152,16 @@ const AddressInner = () => {
         </div>
       </Popup>
       <Popup type="change">
-        <Input value={name} onChange={changeNameHandler}>
+        <Input
+          value={name}
+          onChange={(e) => dispatch(changePointName(e.target.value))}
+        >
           Название пункта выдачи
         </Input>
-        <Input value={address} onChange={changeAddressHandler}>
+        <Input
+          value={address}
+          onChange={(e) => dispatch(changeAddressName(e.target.value))}
+        >
           Пункт выдачи
         </Input>
         <Selector

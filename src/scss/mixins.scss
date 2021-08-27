@@ -65,7 +65,7 @@
 @mixin button {
   font-family: $mainFont;
   display: flex;
-  flex-direction: column;
+  line-height: 30px;
   justify-content: center;
   align-content: center;
   align-self: center;
@@ -78,6 +78,14 @@
   background-color: $buttonPrimary;
   transition: 0.2s all ease-in-out;
   text-decoration: none;
+  min-width: 96px;
+  &:disabled {
+    background-color: $mainGrayDark;
+    color: $dotsGray;
+    &:hover {
+      background-color: $mainGrayDark;
+    }
+  }
   &:hover {
     background-color: $buttonHover;
   }
@@ -85,6 +93,13 @@
     background-color: $mainRed;
     &:hover {
       background-color: $buttonHoverWarning;
+    }
+    &:disabled {
+      background-color: $mainGrayDark;
+      color: $dotsGray;
+      &:hover {
+        background-color: $mainGrayDark;
+      }
     }
   }
   &.cancel {
@@ -94,12 +109,19 @@
       background-color: $buttonCancelHover;
       color: #fff;
     }
+    &:disabled {
+      background-color: $mainGrayDark;
+      color: $dotsGray;
+      &:hover {
+        background-color: $mainGrayDark;
+      }
+    }
   }
   &.add {
     background-color: $mainGreen;
     flex-direction: row;
     height: 30px;
-    width: 96px;
+
     align-items: center;
     justify-content: space-between;
     margin-left: 8px;

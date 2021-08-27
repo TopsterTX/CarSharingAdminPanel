@@ -1,0 +1,21 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.cities-item {
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+  &__part {
+    max-width: min-content;
+  }
+  &__name {
+    color: $mainBlack;
+    display: block;
+    font-size: 19px;
+    margin-bottom: 8px;
+  }
+}

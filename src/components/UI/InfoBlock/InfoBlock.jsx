@@ -55,6 +55,13 @@ const InfoBlockInner = ({
     }
   }, []);
 
+  const changeDescriptionHandler = useCallback(
+    (val) => {
+      return dispatch(onChangeDescription(val));
+    },
+    [valueDescription, onChangeDescription]
+  );
+
   return (
     <section className="info-block">
       <div className="info-block__picture">
@@ -92,7 +99,7 @@ const InfoBlockInner = ({
         <textarea
           className="info-block__description-text"
           value={valueDescription}
-          onChange={(e) => onChangeDescription(e.target.value)}
+          onChange={(e) => changeDescriptionHandler(e.target.value)}
         />
       </div>
     </section>

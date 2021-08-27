@@ -6,6 +6,7 @@ import { ButtonRoute } from "../../UI/ButtonRoute/ButtonRoute";
 import { deleteCity } from "../../../redux/actions/citiesCard/citiesCard";
 import { changePopup } from "../../../redux/actions/popup/popup";
 import { getEditCity } from "../../../redux/actions/citiesCard/citiesCard";
+import "./CitiesItem.scss";
 
 const CitiesItemInner = ({ city }) => {
   const dispatch = useDispatch();
@@ -23,9 +24,9 @@ const CitiesItemInner = ({ city }) => {
     <div className="cities-item">
       <ul className="cities-item__container">
         <li className="cities-item__part">
-          <span>{name}</span>
+          <span className="cities-item__name">{name}</span>
         </li>
-        <li className="cities-item__part">
+        <li className="cities-item__part ">
           <ButtonsContainer>
             <ButtonRoute
               to={"/admin/panel/cities"}

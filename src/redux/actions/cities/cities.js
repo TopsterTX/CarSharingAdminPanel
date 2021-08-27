@@ -8,7 +8,13 @@ export const getCities = () => async (dispatch) => {
     dispatch(showLoader(true));
     return await api("db/city")
       .then((res) => {
-        dispatch({ type: GET_CITIES, payload: res.data.data });
+        if (res.status >= 200 && res.status < 300) {
+          return dispatch({ type: GET_CITIES, payload: res.data.data });
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
       })
       .catch((err) => {
         dispatch(warningNotice(true));
@@ -29,7 +35,16 @@ export const getCitiesOnPage =
       dispatch(showLoader(true));
       return await api(`db/city?limit=5&page=${page}`)
         .then((res) => {
-          dispatch({ type: GET_CITIES_ON_PAGE, payload: res.data.data });
+          if (res.status >= 200 && res.status < 300) {
+            return dispatch({
+              type: GET_CITIES_ON_PAGE,
+              payload: res.data.data,
+            });
+          } else {
+            let error = new Error(res.statusText);
+            error.response = res;
+            throw error;
+          }
         })
         .catch((err) => {
           dispatch(warningNotice(true));

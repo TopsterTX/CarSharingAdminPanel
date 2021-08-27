@@ -40,7 +40,7 @@ const defaultState = {
     },
     {
       id: v4(),
-      title: "Меню 5",
+      title: "Города",
       icon: <ErrorIcon className="aside__item-icon"></ErrorIcon>,
       path: "/admin/panel/cities",
     },

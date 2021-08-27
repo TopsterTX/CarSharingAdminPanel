@@ -14,6 +14,7 @@ const SettingInner = ({
   onClickCancel = () => {},
   onClickDelete = () => {},
   onClickCreate = () => {},
+  buttonsDisabled = false,
 }) => {
   const { editCar } = useSelector((state) => state.carCard);
 
@@ -44,14 +45,22 @@ const SettingInner = ({
           <div className="setting__main">{children}</div>
           <div className="setting__buttons">
             <div className="setting__buttons-wrapper">
-              <Button onClick={applyOrCreateHandler()}>
+              <Button onClick={applyOrCreateHandler()} disabled={true}>
                 {checkText(checkTextKey, checkTextObj)}
               </Button>
-              <Button type={"cancel"} onClick={onClickCancel}>
+              <Button
+                type={"cancel"}
+                onClick={onClickCancel}
+                disabled={buttonsDisabled}
+              >
                 Отменить
               </Button>
             </div>
-            <Button type={"warning"} onClick={onClickDelete}>
+            <Button
+              type={"warning"}
+              onClick={onClickDelete}
+              disabled={buttonsDisabled}
+            >
               Удалить
             </Button>
           </div>
@@ -62,6 +71,7 @@ const SettingInner = ({
 };
 
 SettingInner.propTypes = {
+  buttonsDisabled: PropTypes.bool,
   title: PropTypes.string.isRequired,
   type: PropTypes.string,
   children: PropTypes.any.isRequired,

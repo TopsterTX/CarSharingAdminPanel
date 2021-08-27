@@ -16,7 +16,9 @@ const OrdersInner = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOrder());
+    if (!orders.length) {
+      dispatch(getOrder());
+    }
   }, []);
 
   return (
