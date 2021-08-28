@@ -38,6 +38,7 @@ import {
 } from "../../redux/actions/warningPopup/warningPopup";
 import { validateHandler } from "../CarCard/CarCard";
 import "./OrderCard.scss";
+import { showLoader } from "./../../redux/actions/loader/loader";
 
 export function OrderCardInner() {
   const dispatch = useDispatch();
@@ -77,6 +78,7 @@ export function OrderCardInner() {
     : "0000-00-00";
 
   useEffect(() => {
+    dispatch(showLoader(true));
     if (!cars.length) {
       dispatch(getCars());
     }
@@ -94,12 +96,38 @@ export function OrderCardInner() {
     }
   }, []);
 
+  useEffect(() => {
+    if (
+      cars.length &&
+      cities.length &&
+      points.length &&
+      rates.length &&
+      orderStatus.length
+    ) {
+      dispatch(showLoader(false));
+    }
+  }, [cars, cities, points, rates, orderStatus]);
+
   const changePriceHandler = useCallback(
     (e) => {
       validateHandler(setPriceWarn, e.target.value, /\d/g);
       dispatch(changePrice(e.target.value));
     },
     [price]
+  );
+
+  const changeDateFromHandler = useCallback(
+    (e) => {
+      return dispatch(changeDateFrom(new Date(e.target.value).getTime()));
+    },
+    [dateFrom]
+  );
+
+  const changeDateToHandler = useCallback(
+    (e) => {
+      return dispatch(changeDateTo(new Date(e.target.value).getTime()));
+    },
+    [dateTo]
   );
 
   return (
@@ -175,9 +203,8 @@ export function OrderCardInner() {
                   type={"date"}
                   required
                   value={dateBeggin ? dateBeggin : ""}
-                  onChange={(e) =>
-                    dispatch(changeDateFrom(new Date(e.target.value).getTime()))
-                  }
+                  dispatched={true}
+                  onChange={changeDateFromHandler}
                 >
                   Дата начала аренды
                 </Input>
@@ -187,9 +214,8 @@ export function OrderCardInner() {
                   type={"date"}
                   value={dateEnd ? dateEnd : ""}
                   required
-                  onChange={(e) =>
-                    dispatch(changeDateTo(new Date(e.target.value).getTime()))
-                  }
+                  dispatched={true}
+                  onChange={changeDateToHandler}
                 >
                   Дата конца аренды
                 </Input>
@@ -200,17 +226,19 @@ export function OrderCardInner() {
               <h2 className="order-card__title">Тарифы</h2>
               <div className="order-card__rate-block">
                 {rates
-                  ? rates.map((el) => (
-                      <Radio
-                        key={el.id}
-                        item={el}
-                        active={rateId ? el.id === rateId.id : null}
-                        onClick={changeRate}
-                      >
-                        {el.rateTypeId.name}, {el.price} ₽
-                      </Radio>
-                    ))
-                  : ""}
+                  ? rates.map((el) => {
+                      return (
+                        <Radio
+                          key={el.id}
+                          item={el}
+                          active={rateId ? el.id === rateId.id : false}
+                          onClick={changeRate}
+                        >
+                          {el.rateTypeId.name}, {el.price} ₽
+                        </Radio>
+                      );
+                    })
+                  : null}
               </div>
             </div>
             <div className="order-card__addons">
@@ -236,7 +264,7 @@ export function OrderCardInner() {
                 value={price}
                 warning={priceWarn}
                 warningText={"Недопустимый символ"}
-                onChange={(e) => changePriceHandler(e)}
+                onChange={changePriceHandler}
               >
                 Цена
               </Input>

@@ -29,7 +29,6 @@ export const cancelEditCity = () => {
 
 export const addCity = (city) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
     return await api
       .post("db/city", JSON.stringify(city), {
         headers: { "Content-Type": "application/json" },
@@ -54,7 +53,6 @@ export const addCity = (city) => async (dispatch) => {
             name: "",
           })
         );
-        dispatch(showLoader(false));
       });
   } catch (e) {
     console.error(e);

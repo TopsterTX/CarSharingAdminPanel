@@ -9,6 +9,7 @@ import { getOrder as getOrderCard } from "../../redux/actions/orderCard/orderCar
 import { getOrder } from "../../redux/actions/order/order";
 import "./Orders.scss";
 import { AddButton } from "./../UI/AddButton/AddButton";
+import { showLoader } from "./../../redux/actions/loader/loader";
 
 const OrdersInner = () => {
   const { configureFilter, orders } = useSelector((state) => state.order);
@@ -16,10 +17,18 @@ const OrdersInner = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(showLoader(true));
     if (!orders.length) {
       dispatch(getOrder());
     }
+    
   }, []);
+
+  useEffect(() => {
+    if (orders.length) {
+      dispatch(showLoader(false));
+    }
+  }, [orders]);
 
   return (
     <section className="orders">

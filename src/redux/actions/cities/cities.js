@@ -1,11 +1,9 @@
 import api from "../../../axios/axios";
 import { warningNotice, openNotice } from "../notice/notice";
-import { showLoader } from "../loader/loader";
 import { GET_CITIES, GET_CITIES_ON_PAGE } from "../../reducers/cities/cities";
 
 export const getCities = () => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
     return await api("db/city")
       .then((res) => {
         if (res.status >= 200 && res.status < 300) {
@@ -20,9 +18,6 @@ export const getCities = () => async (dispatch) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
       })
-      .finally((res) => {
-        dispatch(showLoader(false));
-      });
   } catch (e) {
     console.error(e);
   }
@@ -32,7 +27,6 @@ export const getCitiesOnPage =
   (page = 0) =>
   async (dispatch) => {
     try {
-      dispatch(showLoader(true));
       return await api(`db/city?limit=5&page=${page}`)
         .then((res) => {
           if (res.status >= 200 && res.status < 300) {
@@ -50,9 +44,6 @@ export const getCitiesOnPage =
           dispatch(warningNotice(true));
           dispatch(openNotice(true));
         })
-        .finally((res) => {
-          dispatch(showLoader(false));
-        });
     } catch (e) {
       console.error(e);
     }

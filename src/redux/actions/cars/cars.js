@@ -3,13 +3,11 @@ import {
   GET_CARS_ON_PAGE,
   CHANGE_PAGE,
 } from "../../reducers/cars/cars";
-import { showLoader } from "../loader/loader";
 import { warningNotice, openNotice } from "../notice/notice";
 import api from "../../../axios/axios";
 
 export const getCarsOnPage = (page) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
     return await api
       .get(`db/car?limit=3&page=${page}`, {
         headers: {
@@ -29,9 +27,6 @@ export const getCarsOnPage = (page) => async (dispatch) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
       })
-      .finally((res) => {
-        dispatch(showLoader(false));
-      });
   } catch (e) {
     console.error(e);
   }
@@ -39,7 +34,6 @@ export const getCarsOnPage = (page) => async (dispatch) => {
 
 export const getCars = () => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
     return await api
       .get(`db/car`, {
         headers: {
@@ -59,9 +53,6 @@ export const getCars = () => async (dispatch) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
       })
-      .finally((res) => {
-        dispatch(showLoader(false));
-      });
   } catch (e) {
     console.error(e);
   }

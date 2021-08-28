@@ -7,7 +7,6 @@ import "./Input.scss";
 function InputInner({
   id,
   addButton,
-  disableButton = false,
   children = "",
   warning,
   warningText,
@@ -28,12 +27,16 @@ function InputInner({
     [onClickButton]
   );
 
-  const changeHandler = useCallback(
-    (e) => {
-      return onChange(e);
-    },
-    [value, onChange]
-  );
+  // const changeHandler = useCallback(
+  //   (e) => {
+  //     if (dispatched) {
+  //       return dispatch(onChange(e.target.value));
+  //     } else {
+  //       onChange(e);
+  //     }
+  //   },
+  //   [value, onChange]
+  // );
 
   return (
     <div className={`input ${addButton ? "plus" : null}`}>
@@ -47,7 +50,7 @@ function InputInner({
           id={x}
           require={required ? "true" : "false"}
           value={value}
-          onChange={(e) => changeHandler(e)}
+          onChange={onChange}
         />
         <button
           className={`input__plus ${addButton ? "active" : null}`}

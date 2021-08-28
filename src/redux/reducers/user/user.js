@@ -1,5 +1,5 @@
 const defaultState = {
-  isUserLogin: true,
+  isUserLogin: false,
   password: "",
   username: "",
   refreshToken: null,

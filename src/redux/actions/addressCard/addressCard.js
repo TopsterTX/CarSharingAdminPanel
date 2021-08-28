@@ -1,6 +1,6 @@
 import { openNotice, warningNotice } from "../notice/notice";
 import api from "./../../../axios/axios";
-import { showLoader } from "./../loader/loader";
+
 import {
   CHANGE_POINT_NAME,
   CHANGE_ADDRESS_NAME,
@@ -45,7 +45,7 @@ export const cancelEditPoint = () => {
 
 export const addPoint = (point) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
+    
     return await api
       .post("db/point", JSON.stringify(point), {
         headers: { "Content-Type": "application/json" },
@@ -75,7 +75,7 @@ export const addPoint = (point) => async (dispatch) => {
             },
           })
         );
-        dispatch(showLoader(false));
+        
       });
   } catch (e) {
     console.error(e);
@@ -84,7 +84,7 @@ export const addPoint = (point) => async (dispatch) => {
 
 export const deletePoint = (id) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
+    
     return await api
       .delete(`db/point/${id}`)
       .then((res) => {
@@ -112,7 +112,7 @@ export const deletePoint = (id) => async (dispatch) => {
             },
           })
         );
-        dispatch(showLoader(false));
+        
       });
   } catch (e) {
     console.error(e);
@@ -121,7 +121,7 @@ export const deletePoint = (id) => async (dispatch) => {
 
 export const changePoint = (point, id) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
+    
     return await api
       .put(`db/point/${id}`, JSON.stringify(point), {
         headers: { "Content-Type": "application/json" },
@@ -151,7 +151,7 @@ export const changePoint = (point, id) => async (dispatch) => {
             },
           })
         );
-        dispatch(showLoader(false));
+        
       });
   } catch (e) {
     console.error(e);

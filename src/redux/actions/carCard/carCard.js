@@ -103,7 +103,6 @@ export const deleteColor = (index) => {
 
 export const getCategories = () => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
     return await api("db/category")
       .then((res) => {
         if (res.status >= 200 && res.status < 300) {
@@ -121,9 +120,6 @@ export const getCategories = () => async (dispatch) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
       })
-      .finally((res) => {
-        dispatch(showLoader(false));
-      });
   } catch (e) {
     console.error(e);
   }
@@ -131,7 +127,6 @@ export const getCategories = () => async (dispatch) => {
 
 export const sendChangesCar = (id, car, emptyCar) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
     await api
       .put(
         `db/car/${id}`,
@@ -157,7 +152,6 @@ export const sendChangesCar = (id, car, emptyCar) => async (dispatch) => {
       })
       .finally((res) => {
         dispatch(getEditCar(emptyCar));
-        dispatch(showLoader(false));
       });
   } catch (e) {
     console.error(e);
@@ -178,7 +172,6 @@ export const addImage = (img) => {
 
 export const deleteCar = (id, emptyCar) => (dispatch) => {
   try {
-    dispatch(showLoader(true));
     api
       .delete(`db/car/${id}`)
       .then((res) => {
@@ -196,14 +189,12 @@ export const deleteCar = (id, emptyCar) => (dispatch) => {
       })
       .finally(() => {
         dispatch(getEditCar(emptyCar));
-        dispatch(showLoader(false));
       });
   } catch (e) {}
 };
 
 export const addCar = (car, emptyCar) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
     await api
       .post(`db/car/`, JSON.stringify(car), {
         headers: {
@@ -225,7 +216,6 @@ export const addCar = (car, emptyCar) => async (dispatch) => {
       })
       .finally(() => {
         dispatch(getEditCar(emptyCar));
-        dispatch(showLoader(false));
       });
   } catch (e) {
     console.error(e);

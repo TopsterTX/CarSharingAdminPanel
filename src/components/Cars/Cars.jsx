@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getCarsOnPage } from "../../redux/actions/cars/cars";
 import { getCategories } from "../../redux/actions/carCard/carCard";
 import "./Cars.scss";
+import { showLoader } from "./../../redux/actions/loader/loader";
 
 export default React.memo(function Cars() {
   const { carsOnPage, configureFilter, page } = useSelector(
@@ -19,13 +20,17 @@ export default React.memo(function Cars() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!carsOnPage.length ) {
+    dispatch(showLoader(true));
+    if (!carsOnPage.length) {
       dispatch(getCarsOnPage(page));
     }
-    if (!categories.length ) {
-      dispatch(getCategories());
-    }
   }, [page]);
+
+  useEffect(() => {
+    if (carsOnPage.length > 0) {
+      dispatch(showLoader(false));
+    }
+  }, [carsOnPage]);
 
   return (
     <section className="cars">

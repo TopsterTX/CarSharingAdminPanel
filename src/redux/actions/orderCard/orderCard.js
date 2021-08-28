@@ -110,7 +110,6 @@ export const changeDateFrom = (value) => {
 
 export const addOrder = (order, empty) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
     await api
       .post(`db/order/`, JSON.stringify(order), {
         headers: {
@@ -132,7 +131,6 @@ export const addOrder = (order, empty) => async (dispatch) => {
       })
       .finally((res) => {
         dispatch(getOrder(empty));
-        dispatch(showLoader(false));
       });
   } catch (e) {
     console.error(e);

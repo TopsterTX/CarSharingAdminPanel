@@ -7,11 +7,11 @@ import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Input } from "../UI/Input/Input";
 import { useSelector, useDispatch } from "react-redux";
 import { AddressItem } from "./AddressItem/AddressItem";
-import { showPopup } from "../../redux/actions/popup/popup";
 import {
   getPointsOnPage,
   getPoints,
 } from "../../redux/actions/address/address";
+import { showLoader } from "./../../redux/actions/loader/loader";
 import { getCities } from "../../redux/actions/cities/cities";
 import "./Address.scss";
 import { Selector } from "./../UI/Selector/Selector";
@@ -39,6 +39,7 @@ const AddressInner = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(showLoader(true));
     if (!pointsOnPage.length) {
       dispatch(getPointsOnPage());
     }
@@ -49,6 +50,12 @@ const AddressInner = () => {
       dispatch(getCities());
     }
   }, []);
+
+  useEffect(() => {
+    if (pointsOnPage.length && points.length  && cities.length) {
+      dispatch(showLoader(false));
+    }
+  }, [pointsOnPage, points, cities]);
 
   const changeCityInPointHandler = useCallback(
     (val) => {

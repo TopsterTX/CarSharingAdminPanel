@@ -15,6 +15,7 @@ import {
   changeCityName,
   addCity,
 } from "../../redux/actions/citiesCard/citiesCard";
+import { showLoader } from "./../../redux/actions/loader/loader";
 
 const CitiesInner = () => {
   const dispatch = useDispatch();
@@ -25,12 +26,6 @@ const CitiesInner = () => {
   } = useSelector((state) => state.cities);
   const { editCity } = useSelector((state) => state.citiesCard);
   const { name, id } = editCity;
-
-  useEffect(() => {
-    if (!citiesOnPage.length) {
-      dispatch(getCitiesOnPage(1));
-    }
-  }, []);
 
   const changeCityHandler = useCallback(
     (val, ID) => {
@@ -67,6 +62,19 @@ const CitiesInner = () => {
     );
     dispatch(createPopup(false));
   }, [getEditCity, createPopup]);
+
+  useEffect(() => {
+    dispatch(showLoader(true));
+    if (!citiesOnPage.length) {
+      dispatch(getCitiesOnPage(1));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (citiesOnPage.length > 0) {
+      dispatch(showLoader(false));
+    }
+  }, [citiesOnPage]);
 
   return (
     <section className="cities">

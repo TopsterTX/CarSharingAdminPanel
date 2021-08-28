@@ -6,6 +6,8 @@ import {
 } from "../../reducers/user/user";
 import api from "../../../axios/axios";
 import { showLoader } from "./../loader/loader";
+import { warningNotice } from "../notice/notice";
+import { openNotice } from "../notice/notice";
 
 export const userLogin = (
   isUserLogin,
@@ -38,20 +40,28 @@ export const userAuthorize = (body, basicKey) => async (dispatch) => {
           Authorization: `Basic ${basicKey}`,
         },
       })
-      .then((res) =>
-        dispatch(
-          userLogin(
-            true,
-            res.data.refresh_token,
-            res.data.access_token,
-            res.data.user_id,
-            false,
-            basicKey
-          )
-        )
-      )
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          dispatch(
+            userLogin(
+              true,
+              res.data.refresh_token,
+              res.data.access_token,
+              res.data.user_id,
+              false,
+              basicKey
+            )
+          );
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
+      })
       .catch((err) => {
         dispatch(userLogin(false, null, null, null, true));
+        dispatch(warningNotice(true));
+        dispatch(openNotice(true));
       })
       .finally((res) => {
         dispatch(showLoader(false));
@@ -63,9 +73,25 @@ export const userAuthorize = (body, basicKey) => async (dispatch) => {
 
 export const userLogout = (access) => async (dispatch) => {
   try {
+    dispatch(showLoader(true));
     await api
       .post("auth/logout")
-      .then((res) => dispatch(userLogin(false, null, null, null, false, null)));
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          return dispatch(userLogin(false, null, null, null, false, null));
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
+      })
+      .catch((err) => {
+        dispatch(warningNotice(true));
+        dispatch(openNotice(true));
+      })
+      .finally(() => {
+        dispatch(showLoader(false));
+      });
   } catch (e) {
     console.error(e);
   }
