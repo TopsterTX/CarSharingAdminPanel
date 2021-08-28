@@ -119,7 +119,7 @@ export const getCategories = () => async (dispatch) => {
       .catch((err) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
-      })
+      });
   } catch (e) {
     console.error(e);
   }
@@ -128,17 +128,13 @@ export const getCategories = () => async (dispatch) => {
 export const sendChangesCar = (id, car, emptyCar) => async (dispatch) => {
   try {
     await api
-      .put(
-        `db/car/${id}`,
-        JSON.stringify(car),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      .put(`db/car/${id}`, JSON.stringify(car), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 300) {
+        if (res.status >= 200 && res.status < 300) {
           dispatch(openNotice(true));
         } else {
           let error = new Error(res.statusText);
@@ -175,7 +171,7 @@ export const deleteCar = (id, emptyCar) => (dispatch) => {
     api
       .delete(`db/car/${id}`)
       .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 300) {
+        if (res.status >= 200 && res.status < 300) {
           dispatch(openNotice(true));
         } else {
           let error = new Error(res.statusText);
@@ -184,8 +180,8 @@ export const deleteCar = (id, emptyCar) => (dispatch) => {
         }
       })
       .catch(() => {
-        dispatch(showLoader(false));
         dispatch(warningNotice(true));
+        dispatch(openNotice(true));
       })
       .finally(() => {
         dispatch(getEditCar(emptyCar));
@@ -202,7 +198,7 @@ export const addCar = (car, emptyCar) => async (dispatch) => {
         },
       })
       .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 300) {
+        if (res.status >= 200 && res.status < 300) {
           dispatch(openNotice(true));
         } else {
           let error = new Error(res.statusText);
@@ -210,9 +206,9 @@ export const addCar = (car, emptyCar) => async (dispatch) => {
           throw error;
         }
       })
-      .catch(() => {
-        dispatch(showLoader(false));
+      .catch((err) => {
         dispatch(warningNotice(true));
+        dispatch(openNotice(true));
       })
       .finally(() => {
         dispatch(getEditCar(emptyCar));

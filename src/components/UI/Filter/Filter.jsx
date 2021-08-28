@@ -32,9 +32,11 @@ const FilterInner = ({ filterItems, buttons, addonComponent = <></> }) => {
           {buttons
             ? buttons.map(({ text, id, type, onClick }) => {
                 return (
-                  <Button key={id} type={type} onClick={onClick}>
-                    {text}
-                  </Button>
+                  <div className="filter__button-wrapper-item">
+                    <Button key={id} type={type} onClick={onClick}>
+                      {text}
+                    </Button>
+                  </div>
                 );
               })
             : ""}

@@ -27,17 +27,6 @@ function InputInner({
     [onClickButton]
   );
 
-  // const changeHandler = useCallback(
-  //   (e) => {
-  //     if (dispatched) {
-  //       return dispatch(onChange(e.target.value));
-  //     } else {
-  //       onChange(e);
-  //     }
-  //   },
-  //   [value, onChange]
-  // );
-
   return (
     <div className={`input ${addButton ? "plus" : null}`}>
       <label htmlFor={x} className={`input__label`}>
@@ -48,7 +37,7 @@ function InputInner({
           type={type ? type : "text"}
           className={`input__item ${warning ? "warning" : null} `}
           id={x}
-          require={required ? "true" : "false"}
+          require={required ? true : false}
           value={value}
           onChange={onChange}
         />

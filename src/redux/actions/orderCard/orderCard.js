@@ -117,6 +117,7 @@ export const addOrder = (order, empty) => async (dispatch) => {
         },
       })
       .then((res) => {
+        console.log(res);
         if (res.status >= 200 && res.status < 300)
           return dispatch(openNotice(true));
         else {
@@ -126,6 +127,7 @@ export const addOrder = (order, empty) => async (dispatch) => {
         }
       })
       .catch((err) => {
+        console.log(err);
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
       })
