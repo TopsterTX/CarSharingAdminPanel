@@ -6,6 +6,7 @@ import {
 } from "../../reducers/cars/cars";
 import { warningNotice, openNotice } from "../notice/notice";
 import api from "../../../axios/axios";
+import { showLoader } from "./../loader/loader";
 
 export const getCount = (count) => {
   return {
@@ -14,34 +15,40 @@ export const getCount = (count) => {
   };
 };
 
-export const getCarsOnPage = (page) => async (dispatch) => {
-  try {
-    return await api
-      .get(`db/car?limit=3&page=${page}`, {
-        headers: {
-          "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
-        },
-      })
-      .then((res) => {
-        if (res.status >= 200 && res.status < 300) {
-          console.log(res.data);
-          dispatch({ type: GET_CARS_ON_PAGE, payload: res.data.data });
-          return res;
-        } else {
-          let error = new Error(res.statusText);
-          error.response = res;
-          throw error;
-        }
-      })
-      .then((res) => dispatch(getCount(res.data.count)))
-      .catch((err) => {
-        dispatch(warningNotice(true));
-        dispatch(openNotice(true));
-      });
-  } catch (e) {
-    console.error(e);
-  }
-};
+export const getCarsOnPage =
+  (limit = 3, page) =>
+  async (dispatch) => {
+    try {
+      dispatch(showLoader(true));
+      return await api
+        .get(`db/car?limit=${limit}&page=${page}`, {
+          headers: {
+            "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
+          },
+        })
+        .then((res) => {
+          if (res.status >= 200 && res.status < 300) {
+            console.log(res.data);
+            dispatch({ type: GET_CARS_ON_PAGE, payload: res.data.data });
+            return res;
+          } else {
+            let error = new Error(res.statusText);
+            error.response = res;
+            throw error;
+          }
+        })
+        .then((res) => dispatch(getCount(res.data.count)))
+        .catch((err) => {
+          dispatch(warningNotice(true));
+          dispatch(openNotice(true));
+        })
+        .finally(() => {
+          return dispatch(showLoader(false));
+        });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
 export const getCars = () => async (dispatch) => {
   try {

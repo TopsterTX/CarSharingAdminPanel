@@ -1,29 +1,46 @@
 import api from "../../../axios/axios";
-import { GET_POINTS, GET_POINTS_ON_PAGE } from "../../reducers/address/address";
-
+import {
+  GET_COUNT,
+  GET_POINTS,
+  GET_POINTS_ON_PAGE,
+} from "../../reducers/address/address";
 import { openNotice, warningNotice } from "../notice/notice";
+import { showLoader } from "./../loader/loader";
+
+export const getCount = (count) => {
+  return {
+    type: GET_COUNT,
+    payload: count,
+  };
+};
 
 export const getPointsOnPage =
-  (page = 0) =>
+  (limit = 5, page = 0) =>
   async (dispatch) => {
     try {
-      return await api(`db/point?limit=5&page=${page}`)
+      dispatch(showLoader(true));
+      return await api(`db/point?limit=${limit}&page=${page}`)
         .then((res) => {
           if (res.status >= 200 && res.status < 300) {
-            return dispatch({
+            dispatch({
               type: GET_POINTS_ON_PAGE,
               payload: res.data.data,
             });
+            return res;
           } else {
             let error = new Error(res.statusText);
             error.response = res;
             throw error;
           }
         })
+        .then((res) => dispatch(getCount(res.data.count)))
         .catch((err) => {
           dispatch(warningNotice(true));
           dispatch(openNotice(true));
         })
+        .finally(() => {
+          return dispatch(showLoader(false));
+        });
     } catch (e) {
       console.error(e);
     }
@@ -31,7 +48,6 @@ export const getPointsOnPage =
 
 export const getPoints = () => async (dispatch) => {
   try {
-   
     return await api("db/point")
       .then((res) => {
         if (res.status >= 200 && res.status < 300) {
@@ -45,8 +61,7 @@ export const getPoints = () => async (dispatch) => {
       .catch((err) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
-      })
-      
+      });
   } catch (e) {
     console.error(e);
   }

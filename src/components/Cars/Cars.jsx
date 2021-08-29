@@ -12,40 +12,31 @@ import "./Cars.scss";
 import { showLoader } from "./../../redux/actions/loader/loader";
 
 export default React.memo(function Cars() {
-  const { carsOnPage, configureFilter, page } = useSelector(
+  const { carsOnPage, configureFilter, count, limit } = useSelector(
     (state) => state.cars
   );
   const { categories } = useSelector((state) => state.carCard);
   const { emptyCar } = useSelector((state) => state.carCard);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(showLoader(true));
-    if (!carsOnPage.length) {
-      dispatch(getCarsOnPage(page));
-    }
-  }, [page]);
-
-  useEffect(() => {
-    if (carsOnPage.length > 0) {
-      dispatch(showLoader(false));
-    }
-  }, [carsOnPage]);
-
+  const addComponent = (
+    <AddButton
+      onClick={() => dispatch(getEditCar(emptyCar))}
+      to="/admin/panel/card_car"
+    >
+      Автомобиль
+    </AddButton>
+  );
   return (
     <section className="cars">
       <ContentContainer>
         <Title>Список автомобилей</Title>
         <Table
           configureFilter={configureFilter}
-          addonComponent={
-            <AddButton
-              onClick={() => dispatch(getEditCar(emptyCar))}
-              to="/admin/panel/card_car"
-            >
-              Автомобиль
-            </AddButton>
-          }
+          addonComponent={addComponent}
+          divisor={limit}
+          onChangePage={getCarsOnPage}
+          count={count}
         >
           {carsOnPage
             ? carsOnPage.map((el) => {

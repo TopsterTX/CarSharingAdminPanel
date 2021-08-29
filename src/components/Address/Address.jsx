@@ -26,23 +26,25 @@ import {
 } from "../../redux/actions/addressCard/addressCard";
 
 const AddressInner = () => {
+  const dispatch = useDispatch();
   const {
     configureFilter,
     pointsOnPage,
     points = [],
+    limit,
+    count,
   } = useSelector((state) => state.address);
   const { editAddress } = useSelector((state) => state.addressCard);
   const { name, cityId, address, id } = editAddress;
   const { cities = [] } = useSelector((state) => state.cities);
-  console.log(cities);
-
-  const dispatch = useDispatch();
+  const addComponent = (
+    <Button type="add" onClick={() => dispatch(createPopup(true))}>
+      Пункт
+    </Button>
+  );
 
   useEffect(() => {
     dispatch(showLoader(true));
-    if (!pointsOnPage.length) {
-      dispatch(getPointsOnPage());
-    }
     if (!points.length) {
       dispatch(getPoints());
     }
@@ -52,10 +54,10 @@ const AddressInner = () => {
   }, []);
 
   useEffect(() => {
-    if (pointsOnPage.length && points.length  && cities.length) {
+    if (points.length && cities.length) {
       dispatch(showLoader(false));
     }
-  }, [pointsOnPage, points, cities]);
+  }, [points, cities]);
 
   const changeCityInPointHandler = useCallback(
     (val) => {
@@ -116,11 +118,10 @@ const AddressInner = () => {
         <Title>Адреса</Title>
         <Table
           configureFilter={configureFilter}
-          addonComponent={
-            <Button type="add" onClick={() => dispatch(createPopup(true))}>
-              Пункт
-            </Button>
-          }
+          addonComponent={addComponent}
+          onChangePage={getPointsOnPage}
+          divisor={limit}
+          count={count}
         >
           {pointsOnPage
             ? pointsOnPage.map((el) => {

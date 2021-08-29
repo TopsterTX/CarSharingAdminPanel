@@ -16,6 +16,7 @@ import {
   addCity,
 } from "../../redux/actions/citiesCard/citiesCard";
 import { showLoader } from "./../../redux/actions/loader/loader";
+import "./Cities.scss";
 
 const CitiesInner = () => {
   const dispatch = useDispatch();
@@ -23,9 +24,17 @@ const CitiesInner = () => {
     cities = [],
     citiesOnPage = [],
     configureFilter,
+    count,
+    limit,
   } = useSelector((state) => state.cities);
   const { editCity } = useSelector((state) => state.citiesCard);
   const { name, id } = editCity;
+
+  const addCompoent = (
+    <Button onClick={() => dispatch(createPopup(true))} type="add">
+      Город
+    </Button>
+  );
 
   const changeCityHandler = useCallback(
     (val, ID) => {
@@ -63,18 +72,6 @@ const CitiesInner = () => {
     dispatch(createPopup(false));
   }, [getEditCity, createPopup]);
 
-  useEffect(() => {
-    dispatch(showLoader(true));
-    if (!citiesOnPage.length) {
-      dispatch(getCitiesOnPage(1));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (citiesOnPage.length > 0) {
-      dispatch(showLoader(false));
-    }
-  }, [citiesOnPage]);
 
   return (
     <section className="cities">
@@ -82,11 +79,10 @@ const CitiesInner = () => {
         <Title>Города</Title>
         <Table
           configureFilter={configureFilter}
-          addonComponent={
-            <Button onClick={() => dispatch(createPopup(true))} type="add">
-              Город
-            </Button>
-          }
+          addonComponent={addCompoent}
+          onChangePage={getCitiesOnPage}
+          divisor={limit}
+          count={count}
         >
           {citiesOnPage
             ? citiesOnPage.map((el) => {

@@ -31,20 +31,29 @@ const defaultState = {
   rates: [],
   ratesType: [],
   orderStatus: [],
+  ordersOnPage: [],
+  count: 0,
+  limit: 3,
 };
 
 const reduce = "ORDER__";
 export const GET_RATES = `${reduce}GET_RATES`;
-export const GET_ORDERS = `${reduce}GET_ORDERS`;
 export const GET_RATES_TYPE = `${reduce}GET_RATES_TYPE`;
 export const GET_ORDER_STATUS = `${reduce}GET_ORDER_STATUS`;
+export const GET_ORDERS_ON_PAGE = `${reduce}GET_ORDERS_ON_PAGE`;
+export const GET_COUNT = `${reduce}GET_COUNT`;
 
 export default (state = defaultState, { type, payload }) => {
   switch (type) {
-    case GET_ORDERS:
+    case GET_COUNT:
       return {
         ...state,
-        orders: payload,
+        count: payload,
+      };
+    case GET_ORDERS_ON_PAGE:
+      return {
+        ...state,
+        ordersOnPage: payload,
       };
     case GET_RATES:
       return {

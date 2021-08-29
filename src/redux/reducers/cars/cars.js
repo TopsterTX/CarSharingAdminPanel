@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const defaultState = {
   count: 0,
-  page: 1,
+  limit: 3,
   carsOnPage: [],
   cars: [],
   configureFilter: {

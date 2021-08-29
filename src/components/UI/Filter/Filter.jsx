@@ -4,7 +4,11 @@ import { Selector } from "../Selector/Selector";
 import { Button } from "../Button/Button";
 import "./Filter.scss";
 
-const FilterInner = ({ filterItems, buttons, addonComponent = <></> }) => {
+const FilterInner = ({
+  filterItems = [],
+  buttons = [],
+  addonComponent = <></>,
+}) => {
   const [active, setActive] = useState(false);
 
   return (

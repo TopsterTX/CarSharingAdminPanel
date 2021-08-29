@@ -44,7 +44,9 @@ export const OrderItem = ({ order, id }) => {
       <ul className="order__item-container">
         <li className="order__item-part order__item-part--wrapper">
           <div className="order__item-part order__item-part--full-width">
-            <Image path={carId ? carId.thumbnail.path : ""} />
+            <Image
+              path={carId ? (carId.thumbnail ? carId.thumbnail.path : "") : ""}
+            />
             <Info {...order} />
           </div>
           <CheckboxOrder

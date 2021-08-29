@@ -6,14 +6,17 @@ import "./Table.scss";
 
 const TableInner = ({
   children = "",
-  configureFilter = {},
-  addonComponent = <></>,
+  configureFilter,
+  addonComponent,
+  onChangePage,
+  divisor,
+  count,
 }) => {
   return (
     <div className="block">
       <Filter {...configureFilter} addonComponent={addonComponent} />
       <div className="block__main">{children}</div>
-      <Pages />
+      <Pages onChangePage={onChangePage} divisor={divisor} count={count} />
     </div>
   );
 };
@@ -25,6 +28,9 @@ TableInner.propTypes = {
       PropTypes.objectOf(PropTypes.string.isRequired).isRequired
     ).isRequired
   ).isRequired,
+  onChangePage: PropTypes.func.isRequired,
+  divisor: PropTypes.number,
+  count: PropTypes.number.isRequired,
 };
 
 export const Table = memo(TableInner);
