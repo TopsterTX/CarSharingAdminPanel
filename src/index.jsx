@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { loadState, saveState } from "./local_storage/localStorage";
 import "./index.scss";
-import { mobileViewport } from "./mobileViewportOption";
 import { App } from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { configureStore } from "./redux/configureStore";
@@ -51,7 +50,6 @@ store.subscribe(() =>
   )
 );
 
-mobileViewport();
 
 ReactDOM.render(
   <React.StrictMode>
