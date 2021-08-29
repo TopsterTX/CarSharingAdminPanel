@@ -28,7 +28,6 @@ export const getCarsOnPage =
         })
         .then((res) => {
           if (res.status >= 200 && res.status < 300) {
-            console.log(res.data);
             dispatch({ type: GET_CARS_ON_PAGE, payload: res.data.data });
             return res;
           } else {

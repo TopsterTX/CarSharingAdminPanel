@@ -14,25 +14,20 @@ const PagesInner = ({ count = 0, onChangePage = () => {}, divisor = 0 }) => {
     leftIndicator,
     curPage,
     rightIndicator,
-    optional = page > 2
+    option = rightIndicator
   ) => {
-    return optional && page <= rightIndicator
+    return page > 2 && page <= option
       ? curPage
       : page <= 2
       ? leftIndicator
-      : page > rightIndicator
+      : page >= rightIndicator
       ? rightIndicator
       : null;
   };
 
-  const middlePageRef = useRef();
-  const leftPageRef = useRef();
-  const rightPageRef = useRef();
-
   let leftPage = pageHandler(2, page - 1, maxPage - 3);
   let middlePage = pageHandler(3, page, maxPage - 2);
-  let rightPage = pageHandler(4, page + 1, maxPage - 1);
-
+  let rightPage = pageHandler(4, page + 1, maxPage - 1, maxPage - 2);
   const leftArrowHandler = () => {
     if (page === 1) return;
     setPage((p) => page - 1);
@@ -81,7 +76,6 @@ const PagesInner = ({ count = 0, onChangePage = () => {}, divisor = 0 }) => {
               maxPage <= 6 ? "none" : null
             }`}
             onClick={(e) => buttonClickedHandler(e)}
-            ref={leftPageRef}
           >
             <span>{leftPage}</span>
           </button>
@@ -90,7 +84,6 @@ const PagesInner = ({ count = 0, onChangePage = () => {}, divisor = 0 }) => {
               page >= 3 && page <= maxPage - 2 ? "active" : null
             } ${maxPage <= 6 ? "none" : null}`}
             onClick={(e) => buttonClickedHandler(e)}
-            ref={middlePageRef}
           >
             <span>{middlePage}</span>
           </button>
@@ -99,7 +92,6 @@ const PagesInner = ({ count = 0, onChangePage = () => {}, divisor = 0 }) => {
               page === maxPage - 1 ? "active" : null
             } ${maxPage <= 6 ? "none" : null}`}
             onClick={(e) => buttonClickedHandler(e)}
-            ref={rightPageRef}
           >
             <span>{rightPage}</span>
           </button>

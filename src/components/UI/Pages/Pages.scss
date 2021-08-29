@@ -8,7 +8,7 @@
     background-color: transparent;
     color: $buttonPrimary;
     font-weight: 900;
-    font-size: 8px;
+    font-size: 15px;
     cursor: pointer;
     transition: 0.2s all;
     &.--left {
@@ -83,6 +83,14 @@
     }
     &.none {
       display: none;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .pages {
+    &__arrow {
+      font-size: 11px;
     }
   }
 }
