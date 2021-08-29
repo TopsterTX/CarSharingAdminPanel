@@ -20,7 +20,7 @@
     span {
       color: $buttonPrimary;
     }
-    @include pagesArrow();
+    // @include pagesArrow();
   }
   &__button {
     cursor: pointer;

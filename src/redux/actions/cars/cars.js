@@ -2,9 +2,17 @@ import {
   GET_CARS,
   GET_CARS_ON_PAGE,
   CHANGE_PAGE,
+  GET_COUNT,
 } from "../../reducers/cars/cars";
 import { warningNotice, openNotice } from "../notice/notice";
 import api from "../../../axios/axios";
+
+export const getCount = (count) => {
+  return {
+    type: GET_COUNT,
+    payload: count,
+  };
+};
 
 export const getCarsOnPage = (page) => async (dispatch) => {
   try {
@@ -16,17 +24,20 @@ export const getCarsOnPage = (page) => async (dispatch) => {
       })
       .then((res) => {
         if (res.status >= 200 && res.status < 300) {
-          return dispatch({ type: GET_CARS_ON_PAGE, payload: res.data.data });
+          console.log(res.data);
+          dispatch({ type: GET_CARS_ON_PAGE, payload: res.data.data });
+          return res;
         } else {
           let error = new Error(res.statusText);
           error.response = res;
           throw error;
         }
       })
+      .then((res) => dispatch(getCount(res.data.count)))
       .catch((err) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
-      })
+      });
   } catch (e) {
     console.error(e);
   }
@@ -52,7 +63,7 @@ export const getCars = () => async (dispatch) => {
       .catch((err) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
-      })
+      });
   } catch (e) {
     console.error(e);
   }
