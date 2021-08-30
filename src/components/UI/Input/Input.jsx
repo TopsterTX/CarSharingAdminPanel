@@ -29,7 +29,10 @@ function InputInner({
 
   return (
     <div className={`input ${addButton ? "plus" : null}`}>
-      <label htmlFor={x} className={`input__label`}>
+      <label
+        htmlFor={x}
+        className={`input__label ${required ? "required" : null}`}
+      >
         {children}
       </label>
       <div className="input__wrapper">

@@ -56,22 +56,24 @@ const LoginInner = () => {
             <div className="login__subtitle">Вход</div>
             <form action="" className="login__form">
               <Input
-                label={"Логин"}
                 warning={isUserLoginFailed}
                 warningText={"Не правильный логин"}
                 onChange={(e) => changeUsernameHandler(e)}
                 value={username}
                 required
-              />
+              >
+                Логин
+              </Input>
               <Input
-                label={"Пароль"}
                 warning={isUserLoginFailed}
                 type={"password"}
                 required
                 value={password}
                 onChange={(e) => changePasswordHandler(e)}
                 warningText={"Не правильный пароль"}
-              />
+              >
+                Пароль
+              </Input>
               <div className="login__buttons">
                 <Button type={"link"}>Запросить доступ</Button>
                 <Button onClick={() => authUser()}>Войти</Button>

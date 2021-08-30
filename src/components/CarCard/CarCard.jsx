@@ -32,13 +32,17 @@ import { addCar, getCategories } from "../../redux/actions/carCard/carCard";
 import { showLoader } from "./../../redux/actions/loader/loader";
 
 export const validateHandler = (setState, string = "", regExp) => {
-  return string
-    ? setState(
-        () =>
-          JSON.stringify(String(string).match(regExp).join("")) !==
-          JSON.stringify(String(string))
-      )
-    : false;
+  if (String(string).match(regExp) === null) {
+    return setState(true);
+  } else if (string !== "") {
+    return setState(
+      () =>
+        JSON.stringify(String(string).match(regExp).join("")) !==
+        JSON.stringify(String(string))
+    );
+  } else {
+    return setState(false);
+  }
 };
 
 function CarCardInner() {
@@ -81,7 +85,7 @@ function CarCardInner() {
 
   const changePriceMinHandler = useCallback(
     (e) => {
-      validateHandler(setPriceMinWarn, e.target.value, /\d/g);
+      validateHandler(setPriceMinWarn, e.target.value, /\d+/);
       dispatch(changePriceMinCar(e.target.value));
     },
     [priceMin]

@@ -67,7 +67,7 @@ const InfoBlockInner = ({
       <div className="info-block__picture">
         <img
           src={imageHandler(path)}
-          alt=""
+          alt="Изображение отсутствует"
           ref={image}
           className="info-block__picture-image"
         />

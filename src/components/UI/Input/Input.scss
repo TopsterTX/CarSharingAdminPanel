@@ -8,10 +8,22 @@
   justify-content: flex-start;
   margin-bottom: 25px;
   &__label {
+    padding-left: 8px;
     font-size: 12px;
     color: $mainBlack;
     margin-bottom: 5px;
+    position: relative;
+    &.required {
+      &::after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        content: "*";
+        color: $mainRed;
+      }
+    }
   }
+
   &__item {
     @include inputLogin();
   }

@@ -223,7 +223,7 @@ export function OrderCardInner() {
               <div className="order-card__date-wrapper"></div>
             </div>
             <div className="order-card__rate">
-              <h2 className="order-card__title">Тарифы</h2>
+              <h2 className="order-card__title"><span>*</span>Тарифы</h2>
               <div className="order-card__rate-block">
                 {rates
                   ? rates.map((el) => {
@@ -265,12 +265,13 @@ export function OrderCardInner() {
                 warning={priceWarn}
                 warningText={"Недопустимый символ"}
                 onChange={changePriceHandler}
+                required
               >
                 Цена
               </Input>
             </div>
             <div className="order-card__status">
-              <h2 className="order-card__title">Статус заказа</h2>
+              <h2 className="order-card__title"><span>*</span>Статус заказа</h2>
               <div className="order-card__status-block">
                 {orderStatus
                   ? orderStatus.map((el) => {
