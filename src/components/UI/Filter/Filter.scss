@@ -46,8 +46,10 @@
     &__wrapper {
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
     }
     &__item {
+      max-width: 110px;
       &:not(:last-child) {
         margin-right: 10px;
       }

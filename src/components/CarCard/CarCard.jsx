@@ -156,7 +156,7 @@ function CarCardInner() {
           >
             <div className="car-card__container">
               <div className="car-card__main">
-                <div className="car-card__main-wrapper">
+                <div className="car-card__main-wrapper car-card__main-wrapper--input">
                   <Input
                     warning={warn}
                     warningText={"Неверно"}
@@ -168,7 +168,7 @@ function CarCardInner() {
                     Модель автомобиля
                   </Input>
                 </div>
-                <div className="car-card__main-wrapper">
+                <div className="car-card__main-wrapper ">
                   <Selector
                     array={categories ? categories : ""}
                     content={"name"}
@@ -179,7 +179,7 @@ function CarCardInner() {
                 </div>
               </div>
               <div className="car-card__main">
-                <div className="car-card__main-wrapper">
+                <div className="car-card__main-wrapper car-card__main-wrapper--input">
                   <Input
                     warning={priceMinWarn}
                     warningText={"Недопустимый символ"}
@@ -191,7 +191,7 @@ function CarCardInner() {
                     Минимальная цена
                   </Input>
                 </div>
-                <div className="car-card__main-wrapper">
+                <div className="car-card__main-wrapper car-card__main-wrapper--input">
                   <Input
                     warningText={"Недопустимый символ"}
                     warning={priceMaxWarn}
@@ -205,17 +205,18 @@ function CarCardInner() {
               </div>
               <div className="car-card__color">
                 <div className="car-card__color-wrapper">
-                  <Input
-                    warningText={"Недопустимый символ"}
-                    warning={colorWarn}
-                    addButton
-                    onClickButton={clickOnPlusHandler}
-                    value={color}
-                    onChange={changeColorCarHandler}
-                  >
-                    Доступные цвета
-                  </Input>
-
+                  <div className="car-card__main-wrapper--input">
+                    <Input
+                      warningText={"Недопустимый символ"}
+                      warning={colorWarn}
+                      addButton
+                      onClickButton={clickOnPlusHandler}
+                      value={color}
+                      onChange={changeColorCarHandler}
+                    >
+                      Доступные цвета
+                    </Input>
+                  </div>
                   <CarColors arr={colors} onClick={deleteColor} />
                 </div>
               </div>

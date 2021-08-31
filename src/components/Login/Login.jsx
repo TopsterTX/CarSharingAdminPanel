@@ -55,25 +55,30 @@ const LoginInner = () => {
           <div className="login__container">
             <div className="login__subtitle">Вход</div>
             <form action="" className="login__form">
-              <Input
-                warning={isUserLoginFailed}
-                warningText={"Не правильный логин"}
-                onChange={(e) => changeUsernameHandler(e)}
-                value={username}
-                required
-              >
-                Логин
-              </Input>
-              <Input
-                warning={isUserLoginFailed}
-                type={"password"}
-                required
-                value={password}
-                onChange={(e) => changePasswordHandler(e)}
-                warningText={"Не правильный пароль"}
-              >
-                Пароль
-              </Input>
+              <div className="login__item--input">
+                <Input
+                  warning={isUserLoginFailed}
+                  warningText={"Не правильный логин"}
+                  onChange={(e) => changeUsernameHandler(e)}
+                  value={username}
+                  required
+                >
+                  Логин
+                </Input>
+              </div>
+              <div className="login__item--input">
+                <Input
+                  warning={isUserLoginFailed}
+                  type={"password"}
+                  required
+                  value={password}
+                  onChange={(e) => changePasswordHandler(e)}
+                  warningText={"Не правильный пароль"}
+                >
+                  Пароль
+                </Input>
+              </div>
+
               <div className="login__buttons">
                 <Button type={"link"}>Запросить доступ</Button>
                 <Button onClick={() => authUser()}>Войти</Button>

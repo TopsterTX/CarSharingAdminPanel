@@ -5,7 +5,7 @@ import { Address } from "./../Address/Address";
 import { Cities } from "../Cities/Cities";
 import { CarCard } from "./../CarCard/CarCard";
 import { OrderCard } from "./../OrderCard/OrderCard";
-import Cars from "./../Cars/Cars";
+import { Cars } from "./../Cars/Cars";
 
 const ContentRouterInner = () => {
   return (

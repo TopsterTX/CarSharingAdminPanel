@@ -4,8 +4,16 @@ import {
   GET_CITIES,
   GET_CITIES_ON_PAGE,
   GET_COUNT,
+  CHANGE_PAGE,
 } from "../../reducers/cities/cities";
 import { showLoader } from "../loader/loader";
+
+export const changePage = (page) => {
+  return {
+    type: CHANGE_PAGE,
+    payload: page,
+  };
+};
 
 export const getCount = (count) => {
   return {

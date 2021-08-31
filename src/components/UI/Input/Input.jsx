@@ -15,6 +15,7 @@ function InputInner({
   required,
   type = "",
   onClickButton = () => {},
+  filterPlaceholder,
 }) {
   let x = id ? id : uuidv4();
   const dispatch = useDispatch();
@@ -27,6 +28,18 @@ function InputInner({
     [onClickButton]
   );
 
+  if (type === "filter") {
+    return (
+      <input
+        type={type ? type : "text"}
+        className={`input__item ${warning ? "warning" : null} filter`}
+        id={x}
+        value={value}
+        onChange={onChange}
+        placeholder={filterPlaceholder}
+      />
+    );
+  }
   return (
     <div className={`input ${addButton ? "plus" : null}`}>
       <label
@@ -67,6 +80,7 @@ InputInner.propTypes = {
   type: PropTypes.string,
   onClickButton: PropTypes.func,
   children: PropTypes.elementType.isRequired,
+  filterPlaceholder: PropTypes.string,
 };
 
 export const Input = memo(InputInner);

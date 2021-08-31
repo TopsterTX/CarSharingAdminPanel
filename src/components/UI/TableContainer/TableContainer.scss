@@ -1,0 +1,6 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.table-container {
+  @include mainBlock();
+}

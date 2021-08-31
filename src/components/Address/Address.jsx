@@ -1,8 +1,11 @@
-import React, { useEffect, memo, useCallback } from "react";
+import React, { useEffect, memo, useCallback, useState } from "react";
 import Popup from "./../UI/Popup/Popup";
 import { Button } from "../UI/Button/Button";
 import { Table } from "../UI/Table/Table";
 import { Title } from "../UI/Title/Title";
+import { Filter } from "../UI/Filter/Filter";
+import { FilterItem } from "../UI/Filter/FilterItem/FilterItem";
+import { Pages } from "../UI/Pages/Pages";
 import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Input } from "../UI/Input/Input";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,8 +13,9 @@ import { AddressItem } from "./AddressItem/AddressItem";
 import {
   getPointsOnPage,
   getPoints,
+  changeCity,
+  changePage,
 } from "../../redux/actions/address/address";
-import { showLoader } from "./../../redux/actions/loader/loader";
 import { getCities } from "../../redux/actions/cities/cities";
 import "./Address.scss";
 import { Selector } from "./../UI/Selector/Selector";
@@ -24,15 +28,17 @@ import {
   changePoint,
   getEditPoint,
 } from "../../redux/actions/addressCard/addressCard";
+import { TableContainer } from "./../UI/TableContainer/TableContainer";
 
 const AddressInner = () => {
   const dispatch = useDispatch();
   const {
-    configureFilter,
     pointsOnPage,
     points = [],
     limit,
     count,
+    page,
+    changedCity,
   } = useSelector((state) => state.address);
   const { editAddress } = useSelector((state) => state.addressCard);
   const { name, cityId, address, id } = editAddress;
@@ -43,21 +49,20 @@ const AddressInner = () => {
     </Button>
   );
 
-  useEffect(() => {
-    dispatch(showLoader(true));
-    if (!points.length) {
-      dispatch(getPoints());
-    }
-    if (!cities.length) {
-      dispatch(getCities());
-    }
-  }, []);
+  const [filter, setFilter] = useState("");
 
-  useEffect(() => {
-    if (points.length && cities.length) {
-      dispatch(showLoader(false));
-    }
-  }, [points, cities]);
+  const onClickFilterApply = () => {
+    dispatch(changePage(1));
+    setFilter(
+      (filter) => `${changedCity.id ? `&cityId=${changedCity.id}` : ""}`
+    );
+  };
+
+  const onClickFilterReset = () => {
+    dispatch(changePage(1));
+    dispatch(changeCity({}));
+    setFilter((filter) => "");
+  };
 
   const changeCityInPointHandler = useCallback(
     (val) => {
@@ -112,37 +117,64 @@ const AddressInner = () => {
     );
   }, [editAddress, changePopup]);
 
+  useEffect(() => {
+    if (!cities.length) {
+      dispatch(getCities());
+    }
+  }, []);
+
+  useEffect(() => {
+    dispatch(getPointsOnPage(limit, page - 1, filter));
+  }, [page, filter]);
+
   return (
     <section className="address">
       <ContentContainer>
         <Title>Адреса</Title>
-        <Table
-          configureFilter={configureFilter}
-          addonComponent={addComponent}
-          onChangePage={getPointsOnPage}
-          divisor={limit}
-          count={count}
-        >
-          {pointsOnPage
-            ? pointsOnPage.map((el) => {
-                return <AddressItem point={el}></AddressItem>;
-              })
-            : ""}
-        </Table>
+        <TableContainer>
+          <Filter
+            addonComponent={addComponent}
+            onClickApply={() => onClickFilterApply()}
+            onClickReset={() => onClickFilterReset()}
+          >
+            <FilterItem>
+              <Selector array={cities} content={"name"} onClick={changeCity}>
+                {changedCity.name ? changedCity.name : "Город"}
+              </Selector>
+            </FilterItem>
+          </Filter>
+          <Table>
+            {pointsOnPage.length
+              ? pointsOnPage.map((el) => {
+                  return <AddressItem point={el}></AddressItem>;
+                })
+              : "Нечего не найдено"}
+          </Table>
+          <Pages
+            count={count}
+            divisor={limit}
+            changePage={changePage}
+            page={page}
+          />
+        </TableContainer>
       </ContentContainer>
       <Popup type="create">
-        <Input
-          value={name}
-          onChange={(e) => dispatch(changePointName(e.target.value))}
-        >
-          Название пункта выдачи
-        </Input>
-        <Input
-          value={address}
-          onChange={(e) => dispatch(changeAddressName(e.target.value))}
-        >
-          Адресс пункта выдачи
-        </Input>
+        <div className="popup__input">
+          <Input
+            value={name}
+            onChange={(e) => dispatch(changePointName(e.target.value))}
+          >
+            Название пункта выдачи
+          </Input>
+        </div>
+        <div className="popup__input">
+          <Input
+            value={address}
+            onChange={(e) => dispatch(changeAddressName(e.target.value))}
+          >
+            Адресс пункта выдачи
+          </Input>
+        </div>
         <Selector
           array={cities}
           content="name"
@@ -160,18 +192,22 @@ const AddressInner = () => {
         </div>
       </Popup>
       <Popup type="change">
-        <Input
-          value={name}
-          onChange={(e) => dispatch(changePointName(e.target.value))}
-        >
-          Название пункта выдачи
-        </Input>
-        <Input
-          value={address}
-          onChange={(e) => dispatch(changeAddressName(e.target.value))}
-        >
-          Пункт выдачи
-        </Input>
+        <div className="popup__input">
+          <Input
+            value={name}
+            onChange={(e) => dispatch(changePointName(e.target.value))}
+          >
+            Название пункта выдачи
+          </Input>
+        </div>
+        <div className="popup__input">
+          <Input
+            value={address}
+            onChange={(e) => dispatch(changeAddressName(e.target.value))}
+          >
+            Пункт выдачи
+          </Input>
+        </div>
         <Selector
           array={cities}
           content="name"

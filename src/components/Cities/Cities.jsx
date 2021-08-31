@@ -15,8 +15,11 @@ import {
   changeCityName,
   addCity,
 } from "../../redux/actions/citiesCard/citiesCard";
-import { showLoader } from "./../../redux/actions/loader/loader";
+import { changePage } from "../../redux/actions/cities/cities";
 import "./Cities.scss";
+import { TableContainer } from "./../UI/TableContainer/TableContainer";
+import { Filter } from "./../UI/Filter/Filter";
+import { Pages } from "../UI/Pages/Pages";
 
 const CitiesInner = () => {
   const dispatch = useDispatch();
@@ -26,11 +29,12 @@ const CitiesInner = () => {
     configureFilter,
     count,
     limit,
+    page,
   } = useSelector((state) => state.cities);
   const { editCity } = useSelector((state) => state.citiesCard);
   const { name, id } = editCity;
 
-  const addCompoent = (
+  const addComponent = (
     <Button onClick={() => dispatch(createPopup(true))} type="add">
       Город
     </Button>
@@ -72,32 +76,40 @@ const CitiesInner = () => {
     dispatch(createPopup(false));
   }, [getEditCity, createPopup]);
 
+  useEffect(() => {
+    dispatch(getCitiesOnPage(limit, page - 1));
+  }, [page]);
 
   return (
     <section className="cities">
       <ContentContainer>
         <Title>Города</Title>
-        <Table
-          configureFilter={configureFilter}
-          addonComponent={addCompoent}
-          onChangePage={getCitiesOnPage}
-          divisor={limit}
-          count={count}
-        >
-          {citiesOnPage
-            ? citiesOnPage.map((el) => {
-                return <CitiesItem city={el} key={el.id} />;
-              })
-            : ""}
-        </Table>
+        <TableContainer>
+          <Filter addonComponent={addComponent} />
+          <Table>
+            {citiesOnPage
+              ? citiesOnPage.map((el) => {
+                  return <CitiesItem city={el} key={el.id} />;
+                })
+              : ""}
+          </Table>
+          <Pages
+            count={count}
+            page={page}
+            changePage={changePage}
+            divisor={limit}
+          />
+        </TableContainer>
       </ContentContainer>
       <Popup type="change">
-        <Input
-          value={name}
-          onChange={(e) => dispatch(changeCityName(e.target.value))}
-        >
-          Название города
-        </Input>
+        <div className="popup__input">
+          <Input
+            value={name}
+            onChange={(e) => dispatch(changeCityName(e.target.value))}
+          >
+            Название города
+          </Input>
+        </div>
         <div className="popup__buttons">
           <Button onClick={() => changeCityHandler(editCity, id)}>
             Применить
@@ -108,12 +120,14 @@ const CitiesInner = () => {
         </div>
       </Popup>
       <Popup type="create">
-        <Input
-          value={name}
-          onChange={(e) => dispatch(changeCityName(e.target.value))}
-        >
-          Название города
-        </Input>
+        <div className="popup__input">
+          <Input
+            value={name}
+            onChange={(e) => dispatch(changeCityName(e.target.value))}
+          >
+            Название города
+          </Input>
+        </div>
         <div className="popup__buttons">
           <Button onClick={() => createCityHandler(editCity)}>Применить</Button>
           <Button type="warning" onClick={() => closeCreatePopupHandler()}>

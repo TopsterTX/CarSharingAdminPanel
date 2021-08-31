@@ -5,37 +5,8 @@ const defaultState = {
   count: 0,
   limit: 5,
   points: [],
-  configureFilter: {
-    filterItems: [
-      {
-        id: uuidv4(),
-        text: "Field",
-      },
-      {
-        id: uuidv4(),
-        text: "Field",
-      },
-      {
-        id: uuidv4(),
-        text: "Field",
-      },
-      {
-        id: uuidv4(),
-        text: "Field",
-      },
-    ],
-    buttons: [
-      {
-        id: uuidv4(),
-        type: "warning",
-        text: "Сбросить",
-      },
-      {
-        id: uuidv4(),
-        text: "Применить",
-      },
-    ],
-  },
+  page: 1,
+  changedCity: {},
 };
 
 const reduce = "ADDRESS__";
@@ -43,9 +14,21 @@ const reduce = "ADDRESS__";
 export const GET_POINTS = `${reduce}GET_POINTS`;
 export const GET_POINTS_ON_PAGE = `${reduce}GET_POINTS_ON_PAGE`;
 export const GET_COUNT = `${reduce}GET_COUNT`;
+export const CHANGE_PAGE = `${reduce}CHANGE_PAGE`;
+export const CHANGED_CITY = `${reduce}CHANGED_CITY`;
 
 export default (state = defaultState, { type, payload }) => {
   switch (type) {
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        page: payload,
+      };
+    case CHANGED_CITY:
+      return {
+        ...state,
+        changedCity: payload,
+      };
     case GET_COUNT:
       return {
         ...state,

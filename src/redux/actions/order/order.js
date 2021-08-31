@@ -4,10 +4,42 @@ import {
   GET_ORDER_STATUS,
   GET_COUNT,
   GET_ORDERS_ON_PAGE,
+  CHANGE_FILTER_MIN_PRICE,
+  CHANGE_FILTER_MAX_PRICE,
+  CHANGED_CITY,
+  CHANGE_PAGE,
 } from "../../reducers/order/order";
 import api from "../../../axios/axios";
 import { openNotice, warningNotice } from "../notice/notice";
 import { showLoader } from "./../loader/loader";
+
+export const changePage = (page) => {
+  return {
+    type: CHANGE_PAGE,
+    payload: page,
+  };
+};
+
+export const changeCity = (el) => {
+  return {
+    type: CHANGED_CITY,
+    payload: el,
+  };
+};
+
+export const changeFilterMinPrice = (val) => {
+  return {
+    type: CHANGE_FILTER_MIN_PRICE,
+    payload: val,
+  };
+};
+
+export const changeFilterMaxPrice = (val) => {
+  return {
+    type: CHANGE_FILTER_MAX_PRICE,
+    payload: val,
+  };
+};
 
 export const getCount = (count) => {
   return {
@@ -17,11 +49,11 @@ export const getCount = (count) => {
 };
 
 export const getOrderOnPage =
-  (limit = 3, page) =>
+  (limit = 3, page, filter = "") =>
   async (dispatch) => {
     try {
       dispatch(showLoader(true));
-      await api(`db/order?limit=${limit}&page=${page}`)
+      await api(`db/order?limit=${limit}&page=${page}${filter}`)
         .then((res) => {
           if (res.status >= 200 && res.status < 300) {
             dispatch({ type: GET_ORDERS_ON_PAGE, payload: res.data.data });

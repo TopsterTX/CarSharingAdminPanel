@@ -3,10 +3,12 @@ import PropTypes from "prop-types";
 import { Selector } from "../Selector/Selector";
 import { Button } from "../Button/Button";
 import "./Filter.scss";
+import { Input } from "./../Input/Input";
 
 const FilterInner = ({
-  filterItems = [],
-  buttons = [],
+  onClickApply = () => {},
+  onClickReset = () => {},
+  children = <></>,
   addonComponent = <></>,
 }) => {
   const [active, setActive] = useState(false);
@@ -19,31 +21,17 @@ const FilterInner = ({
       >
         Фильтры
       </button>
-
       <div className={`filter__container ${active ? "active" : ""}`}>
-        <div className="filter__wrapper">
-          {filterItems
-            ? filterItems.map(({ text, id }) => {
-                return (
-                  <div className="filter__item" key={id}>
-                    <Selector>{text}</Selector>
-                  </div>
-                );
-              })
-            : ""}
-        </div>
+        <div className="filter__wrapper">{children}</div>
         <div className="filter__button-wrapper">
-          {buttons
-            ? buttons.map(({ text, id, type, onClick }) => {
-                return (
-                  <div className="filter__button-wrapper-item">
-                    <Button key={id} type={type} onClick={onClick}>
-                      {text}
-                    </Button>
-                  </div>
-                );
-              })
-            : ""}
+          <div className="filter__button-wrapper-item">
+            <Button onClick={onClickApply}>Применить</Button>
+          </div>
+          <div className="filter__button-wrapper-item">
+            <Button type="warning" onClick={onClickReset}>
+              Сбросить
+            </Button>
+          </div>
         </div>
       </div>
       {addonComponent}
@@ -52,12 +40,10 @@ const FilterInner = ({
 };
 
 FilterInner.propTypes = {
-  filterItems: PropTypes.arrayOf(
-    PropTypes.objectOf(PropTypes.string.isRequired).isRequired
-  ).isRequired,
-  buttons: PropTypes.arrayOf(
-    PropTypes.objectOf(PropTypes.string.isRequired).isRequired
-  ).isRequired,
+  onClickApply: PropTypes.func.isRequired,
+  onClickReset: PropTypes.func.isRequired,
+  children: PropTypes.elementType.isRequired,
+  addonComponent: PropTypes.elementType.isRequired,
 };
 
 export const Filter = memo(FilterInner);

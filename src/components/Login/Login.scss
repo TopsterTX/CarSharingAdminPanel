@@ -9,6 +9,9 @@
     background-color: #fff;
     box-shadow: $boxShadowOnBlock;
   }
+  &__item--input {
+    margin-bottom: 23px;
+  }
   &__wrapper {
     color: $wordsColor;
     min-height: $fullHeight;

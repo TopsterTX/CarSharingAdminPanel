@@ -198,7 +198,7 @@ export function OrderCardInner() {
               </div>
             </div>
             <div className="order-card__date">
-              <div className="order-card__date-wrapper">
+              <div className="order-card__date-wrapper order-card__date-wrapper--input">
                 <Input
                   type={"date"}
                   required
@@ -209,7 +209,7 @@ export function OrderCardInner() {
                   Дата начала аренды
                 </Input>
               </div>
-              <div className="order-card__date-wrapper">
+              <div className="order-card__date-wrapper order-card__date-wrapper--input">
                 <Input
                   type={"date"}
                   value={dateEnd ? dateEnd : ""}
@@ -223,7 +223,9 @@ export function OrderCardInner() {
               <div className="order-card__date-wrapper"></div>
             </div>
             <div className="order-card__rate">
-              <h2 className="order-card__title"><span>*</span>Тарифы</h2>
+              <h2 className="order-card__title">
+                <span>*</span>Тарифы
+              </h2>
               <div className="order-card__rate-block">
                 {rates
                   ? rates.map((el) => {
@@ -259,7 +261,7 @@ export function OrderCardInner() {
                 Правый руль
               </CheckboxPrimary>
             </div>
-            <div className="order-card__price">
+            <div className="order-card__price order-card__price--input">
               <Input
                 value={price}
                 warning={priceWarn}
@@ -271,7 +273,9 @@ export function OrderCardInner() {
               </Input>
             </div>
             <div className="order-card__status">
-              <h2 className="order-card__title"><span>*</span>Статус заказа</h2>
+              <h2 className="order-card__title">
+                <span>*</span>Статус заказа
+              </h2>
               <div className="order-card__status-block">
                 {orderStatus
                   ? orderStatus.map((el) => {

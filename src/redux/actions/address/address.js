@@ -3,9 +3,25 @@ import {
   GET_COUNT,
   GET_POINTS,
   GET_POINTS_ON_PAGE,
+  CHANGE_PAGE,
+  CHANGED_CITY,
 } from "../../reducers/address/address";
 import { openNotice, warningNotice } from "../notice/notice";
 import { showLoader } from "./../loader/loader";
+
+export const changeCity = (city) => {
+  return {
+    type: CHANGED_CITY,
+    payload: city,
+  };
+};
+
+export const changePage = (page) => {
+  return {
+    type: CHANGE_PAGE,
+    payload: page,
+  };
+};
 
 export const getCount = (count) => {
   return {
@@ -15,11 +31,11 @@ export const getCount = (count) => {
 };
 
 export const getPointsOnPage =
-  (limit = 5, page = 0) =>
+  (limit = 5, page = 0, filter) =>
   async (dispatch) => {
     try {
       dispatch(showLoader(true));
-      return await api(`db/point?limit=${limit}&page=${page}`)
+      return await api(`db/point?limit=${limit}&page=${page}${filter}`)
         .then((res) => {
           if (res.status >= 200 && res.status < 300) {
             dispatch({

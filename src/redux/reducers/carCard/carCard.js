@@ -21,7 +21,7 @@ const defaultState = {
   inputs: {
     color: "",
   },
-  categories: [],
+
   copyCar: {
     id: "",
     priceMax: 0,
@@ -67,8 +67,8 @@ export const ADD_IMAGE = `${reduce}ADD_IMAGE`;
 export const ADD_COLOR = `${reduce}ADD_COLOR`;
 export const DELETE_COLOR = `${reduce}DELETE_COLOR`;
 export const GET_EDIT_CAR = `${reduce}GET_EDIT_CAR`;
-export const APPLY_CATEGORY = `${reduce}APPLY_CATEGORY`;
 export const GET_CATEGORIES = `${reduce}GET_CATEGORIES`;
+export const APPLY_CATEGORY = `${reduce}APPLY_CATEGORY`;
 export const CANCEL_EDIT_CAR = `${reduce}CANCEL_EDIT_CAR`;
 export const CHANGE_TYPE_CAR = `${reduce}CHANGE_TYPE_CAR`;
 export const CHANGE_MODEL_CAR = `${reduce}CHANGE_MODEL_CAR`;

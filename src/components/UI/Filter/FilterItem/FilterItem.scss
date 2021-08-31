@@ -1,0 +1,15 @@
+@import "../../../../scss/vars.scss";
+@import "../../../../scss/mixins.scss";
+
+.filter__item {
+  margin-bottom: 12px;
+}
+
+@media (min-width: 768px) {
+  .filter__item {
+    max-width: 110px;
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+  }
+}

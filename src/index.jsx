@@ -50,7 +50,6 @@ store.subscribe(() =>
   )
 );
 
-
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>

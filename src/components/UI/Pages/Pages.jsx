@@ -1,12 +1,15 @@
-import React, { useState, memo, useRef, useEffect } from "react";
+import React, { useState, memo, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import "./Pages.scss";
 
-const PagesInner = ({ count = 0, onChangePage = () => {}, divisor = 0 }) => {
+const PagesInner = ({
+  page = 0,
+  count = 0,
+  divisor = 0,
+  changePage = () => {},
+}) => {
   const dispatch = useDispatch();
-  const { carsOnPage } = useSelector((state) => state.cars);
-  const [page, setPage] = useState(1);
   const [maxPage, setMaxPage] = useState(0);
   const [minPage, setMinPage] = useState(1);
 
@@ -30,97 +33,135 @@ const PagesInner = ({ count = 0, onChangePage = () => {}, divisor = 0 }) => {
   let rightPage = pageHandler(4, page + 1, maxPage - 1, maxPage - 2);
   const leftArrowHandler = () => {
     if (page === 1) return;
-    setPage((p) => page - 1);
+    dispatch(changePage(page - 1));
   };
 
   const rightArrowHandler = () => {
     if (page === maxPage) return;
-    setPage((p) => page + 1);
+    dispatch(changePage(page + 1));
   };
 
   const buttonClickedHandler = (e) => {
-    setPage((p) => Number(e.target.textContent));
+    dispatch(changePage(Number(e.target.textContent)));
   };
 
-  useEffect(() => {
-    dispatch(onChangePage(divisor, page - 1));
-  }, [page]);
+  const displayPageHandler = () => {
+    let pages = [];
+    for (let i = 0; i < maxPage; i++) {
+      pages.push(i + 1);
+    }
+    return pages.map((el) => {
+      return (
+        <button
+          className={`pages__button ${page === el ? "active" : null} `}
+          onClick={(e) => buttonClickedHandler(e)}
+        >
+          <span>{el}</span>
+        </button>
+      );
+    });
+  };
 
   useEffect(() => {
     setMaxPage((p) => Math.ceil(count / divisor));
   }, [count]);
-
-  return (
-    <section className="pages">
-      <div className="pages__container">
-        <button
-          className="pages__arrow --left"
-          onClick={() => leftArrowHandler()}
-        >
-          <span>^</span>
-          <span>^</span>
-        </button>
-        <div className="pages__wrapper">
+  if (maxPage < 5) {
+    return (
+      <section className="pages">
+        <div className="pages__container">
           <button
-            className={`pages__button ${page === minPage ? "active" : null} `}
-            onClick={(e) => buttonClickedHandler(e)}
+            className="pages__arrow --left"
+            onClick={() => leftArrowHandler()}
           >
-            <span>{minPage}</span>
+            <span>^</span>
+            <span>^</span>
           </button>
-          <button className={`pages__button ${maxPage <= 6 ? "none" : null}`}>
-            <span>...</span>
-          </button>
-
+          <div className="pages__wrapper">{displayPageHandler()}</div>
           <button
-            className={`pages__button ${page === 2 ? "active" : null} ${
-              maxPage <= 6 ? "none" : null
-            }`}
-            onClick={(e) => buttonClickedHandler(e)}
+            className="pages__arrow --right"
+            onClick={() => rightArrowHandler()}
           >
-            <span>{leftPage}</span>
-          </button>
-          <button
-            className={`pages__button ${
-              page >= 3 && page <= maxPage - 2 ? "active" : null
-            } ${maxPage <= 6 ? "none" : null}`}
-            onClick={(e) => buttonClickedHandler(e)}
-          >
-            <span>{middlePage}</span>
-          </button>
-          <button
-            className={`pages__button ${
-              page === maxPage - 1 ? "active" : null
-            } ${maxPage <= 6 ? "none" : null}`}
-            onClick={(e) => buttonClickedHandler(e)}
-          >
-            <span>{rightPage}</span>
-          </button>
-          <button className={`pages__button`}>
-            <span>...</span>
-          </button>
-          <button
-            className={`pages__button ${page === maxPage ? "active" : null}`}
-            onClick={(e) => buttonClickedHandler(e)}
-          >
-            <span>{maxPage}</span>
+            <span>^</span>
+            <span>^</span>
           </button>
         </div>
-        <button
-          className="pages__arrow --right"
-          onClick={() => rightArrowHandler()}
-        >
-          <span>^</span>
-          <span>^</span>
-        </button>
-      </div>
-    </section>
-  );
+      </section>
+    );
+  } else {
+    return (
+      <section className="pages">
+        <div className="pages__container">
+          <button
+            className="pages__arrow --left"
+            onClick={() => leftArrowHandler()}
+          >
+            <span>^</span>
+            <span>^</span>
+          </button>
+          <div className="pages__wrapper">
+            <button
+              className={`pages__button ${page === minPage ? "active" : null} `}
+              onClick={(e) => buttonClickedHandler(e)}
+            >
+              <span>{minPage}</span>
+            </button>
+            <button className={`pages__button ${maxPage < 5 ? "none" : null}`}>
+              <span>...</span>
+            </button>
+
+            <button
+              className={`pages__button ${page === 2 ? "active" : null} ${
+                maxPage < 5 ? "none" : null
+              }`}
+              onClick={(e) => buttonClickedHandler(e)}
+            >
+              <span>{leftPage}</span>
+            </button>
+            <button
+              className={`pages__button ${
+                page >= 3 && page <= maxPage - 2 ? "active" : null
+              } ${maxPage < 5 ? "none" : null}`}
+              onClick={(e) => buttonClickedHandler(e)}
+            >
+              <span>{middlePage}</span>
+            </button>
+            <button
+              className={`pages__button ${
+                page === maxPage - 1 ? "active" : null
+              } ${maxPage < 5 ? "none" : null}`}
+              onClick={(e) => buttonClickedHandler(e)}
+            >
+              <span>{rightPage}</span>
+            </button>
+            <button className={`pages__button ${maxPage < 5 ? "none" : null}`}>
+              <span>...</span>
+            </button>
+            <button
+              className={`pages__button ${page === maxPage ? "active" : null}`}
+              onClick={(e) => buttonClickedHandler(e)}
+            >
+              <span>{maxPage}</span>
+            </button>
+          </div>
+          <button
+            className="pages__arrow --right"
+            onClick={() => rightArrowHandler()}
+          >
+            <span>^</span>
+            <span>^</span>
+          </button>
+        </div>
+      </section>
+    );
+  }
 };
 
 PagesInner.propTypes = {
+  page: PropTypes.number.isRequired,
   count: PropTypes.number.isRequired,
   onChangePage: PropTypes.func.isRequired,
   divisor: PropTypes.number,
+  changePage: PropTypes.func.isRequired,
 };
 
 export const Pages = memo(PagesInner);
