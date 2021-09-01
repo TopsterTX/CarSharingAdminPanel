@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import { NavLink } from "react-router-dom";
 import "./Footer.scss";
 
-export const Footer = () => {
+const FooterInner = () => {
   return (
     <footer className="footer">
       <div className="footer__container">
@@ -27,3 +27,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export const Footer = memo(FooterInner);

@@ -12,7 +12,8 @@
       width: 100%;
     }
     &--full-width {
-      flex: 1 1 auto;
+      flex: 1 1 100%;
+      min-width: 338px;
     }
 
     &--column {
@@ -46,12 +47,20 @@
 }
 
 @media (min-width: 1024px) {
-  .order__item{
-    &-price{
+  .order__item {
+    &-price {
       font-size: 24px;
     }
-    &-image{
+    &-part {
+      &--full-width {
+        min-width: 398px;
+      }
+    }
+    &-image {
       display: block;
+      width: 138px;
+      height: 63px;
+      margin-right: 10px;
     }
   }
 }

@@ -1,44 +1,93 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { Buttons } from "../../UI/Buttons/Buttons";
-import carImage from "../../../images/car.png";
+import React, { memo } from "react";
+import PropTypes from "prop-types";
+import { Image } from "../../UI/Image/Image";
+import { ButtonsContainer } from "./../../UI/ButtonsContainer/ButtonsContainer";
+import { ButtonRoute } from "../../UI/ButtonRoute/ButtonRoute";
+import { useDispatch } from "react-redux";
+import { v4 as uuidv4 } from "uuid";
+import { getEditCar } from "../../../redux/actions/carCard/carCard";
+import { WarningPopup } from "./../../UI/WarningPopup/WarningPopup";
+import { openedDeletePopup } from "../../../redux/actions/warningPopup/warningPopup";
+import { deleteCar } from "../../../redux/actions/carCard/carCard";
 import "./CarsItem.scss";
 
-export function CarsItem({ car }) {
-  const buttonsProps = {
-    buttons: [{ type: "default" }],
-  };
+function CarsItemInner({ car }) {
+  const dispatch = useDispatch();
+
+  const { thumbnail, colors, name, description, priceMax, priceMin, id } = car;
+  const { path } = thumbnail;
 
   return (
     <section className="car__item">
       <ul className="car__item-container">
         <li className="car__item-part car__item-part --full-width">
-          <li className="car__item-part --first-block">
-            <img src={carImage} alt="image" className="car__image" />
+          <div className="car__item-part --first-block">
+            <Image path={path} />
             <div className="car__info">
-              <p className="car__model">ELANTRA</p>
-              <p className="car__description">
-                Супер пупер автомобиль для повседневной жизни
-              </p>
+              <p className="car__model">{name}</p>
+              <p className="car__description">{description}</p>
             </div>
-          </li>
-          <li>
+          </div>
+          <div>
             <ul className="car__colors">
               <span>Цвета:</span>
-              <li className="car__colors-item">Красный,</li>
-              <li className="car__colors-item">Синий,</li>
-              <li className="car__colors-item">Чёрный</li>
+              {colors.map((el) => {
+                return (
+                  <li className="car__colors-item" key={uuidv4()}>
+                    {el}
+                  </li>
+                );
+              })}
             </ul>
-          </li>
+          </div>
         </li>
 
         <li className="car__item-part">
-          <span className="car__price">10 000 ₽ - 20 000 ₽</span>
+          <span className="car__price">
+            {priceMin} ₽ - {priceMax} ₽
+          </span>
         </li>
         <li className="car__item-part">
-          <Buttons buttonsProps={buttonsProps} />
+          <ButtonsContainer>
+            <ButtonRoute
+              to={"/admin/panel/card_car"}
+              type={"default"}
+              onClick={() => dispatch(getEditCar(car))}
+            >
+              Изменить
+            </ButtonRoute>
+            <ButtonRoute
+              to={"/admin/panel/main"}
+              type={"warning"}
+              onClick={() => dispatch(deleteCar(id))}
+            >
+              Удалить
+            </ButtonRoute>
+          </ButtonsContainer>
         </li>
       </ul>
     </section>
   );
 }
+
+CarsItemInner.propTypes = {
+  car: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    tank: PropTypes.number.isRequired,
+    number: PropTypes.string.isRequired,
+    colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+    description: PropTypes.string.isRequired,
+    categoryId: PropTypes.objectOf(PropTypes.string).isRequired,
+    name: PropTypes.string.isRequired,
+    priceMin: PropTypes.number.isRequired,
+    priceMax: PropTypes.number.isRequired,
+    thumbnail: PropTypes.shape({
+      size: PropTypes.any.isRequired,
+      originalname: PropTypes.string.isRequired,
+      mimetype: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+    }),
+  }),
+};
+
+export const CarsItem = memo(CarsItemInner);

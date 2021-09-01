@@ -1,17 +1,51 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
+import PropTypes from "prop-types";
+import plus from "./plus.svg";
 import { v4 as uuidv4 } from "uuid";
 import "./Button.scss";
 
-export function Button({ text, type, disabled, onClick }) {
+const ButtonInner = ({
+  children = "",
+  type = "",
+  disabled,
+  className = "",
+  onClick = () => {},
+  ...props
+}) => {
+  const clickHander = useCallback(
+    (e) => {
+      e.preventDefault();
+      onClick();
+    },
+    [onClick]
+  );
+
   let key = uuidv4();
+
   return (
     <button
-      className={`button ${type ? type : null}`}
+      className={`${
+        className
+          ? `${className} button ${type ? type : null}`
+          : `button ${type ? type : null}`
+      }`}
       disable={disabled ? "true" : "false"}
-      onClick={onClick}
+      onClick={(e) => clickHander(e)}
       key={key}
+      {...props}
     >
-      {text}
+      {type === "add" ? <img className="button__image" src={plus} /> : ""}
+      {children}
     </button>
   );
-}
+};
+
+ButtonInner.propTypes = {
+  children: PropTypes.any.isRequired,
+  type: PropTypes.string,
+  disabled: PropTypes.bool,
+  className: PropTypes.string,
+  onClick: PropTypes.func,
+};
+
+export const Button = memo(ButtonInner);

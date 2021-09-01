@@ -1,31 +1,76 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import "./Input.scss";
 
-export function Input(props) {
-  let x = props.id ? props.id : uuidv4();
+function InputInner({
+  id,
+  addButton,
+  children = "",
+  warning,
+  warningText,
+  onChange = () => {},
+  value = "",
+  required,
+  type = "",
+  onClickButton = () => {},
+}) {
+  let x = id ? id : uuidv4();
+  const dispatch = useDispatch();
+
+  const clickHandler = useCallback(
+    (e) => {
+      e.preventDefault();
+      onClickButton(dispatch, value);
+    },
+    [onClickButton]
+  );
+
+  const changeHandler = useCallback(
+    (val) => {
+      onChange(val);
+    },
+    [value, onChange]
+  );
 
   return (
-    <div className={`input ${props.addButton ? "plus" : null}`}>
+    <div className={`input ${addButton ? "plus" : null}`}>
       <label htmlFor={x} className={`input__label`}>
-        {props.label}
+        {children}
       </label>
       <div className="input__wrapper">
         <input
-          type={props.type ? props.type : "text"}
-          className={`input__item ${props.warning ? "warning" : null} `}
+          type={type ? type : "text"}
+          className={`input__item ${warning ? "warning" : null} `}
           id={x}
-          require={props.required ? true : false}
-          value={props.value}
-          onChange={props.onChange}
+          require={required ? "true" : "false"}
+          value={value}
+          onChange={(e) => changeHandler(e.target.value)}
         />
-        <div
-          className={`input__plus ${props.addButton ? "active" : null}`}
-        ></div>
+        <button
+          className={`input__plus ${addButton ? "active" : null}`}
+          onClick={(e) => clickHandler(e)}
+        ></button>
       </div>
-      <span className={`input__error ${props.warning ? "active" : null}`}>
-        {props.warningText}
+      <span className={`input__error ${warning ? "active" : null}`}>
+        {warningText}
       </span>
     </div>
   );
 }
+
+InputInner.propTypes = {
+  id: PropTypes.string,
+  addButton: PropTypes.bool,
+  warning: PropTypes.bool,
+  warningText: PropTypes.string,
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.any.isRequired,
+  required: PropTypes.bool,
+  type: PropTypes.string,
+  onClickButton: PropTypes.func,
+  children: PropTypes.elementType.isRequired,
+};
+
+export const Input = memo(InputInner);

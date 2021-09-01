@@ -10,6 +10,7 @@
     display: none;
   }
   &__item {
+    min-height: 118px;
     &-container {
       display: flex;
       flex-direction: column;
@@ -28,6 +29,7 @@
   }
   &__info {
     max-width: 120px;
+    margin-bottom: 5px;
   }
   &__description {
     max-width: 200px;
@@ -41,6 +43,7 @@
     color: $wordGray;
   }
   &__colors {
+    text-align: center;
     max-width: 100px;
     display: flex;
     flex-direction: column;
@@ -59,7 +62,9 @@
 @media (min-width: 768px) {
   .car {
     &__item {
+      display: flex;
       &-container {
+        width: 100%;
         flex-direction: row;
         align-items: center;
       }
@@ -74,6 +79,9 @@
     }
     &__info {
       min-width: 230px;
+    }
+    &__colors {
+      text-align: left;
     }
   }
 }
@@ -91,9 +99,11 @@
       }
     }
     &__image {
+      align-self: center;
       display: block;
-      // width: 70px;
-      // height: 70px;
+      margin-right: 10px;
+      height: 63px;
+      width: 138px;
     }
   }
 }

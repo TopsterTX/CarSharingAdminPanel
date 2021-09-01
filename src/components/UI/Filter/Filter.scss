@@ -8,18 +8,33 @@
 
   &__toggler {
     @include filterToggler();
+    margin-right: 8px;
   }
   &__container {
+    pointer-events: none;
     @include filterContainer();
+    &.active {
+      pointer-events: all;
+    }
   }
   &__button {
     @include button();
     &:not(:last-child) {
       margin-right: 10px;
     }
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 100px;
+    }
   }
   &__button-wrapper {
     display: flex;
+  }
+  &__item {
+    margin-bottom: 12px;
   }
 }
 
@@ -29,11 +44,28 @@
       display: flex;
       flex-wrap: wrap;
     }
+    &__item {
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+    &__button {
+      &-wrapper {
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+    }
   }
 }
 
 @media (min-width: 1024px) {
   .filter {
     width: 100%;
+    &__item {
+      margin-bottom: 0;
+    }
+    &__container {
+      pointer-events: all;
+    }
   }
 }

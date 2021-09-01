@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from "uuid";
 
 const defaultState = {
+  page: 1,
+  carsOnPage: [],
   cars: [],
   configureFilter: {
     filterItems: [
@@ -32,6 +34,8 @@ const defaultState = {
 
 const reduce = "CARS";
 export const GET_CARS = `${reduce}GET_CARS`;
+export const CHANGE_PAGE = `${reduce}CHANGE_PAGE`;
+export const GET_CARS_ON_PAGE = `${reduce}GET_CARS_ON_PAGE`;
 
 export default (state = defaultState, { type, payload }) => {
   switch (type) {
@@ -39,6 +43,16 @@ export default (state = defaultState, { type, payload }) => {
       return {
         ...state,
         cars: payload,
+      };
+    case GET_CARS_ON_PAGE:
+      return {
+        ...state,
+        carsOnPage: payload,
+      };
+    case CHANGE_PAGE:
+      return {
+        ...state,
+        page: payload,
       };
     default:
       return state;

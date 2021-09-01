@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
+import PropTypes from "prop-types";
 import { Selector } from "../Selector/Selector";
 import { Button } from "../Button/Button";
 import "./Filter.scss";
 
-export const Filter = ({ filterItems, buttons }) => {
+const FilterInner = ({ filterItems, buttons, addonComponent = <></> }) => {
   const [active, setActive] = useState(false);
 
   return (
@@ -14,22 +15,43 @@ export const Filter = ({ filterItems, buttons }) => {
       >
         Фильтры
       </button>
+
       <div className={`filter__container ${active ? "active" : ""}`}>
         <div className="filter__wrapper">
           {filterItems
-            ? filterItems.map((el) => {
-                return <Selector text={el.text} key={el.id} />;
+            ? filterItems.map(({ text, id }) => {
+                return (
+                  <div className="filter__item" key={id}>
+                    <Selector>{text}</Selector>
+                  </div>
+                );
               })
             : ""}
         </div>
         <div className="filter__button-wrapper">
           {buttons
-            ? buttons.map((el) => {
-                return <Button text={el.text} key={el.id} type={el.type} />;
+            ? buttons.map(({ text, id, type, onClick }) => {
+                return (
+                  <Button key={id} type={type} onClick={onClick}>
+                    {text}
+                  </Button>
+                );
               })
             : ""}
         </div>
       </div>
+      {addonComponent}
     </section>
   );
 };
+
+FilterInner.propTypes = {
+  filterItems: PropTypes.arrayOf(
+    PropTypes.objectOf(PropTypes.string.isRequired).isRequired
+  ).isRequired,
+  buttons: PropTypes.arrayOf(
+    PropTypes.objectOf(PropTypes.string.isRequired).isRequired
+  ).isRequired,
+};
+
+export const Filter = memo(FilterInner);

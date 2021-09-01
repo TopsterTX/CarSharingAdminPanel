@@ -1,23 +1,82 @@
-import React from "react";
-import {v4 as uuidv4} from 'uuid'
+import React, { useCallback, useState, memo } from "react";
+import PropTypes from "prop-types";
+import { v4 as uuidv4 } from "uuid";
 import "./Selector.scss";
 
-export function Selector({ text,  array, arrayContent }) {
+const SelectorInner = ({
+  children = "",
+  array = [],
+  sortId = "",
+  content = "",
+  onClick = () => {},
+}) => {
+  const [active, setActive] = useState(false);
+  const [text, setText] = useState("");
 
-  let key = uuidv4()
+  const clickHandler = useCallback(
+    (el) => {
+      if (content === "el") {
+        setText((t) => el);
+      }
+      setText((t) => el[`${content}`]);
+      onClick(el);
+    },
+    [content, onClick]
+  );
+
+  const displayHeandler = () => {
+    if (sortId) {
+      return array.map((el) => {
+        if (el.cityId && el.cityId.id === sortId) {
+          return (
+            <li
+              className="selector__item"
+              key={el.id}
+              onClick={() => clickHandler(el)}
+            >
+              {content === "el" ? el : el[`${content}`]}
+            </li>
+          );
+        } else {
+          return;
+        }
+      });
+    } else {
+      return array.map((el) => {
+        return (
+          <li
+            key={el.id}
+            className="selector__item"
+            onClick={() => clickHandler(el)}
+          >
+            {content === "el" ? el : el[`${content}`]}
+          </li>
+        );
+      });
+    }
+  };
+
   return (
-    <div key={key} className="selector">
-      <ul className="selector__list">
-        <span>{text}</span>
-        {array
-          ? array.map((el) => {
-              if (arrayContent === "point") {
-                return <li className="selector__item">{el.address}</li>;
-              }
-              return <li className="selector__item">{el.name}</li>;
-            })
-          : null}
-      </ul>
+    <div key={uuidv4()} className="selector">
+      <div
+        className="selector__block"
+        onClick={() => setActive((active) => !active)}
+      >
+        <span>{children ? children : text}</span>
+        <ul className={`selector__list ${active ? "active" : null}`}>
+          {displayHeandler()}
+        </ul>
+      </div>
     </div>
   );
-}
+};
+
+SelectorInner.propTypes = {
+  sortId: PropTypes.string,
+  content: PropTypes.string,
+  array: PropTypes.array,
+  onClick: PropTypes.func,
+  children: PropTypes.elementType,
+};
+
+export const Selector = memo(SelectorInner);

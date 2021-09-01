@@ -1,26 +1,78 @@
-import React, { useState } from "react";
+import React, { useRef, useCallback, memo } from "react";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { addImage } from "../../../redux/actions/carCard/carCard";
 import "./InfoBlock.scss";
 
-export function InfoBlock(props) {
-  const [value, setValue] =
-    useState(`Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio
-    non, aspernatur, voluptatibus illo nesciunt a adipisci quo cumque nam
-    mollitia minima`);
+const InfoBlockInner = ({
+  label = "",
+  subLabel = "",
+  valueDescription = "",
+  onChangeDescription = () => {},
+  path = "",
+}) => {
+  const dispatch = useDispatch();
+  const image = useRef();
+
+  const imageHandler = useCallback(
+    (path) => {
+      if (!path) {
+        return "";
+      } else if (path.indexOf("data:image") !== -1) {
+        return path;
+      } else {
+        return `https://api-factory.simbirsoft1.com${path}`;
+      }
+    },
+    [path]
+  );
+
+  const displayImage = useCallback(
+    (img) => {
+      image.current.src = img.path;
+      dispatch(addImage(img));
+    },
+    [addImage]
+  );
+
+  const changeHandler = useCallback((e) => {
+    let file = e.target.files[0];
+
+    if (file.type === "image/png" && "image/jpeg") {
+      let blob = new Blob([file], { type: file.type });
+      let reader = new FileReader();
+
+      reader.readAsDataURL(blob);
+      reader.onload = () => {
+        let img = {
+          path: reader.result,
+          mimetype: blob.type,
+          size: blob.size,
+          originalname: file.name,
+        };
+        displayImage(img);
+      };
+    }
+  }, []);
 
   return (
     <section className="info-block">
       <div className="info-block__picture">
         <img
-          src={props.car}
+          src={imageHandler(path)}
           alt=""
+          ref={image}
           className="info-block__picture-image"
-          width="240px"
-          height="110px"
         />
-        <h2 className="info-block__picture-label">{props.label}</h2>
-        <h3 className="info-block__picture-sublabel">{props.subLabel}</h3>
+        <h2 className="info-block__picture-label">{label}</h2>
+        <h3 className="info-block__picture-sublabel">{subLabel}</h3>
         <div className="info-block__picture-review">
-          <input type="file" name="" id="file"/>
+          <input
+            type="file"
+            name=""
+            id="file"
+            onChange={(e) => changeHandler(e)}
+          />
           <label htmlFor="file">Обзор</label>
         </div>
       </div>
@@ -39,12 +91,20 @@ export function InfoBlock(props) {
         <span className="info-block__description-label">Описание</span>
         <textarea
           className="info-block__description-text"
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value);
-          }}
+          value={valueDescription}
+          onChange={(e) => onChangeDescription(e.target.value)}
         />
       </div>
     </section>
   );
-}
+};
+
+InfoBlockInner.propTypes = {
+  label: PropTypes.string.isRequired,
+  sublabel: PropTypes.string,
+  valueDescription: PropTypes.string.isRequired,
+  onChangeDescription: PropTypes.func.isRequired,
+  path: PropTypes.string.isRequired,
+};
+
+export const InfoBlock = memo(InfoBlockInner);

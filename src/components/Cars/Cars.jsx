@@ -1,30 +1,32 @@
-import React, { useEffect, useMemo } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { CarsItem } from "./CarsItem/CarsItem";
 import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Table } from "../UI/Table/Table";
 import { Title } from "./../UI/Title/Title";
-import { getCars } from "../../redux/actions/cars/cars";
-import { CarsItem } from "./CarsItem/CarsItem";
+import { useSelector, useDispatch } from "react-redux";
+import { getCarsOnPage } from "../../redux/actions/cars/cars";
+import { getCategories } from "../../redux/actions/carCard/carCard";
 import "./Cars.scss";
 
 export default React.memo(function Cars() {
-  const { cars, configureFilter } = useSelector((state) => state.cars);
+  const { carsOnPage, configureFilter, page } = useSelector(
+    (state) => state.cars
+  );
   const dispatch = useDispatch();
-  let page = 1;
 
-
-  useEffect(() => {
-    dispatch(getCars(page));
-  }, [page]);
+  // useEffect(() => {
+  //   dispatch(getCarsOnPage(page));
+  //   dispatch(getCategories());
+  // }, [page]);
 
   return (
     <section className="cars">
       <ContentContainer>
         <Title>Список автомобилей</Title>
         <Table configureFilter={configureFilter}>
-          {cars
-            ? cars.map((el) => {
-                return <CarsItem key={el.id} />;
+          {carsOnPage
+            ? carsOnPage.map((el) => {
+                return <CarsItem key={el.id} car={el} />;
               })
             : null}
         </Table>

@@ -1,15 +1,16 @@
-import React from "react";
+import React, { memo, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { changeIsOpenAsideMenu } from "../../../../redux/actions/aside/aside";
 import "./AsideItem.scss";
 
-export const AsideItem = ({ item }) => {
+const AsideItemInner = ({ item }) => {
+  const { icon } = item;
   const dispatch = useDispatch();
 
-  const clickHandler = () => {
+  const clickHandler = useCallback(() => {
     dispatch(changeIsOpenAsideMenu(false));
-  };
+  }, [changeIsOpenAsideMenu]);
 
   return (
     <li
@@ -17,9 +18,11 @@ export const AsideItem = ({ item }) => {
       onClick={() => clickHandler()}
     >
       <NavLink to={item.path} className="aside__item-container">
-        <img src={item.icon} alt="" className="aside__item-icon" />
+        {icon}
         <span className="aside__item-title">{item.title}</span>
       </NavLink>
     </li>
   );
 };
+
+export const AsideItem = memo(AsideItemInner);

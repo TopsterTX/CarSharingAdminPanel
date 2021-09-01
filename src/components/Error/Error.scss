@@ -1,0 +1,49 @@
+@import "../../scss/vars.scss";
+@import "../../scss/mixins.scss";
+
+.error {
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 50px;
+    min-width: 100vw;
+    min-height: 100vh;
+  }
+  &__status {
+    font-weight: 500;
+    font-size: 75px;
+    color: $errorGray;
+    line-height: 87px;
+    margin-bottom: 13px;
+  }
+  &__label {
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 57px;
+    margin-bottom: 15px;
+    color: $wordsColor;
+  }
+  &__sublabel {
+    font-size: 20px;
+    line-height: 23px;
+    color: $dotsGray;
+    font-weight: 400;
+    margin-bottom: 35px;
+  }
+  &__button {
+    height: 30px;
+    width: 95px;
+    background-color: $buttonPrimary;
+    color: #fff;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
+    line-height: 12px;
+    font-weight: 400;
+    text-decoration: none;
+  }
+}

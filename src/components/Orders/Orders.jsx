@@ -1,31 +1,32 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { OrderItem } from "./OrderItem/OrderItem";
-import { Table } from "../UI/Table/Table";
-import { getOrder } from "../../redux/actions/order/order";
-import "./Orders.scss";
+import React, { useEffect, memo } from "react";
 import { ContentContainer } from "./../UI/ContentContainer/ContentContainer";
 import { Title } from "./../UI/Title/Title";
+import { OrderItem } from "./OrderItem/OrderItem";
+import { Table } from "../UI/Table/Table";
+import { useSelector, useDispatch } from "react-redux";
+import { getOrder } from "../../redux/actions/order/order";
+import "./Orders.scss";
 
-export const Orders = () => {
-  const { configureFilter } = useSelector((state) => state.order);
-  const { accessToken } = useSelector((state) => state.user);
+const OrdersInner = () => {
+  const { configureFilter, orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    dispatch(getOrder());
-  });
+  // useEffect(() => {
+  //   dispatch(getOrder());
+  // }, []);
 
   return (
     <section className="orders">
       <ContentContainer>
         <Title>Заказы</Title>
         <Table configureFilter={configureFilter}>
-          <OrderItem />
-          <OrderItem />
-          <OrderItem />
+          {orders.map((el) => {
+            return <OrderItem order={el} key={el.id} id={el.id} />;
+          })}
         </Table>
       </ContentContainer>
     </section>
   );
 };
+
+export const Orders = memo(OrdersInner);

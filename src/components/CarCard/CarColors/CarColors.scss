@@ -1,0 +1,11 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.car-card__color {
+  &-checkbox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+}

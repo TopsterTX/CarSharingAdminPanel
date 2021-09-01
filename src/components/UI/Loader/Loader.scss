@@ -1,10 +1,20 @@
-.loader {
-  position: absolute;
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.loader__item {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
   z-index: 100;
-  background-color: rgb(145, 145, 145);
-  display: flex;
+  background-color: rgba(145, 145, 145, 0.5);
   justify-content: center;
   align-items: center;
+  display: none;
+  &.active {
+    display: flex;
+  }
 }
 
 .lds-ring {
@@ -20,10 +30,10 @@
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid #fff;
+  border: 8px solid $buttonPrimary;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
+  border-color: $buttonPrimary transparent transparent transparent;
 }
 .lds-ring div:nth-child(1) {
   animation-delay: -0.45s;
