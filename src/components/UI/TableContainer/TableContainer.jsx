@@ -7,7 +7,7 @@ const TableContainerInner = ({ children }) => {
 };
 
 TableContainerInner.propTypes = {
-  children: PropTypes.elementType.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export const TableContainer = memo(TableContainerInner);

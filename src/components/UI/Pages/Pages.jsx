@@ -105,14 +105,12 @@ const PagesInner = ({
             >
               <span>{minPage}</span>
             </button>
-            <button className={`pages__button ${maxPage < 5 ? "none" : null}`}>
+            <button className={`pages__button`}>
               <span>...</span>
             </button>
 
             <button
-              className={`pages__button ${page === 2 ? "active" : null} ${
-                maxPage < 5 ? "none" : null
-              }`}
+              className={`pages__button ${page === 2 ? "active" : null}`}
               onClick={(e) => buttonClickedHandler(e)}
             >
               <span>{leftPage}</span>
@@ -120,7 +118,7 @@ const PagesInner = ({
             <button
               className={`pages__button ${
                 page >= 3 && page <= maxPage - 2 ? "active" : null
-              } ${maxPage < 5 ? "none" : null}`}
+              }`}
               onClick={(e) => buttonClickedHandler(e)}
             >
               <span>{middlePage}</span>
@@ -128,12 +126,12 @@ const PagesInner = ({
             <button
               className={`pages__button ${
                 page === maxPage - 1 ? "active" : null
-              } ${maxPage < 5 ? "none" : null}`}
+              }`}
               onClick={(e) => buttonClickedHandler(e)}
             >
               <span>{rightPage}</span>
             </button>
-            <button className={`pages__button ${maxPage < 5 ? "none" : null}`}>
+            <button className={`pages__button `}>
               <span>...</span>
             </button>
             <button
@@ -159,7 +157,7 @@ const PagesInner = ({
 PagesInner.propTypes = {
   page: PropTypes.number.isRequired,
   count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
+  onChangePage: PropTypes.func,
   divisor: PropTypes.number,
   changePage: PropTypes.func.isRequired,
 };

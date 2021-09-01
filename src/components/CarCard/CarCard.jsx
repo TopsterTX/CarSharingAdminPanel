@@ -28,7 +28,8 @@ import {
 import { WarningPopup } from "./../UI/WarningPopup/WarningPopup";
 import { CarColors } from "./CarColors/CarColors";
 import { Selector } from "../UI/Selector/Selector";
-import { addCar, getCategories } from "../../redux/actions/carCard/carCard";
+import { addCar } from "../../redux/actions/carCard/carCard";
+import { getCategories } from "../../redux/actions/cars/cars";
 import { showLoader } from "./../../redux/actions/loader/loader";
 
 export const validateHandler = (setState, string = "", regExp) => {
@@ -48,22 +49,19 @@ export const validateHandler = (setState, string = "", regExp) => {
 function CarCardInner() {
   const warn = false;
   const dispatch = useDispatch();
+  const { categories } = useSelector((state) => state.cars);
+  const { editCar, inputs } = useSelector((state) => state.carCard);
   const {
-    editCar = {},
-    inputs = {},
-    categories = [],
-  } = useSelector((state) => state.carCard);
-  const {
-    colors = [],
-    thumbnail = {},
-    categoryId = {},
-    name = "",
-    description = "",
-    id = "",
-    priceMin = "",
-    priceMax = "",
+    colors,
+    thumbnail,
+    categoryId,
+    name,
+    description,
+    id,
+    priceMin,
+    priceMax,
   } = editCar;
-  const { path = "" } = thumbnail;
+  const { path } = thumbnail;
   const { color } = inputs;
 
   const [priceMinWarn, setPriceMinWarn] = useState(false);

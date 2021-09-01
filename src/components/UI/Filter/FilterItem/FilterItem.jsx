@@ -7,7 +7,7 @@ const FilterItemInner = ({ children }) => {
 };
 
 FilterItemInner.propTypes = {
-  children: PropTypes.elementType.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export const FilterItem = memo(FilterItemInner);

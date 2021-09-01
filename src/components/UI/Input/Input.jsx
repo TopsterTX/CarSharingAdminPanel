@@ -53,7 +53,7 @@ function InputInner({
           type={type ? type : "text"}
           className={`input__item ${warning ? "warning" : null} `}
           id={x}
-          require={required ? true : false}
+          require={required ? "true" : "false"}
           value={value}
           onChange={onChange}
         />
@@ -79,7 +79,7 @@ InputInner.propTypes = {
   required: PropTypes.bool,
   type: PropTypes.string,
   onClickButton: PropTypes.func,
-  children: PropTypes.elementType.isRequired,
+  children: PropTypes.elementType,
   filterPlaceholder: PropTypes.string,
 };
 

@@ -44,17 +44,19 @@ const SelectorInner = ({
         }
       });
     } else {
-      return array.map((el) => {
-        return (
-          <li
-            key={el.id}
-            className="selector__item"
-            onClick={() => clickHandler(el)}
-          >
-            {content === "el" ? el : el[`${content}`]}
-          </li>
-        );
-      });
+      return array
+        ? array.map((el) => {
+            return (
+              <li
+                key={el.id}
+                className="selector__item"
+                onClick={() => clickHandler(el)}
+              >
+                {content === "el" ? el : el[`${content}`]}
+              </li>
+            );
+          })
+        : null;
     }
   };
 

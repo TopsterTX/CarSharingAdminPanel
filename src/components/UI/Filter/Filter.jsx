@@ -42,8 +42,8 @@ const FilterInner = ({
 FilterInner.propTypes = {
   onClickApply: PropTypes.func.isRequired,
   onClickReset: PropTypes.func.isRequired,
-  children: PropTypes.elementType.isRequired,
-  addonComponent: PropTypes.elementType.isRequired,
+  children: PropTypes.element.isRequired,
+  addonComponent: PropTypes.object.isRequired,
 };
 
 export const Filter = memo(FilterInner);

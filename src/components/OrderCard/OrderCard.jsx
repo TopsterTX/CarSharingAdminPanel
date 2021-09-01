@@ -42,29 +42,28 @@ import { showLoader } from "./../../redux/actions/loader/loader";
 
 export function OrderCardInner() {
   const dispatch = useDispatch();
-  const warn = false;
-  const { cars = [] } = useSelector((state) => state.cars);
+  const { cars } = useSelector((state) => state.cars);
   const {
-    rates = [],
-    ratesType = [],
-    orderStatus = [],
+    rates ,
+    ratesType ,
+    orderStatus ,
   } = useSelector((state) => state.order);
   const { editOrder, emptyOrder } = useSelector((state) => state.orderCard);
-  const { points = [] } = useSelector((state) => state.address);
-  const { cities = [] } = useSelector((state) => state.cities);
+  const { points } = useSelector((state) => state.address);
+  const { cities  } = useSelector((state) => state.cities);
   const {
-    orderStatusId = {},
-    cityId = {},
-    pointId = {},
-    carId = {},
-    color = "",
-    dateFrom = "",
-    dateTo = "",
-    rateId = {},
-    price = 0,
-    isFullTank = false,
-    isNeedChildChair = false,
-    isRightWheel = false,
+    orderStatusId,
+    cityId ,
+    pointId ,
+    carId ,
+    color ,
+    dateFrom,
+    dateTo ,
+    rateId ,
+    price ,
+    isFullTank ,
+    isNeedChildChair,
+    isRightWheel,
   } = editOrder;
   const { colors } = carId ? carId : [];
 

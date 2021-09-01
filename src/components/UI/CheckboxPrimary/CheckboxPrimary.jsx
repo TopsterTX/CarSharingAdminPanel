@@ -3,7 +3,11 @@ import PropTypes from "prop-types";
 import "./CheckboxPrimary.scss";
 import { useDispatch } from "react-redux";
 
-function CheckboxPrimaryInner({ children, active, onClick }) {
+function CheckboxPrimaryInner({
+  children = <></>,
+  active = false,
+  onClick = () => {},
+}) {
   const dispatch = useDispatch();
   const clickHandler = useCallback(
     (active) => {

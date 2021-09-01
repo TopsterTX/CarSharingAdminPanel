@@ -24,8 +24,8 @@ import { Pages } from "../UI/Pages/Pages";
 const CitiesInner = () => {
   const dispatch = useDispatch();
   const {
-    cities = [],
-    citiesOnPage = [],
+    cities,
+    citiesOnPage,
     configureFilter,
     count,
     limit,

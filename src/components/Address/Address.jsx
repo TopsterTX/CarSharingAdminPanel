@@ -12,7 +12,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { AddressItem } from "./AddressItem/AddressItem";
 import {
   getPointsOnPage,
-  getPoints,
   changeCity,
   changePage,
 } from "../../redux/actions/address/address";
@@ -32,17 +31,12 @@ import { TableContainer } from "./../UI/TableContainer/TableContainer";
 
 const AddressInner = () => {
   const dispatch = useDispatch();
-  const {
-    pointsOnPage,
-    points = [],
-    limit,
-    count,
-    page,
-    changedCity,
-  } = useSelector((state) => state.address);
+  const { pointsOnPage, limit, count, page, changedCity } = useSelector(
+    (state) => state.address
+  );
   const { editAddress } = useSelector((state) => state.addressCard);
   const { name, cityId, address, id } = editAddress;
-  const { cities = [] } = useSelector((state) => state.cities);
+  const { cities } = useSelector((state) => state.cities);
   const addComponent = (
     <Button type="add" onClick={() => dispatch(createPopup(true))}>
       Пункт
@@ -68,7 +62,7 @@ const AddressInner = () => {
     (val) => {
       return dispatch(changeCityInPoint(val));
     },
-    [cityId, changeCityInPoint]
+    [cityId]
   );
 
   const createPointHandler = useCallback(
@@ -76,7 +70,7 @@ const AddressInner = () => {
       dispatch(createPopup(false));
       dispatch(addPoint(point));
     },
-    [editAddress, createPopup, addPoint]
+    [editAddress]
   );
 
   const closeCreatePopup = useCallback(() => {
@@ -92,14 +86,14 @@ const AddressInner = () => {
         },
       })
     );
-  }, [createPopup]);
+  }, []);
 
   const changePointHandler = useCallback(
     (val, id) => {
       dispatch(changePoint(val, id));
       dispatch(changePopup(false));
     },
-    [editAddress, changePoint, changePopup]
+    [editAddress, id]
   );
 
   const closeChangePopup = useCallback(() => {
@@ -115,7 +109,7 @@ const AddressInner = () => {
         },
       })
     );
-  }, [editAddress, changePopup]);
+  }, [editAddress]);
 
   useEffect(() => {
     if (!cities.length) {
@@ -180,7 +174,7 @@ const AddressInner = () => {
           content="name"
           onClick={changeCityInPointHandler}
         >
-          {cityId.name.length > 0 ? cityId.name : "Выберите город"}
+          {cityId.name.length ? cityId.name : "Выберите город"}
         </Selector>
         <div className="popup__buttons">
           <Button onClick={() => createPointHandler(editAddress)}>
@@ -213,12 +207,10 @@ const AddressInner = () => {
           content="name"
           onClick={changeCityInPointHandler}
         >
-          {cityId.name.length > 0 ? cityId.name : "Выберите город"}
+          {cityId.name.length ? cityId.name : "Выберите город"}
         </Selector>
         <div className="popup__buttons">
-          <Button
-            onClick={() => changePointHandler(editAddress, editAddress.id)}
-          >
+          <Button onClick={() => changePointHandler(editAddress, id)}>
             Применить
           </Button>
           <Button type="warning" onClick={() => closeChangePopup()}>

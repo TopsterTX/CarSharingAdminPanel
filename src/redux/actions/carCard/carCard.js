@@ -101,29 +101,6 @@ export const deleteColor = (index) => {
   };
 };
 
-export const getCategories = () => async (dispatch) => {
-  try {
-    return await api("db/category")
-      .then((res) => {
-        if (res.status >= 200 && res.status < 300) {
-          dispatch({
-            type: GET_CATEGORIES,
-            payload: res.data.data,
-          });
-        } else {
-          let error = new Error(res.statusText);
-          error.response = res;
-          throw error;
-        }
-      })
-      .catch((err) => {
-        dispatch(warningNotice(true));
-        dispatch(openNotice(true));
-      });
-  } catch (e) {
-    console.error(e);
-  }
-};
 
 export const sendChangesCar = (id, car, emptyCar) => async (dispatch) => {
   try {

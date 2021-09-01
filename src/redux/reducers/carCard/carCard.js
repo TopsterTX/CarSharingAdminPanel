@@ -94,11 +94,6 @@ export default (state = defaultState, { type, payload }) => {
           categoryId: payload,
         },
       };
-    case GET_CATEGORIES:
-      return {
-        ...state,
-        categories: payload,
-      };
     case CHANGE_MODEL_CAR:
       return {
         ...state,
