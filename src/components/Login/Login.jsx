@@ -31,15 +31,15 @@ const LoginInner = () => {
   }, [password, username]);
 
   const changeUsernameHandler = useCallback(
-    (val) => {
-      return dispatch(changeUsername(val));
+    (e) => {
+      return dispatch(changeUsername(e.target.value));
     },
     [username, changeUsername]
   );
 
   const changePasswordHandler = useCallback(
-    (val) => {
-      return dispatch(changePassword(val));
+    (e) => {
+      return dispatch(changePassword(e.target.value));
     },
     [password, changeUsername]
   );
@@ -55,23 +55,30 @@ const LoginInner = () => {
           <div className="login__container">
             <div className="login__subtitle">Вход</div>
             <form action="" className="login__form">
-              <Input
-                label={"Логин"}
-                warning={isUserLoginFailed}
-                warningText={"Не правильный логин"}
-                onChange={changeUsernameHandler}
-                value={username}
-                required
-              />
-              <Input
-                label={"Пароль"}
-                warning={isUserLoginFailed}
-                type={"password"}
-                required
-                value={password}
-                onChange={changePasswordHandler}
-                warningText={"Не правильный пароль"}
-              />
+              <div className="login__item--input">
+                <Input
+                  warning={isUserLoginFailed}
+                  warningText={"Не правильный логин"}
+                  onChange={(e) => changeUsernameHandler(e)}
+                  value={username}
+                  required
+                >
+                  Логин
+                </Input>
+              </div>
+              <div className="login__item--input">
+                <Input
+                  warning={isUserLoginFailed}
+                  type={"password"}
+                  required
+                  value={password}
+                  onChange={(e) => changePasswordHandler(e)}
+                  warningText={"Не правильный пароль"}
+                >
+                  Пароль
+                </Input>
+              </div>
+
               <div className="login__buttons">
                 <Button type={"link"}>Запросить доступ</Button>
                 <Button onClick={() => authUser()}>Войти</Button>

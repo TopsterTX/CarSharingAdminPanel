@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { loadState, saveState } from "./local_storage/localStorage";
 import "./index.scss";
-import { mobileViewport } from "./mobileViewportOption";
 import { App } from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { configureStore } from "./redux/configureStore";
@@ -11,6 +10,7 @@ import { userRefreshAuthorize } from "./redux/actions/user/user";
 import { APP_ID } from "./constants";
 import { Loader } from "./components/UI/Loader/Loader";
 import api from "./axios/axios";
+import { showError, getStatus } from "./redux/actions/error/error";
 
 // const defaultState = loadState();
 const defaultState = {};
@@ -40,18 +40,20 @@ store.subscribe(() =>
     },
     async (error) => {
       if (error.response.status == 401) {
-        const response = await store.dispatch(
+        await store.dispatch(
           userRefreshAuthorize(
             store.getState().user.refreshToken,
             store.getState().user.basicKey
           )
         );
       }
+      if (error.response.status >= 500) {
+        store.dispatch(getStatus(error.response.status));
+        store.dispatch(showError(true));
+      }
     }
   )
 );
-
-mobileViewport();
 
 ReactDOM.render(
   <React.StrictMode>

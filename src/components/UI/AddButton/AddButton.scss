@@ -1,0 +1,12 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.button-add {
+  @include button();
+  &__image {
+    text-align: center;
+    width: 12px;
+    height: 12px;
+    margin-right: 8px;
+  }
+}

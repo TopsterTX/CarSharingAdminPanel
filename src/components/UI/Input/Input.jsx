@@ -15,6 +15,7 @@ function InputInner({
   required,
   type = "",
   onClickButton = () => {},
+  filterPlaceholder,
 }) {
   let x = id ? id : uuidv4();
   const dispatch = useDispatch();
@@ -27,16 +28,24 @@ function InputInner({
     [onClickButton]
   );
 
-  const changeHandler = useCallback(
-    (val) => {
-      onChange(val);
-    },
-    [value, onChange]
-  );
-
+  if (type === "filter") {
+    return (
+      <input
+        type={type ? type : "text"}
+        className={`input__item ${warning ? "warning" : null} filter`}
+        id={x}
+        value={value}
+        onChange={onChange}
+        placeholder={filterPlaceholder}
+      />
+    );
+  }
   return (
     <div className={`input ${addButton ? "plus" : null}`}>
-      <label htmlFor={x} className={`input__label`}>
+      <label
+        htmlFor={x}
+        className={`input__label ${required ? "required" : null}`}
+      >
         {children}
       </label>
       <div className="input__wrapper">
@@ -46,11 +55,11 @@ function InputInner({
           id={x}
           require={required ? "true" : "false"}
           value={value}
-          onChange={(e) => changeHandler(e.target.value)}
+          onChange={onChange}
         />
         <button
           className={`input__plus ${addButton ? "active" : null}`}
-          onClick={(e) => clickHandler(e)}
+          onClick={(e) => (warning ? e.preventDefault() : clickHandler(e))}
         ></button>
       </div>
       <span className={`input__error ${warning ? "active" : null}`}>
@@ -70,7 +79,8 @@ InputInner.propTypes = {
   required: PropTypes.bool,
   type: PropTypes.string,
   onClickButton: PropTypes.func,
-  children: PropTypes.elementType.isRequired,
+  children: PropTypes.elementType,
+  filterPlaceholder: PropTypes.string,
 };
 
 export const Input = memo(InputInner);

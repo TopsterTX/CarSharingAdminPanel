@@ -28,6 +28,9 @@
       justify-content: center;
       align-items: center;
       min-width: 100px;
+      &-item {
+        margin-bottom: 8px;
+      }
     }
   }
   &__button-wrapper {
@@ -43,8 +46,10 @@
     &__wrapper {
       display: flex;
       flex-wrap: wrap;
+      align-items: center;
     }
     &__item {
+      max-width: 110px;
       &:not(:last-child) {
         margin-right: 10px;
       }
@@ -53,6 +58,10 @@
       &-wrapper {
         flex-direction: row;
         justify-content: flex-start;
+        &-item {
+          margin-bottom: 0;
+          margin-right: 8px;
+        }
       }
     }
   }

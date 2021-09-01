@@ -7,7 +7,7 @@ import { Cities } from "../Cities/Cities";
 import { CarCard } from "./../CarCard/CarCard";
 import { OrderCard } from "./../OrderCard/OrderCard";
 import { Error } from "../Error/Error";
-import Cars from "./../Cars/Cars";
+import { Cars } from "./../Cars/Cars";
 
 const ContentRouterInner = () => {
   const { isShow } = useSelector((state) => state.error);

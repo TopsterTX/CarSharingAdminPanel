@@ -1,6 +1,6 @@
 import { openNotice, warningNotice } from "../notice/notice";
 import api from "./../../../axios/axios";
-import { showLoader } from "./../loader/loader";
+
 import {
   CHANGE_POINT_NAME,
   CHANGE_ADDRESS_NAME,
@@ -45,13 +45,25 @@ export const cancelEditPoint = () => {
 
 export const addPoint = (point) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
+    
     return await api
       .post("db/point", JSON.stringify(point), {
         headers: { "Content-Type": "application/json" },
       })
       .then((res) => {
+        if (res.status >= 200 && res.status < 300)
+          return dispatch(openNotice(true));
+        else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
+      })
+      .catch((err) => {
+        dispatch(warningNotice(true));
         dispatch(openNotice(true));
+      })
+      .finally((res) => {
         dispatch(
           getEditPoint({
             id: "",
@@ -63,13 +75,7 @@ export const addPoint = (point) => async (dispatch) => {
             },
           })
         );
-      })
-      .catch((err) => {
-        dispatch(warningNotice(true));
-        dispatch(openNotice(true));
-      })
-      .finally((res) => {
-        dispatch(showLoader(false));
+        
       });
   } catch (e) {
     console.error(e);
@@ -78,18 +84,35 @@ export const addPoint = (point) => async (dispatch) => {
 
 export const deletePoint = (id) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
+    
     return await api
       .delete(`db/point/${id}`)
       .then((res) => {
-        dispatch(openNotice(true));
+        if (res.status >= 200 && res.status < 300)
+          return dispatch(openNotice(true));
+        else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
       })
       .catch((err) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
       })
       .finally((res) => {
-        dispatch(showLoader(false));
+        dispatch(
+          getEditPoint({
+            id: "",
+            address: "",
+            name: "",
+            cityId: {
+              name: "",
+              id: "",
+            },
+          })
+        );
+        
       });
   } catch (e) {
     console.error(e);
@@ -98,18 +121,37 @@ export const deletePoint = (id) => async (dispatch) => {
 
 export const changePoint = (point, id) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
+    
     return await api
-      .put(`db/point${id}`, JSON.stringify(point), {
+      .put(`db/point/${id}`, JSON.stringify(point), {
         headers: { "Content-Type": "application/json" },
       })
-      .then((res) => {})
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300)
+          return dispatch(openNotice(true));
+        else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
+      })
       .catch((err) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
       })
       .finally((res) => {
-        dispatch(showLoader(false));
+        dispatch(
+          getEditPoint({
+            id: "",
+            address: "",
+            name: "",
+            cityId: {
+              name: "",
+              id: "",
+            },
+          })
+        );
+        
       });
   } catch (e) {
     console.error(e);

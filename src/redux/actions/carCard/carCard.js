@@ -101,60 +101,33 @@ export const deleteColor = (index) => {
   };
 };
 
-export const getCategories = () => async (dispatch) => {
+
+export const sendChangesCar = (id, car, emptyCar) => async (dispatch) => {
   try {
-    return await api("db/category")
-      .then((res) =>
-        dispatch({
-          type: GET_CATEGORIES,
-          payload: res.data.data,
-        })
-      )
+    await api
+      .put(`db/car/${id}`, JSON.stringify(car), {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          dispatch(openNotice(true));
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
+      })
       .catch((err) => {
         dispatch(warningNotice(true));
         dispatch(openNotice(true));
       })
       .finally((res) => {
-        dispatch(showLoader(false));
+        dispatch(getEditCar(emptyCar));
       });
   } catch (e) {
     console.error(e);
-  }
-};
-
-export const sendChangesCar = (id, car) => async (dispatch) => {
-  try {
-    dispatch(showLoader(true));
-    await api
-      .put(
-        `db/car/${id}`,
-        JSON.stringify(car, (key, value) => {
-          if ((key === "createdAt") | "updatedAt") {
-            return undefined;
-          }
-          return value;
-        }),
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
-      .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 400) {
-          dispatch(openNotice(true));
-          dispatch(showLoader(false));
-        }
-      })
-      .catch((err) => {
-        dispatch(warningNotice(true));
-        dispatch(openNotice(true));
-      })
-      .finally((res) => {
-        dispatch(showLoader(false));
-      });
-  } catch (e) {
-    console.log("e");
   }
 };
 
@@ -170,30 +143,31 @@ export const addImage = (img) => {
   };
 };
 
-export const deleteCar = (id) => (dispatch) => {
+export const deleteCar = (id, emptyCar) => (dispatch) => {
   try {
-    dispatch(showLoader(true));
     api
       .delete(`db/car/${id}`)
       .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 400) {
+        if (res.status >= 200 && res.status < 300) {
           dispatch(openNotice(true));
-          dispatch(showLoader(false));
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
         }
       })
-      .catch((err) => {
-        dispatch(showLoader(false));
+      .catch(() => {
         dispatch(warningNotice(true));
+        dispatch(openNotice(true));
       })
-      .finally((res) => {
-        dispatch(showLoader(false));
+      .finally(() => {
+        dispatch(getEditCar(emptyCar));
       });
   } catch (e) {}
 };
 
-export const addCar = (car) => async (dispatch) => {
+export const addCar = (car, emptyCar) => async (dispatch) => {
   try {
-    dispatch(showLoader(true));
     await api
       .post(`db/car/`, JSON.stringify(car), {
         headers: {
@@ -201,17 +175,20 @@ export const addCar = (car) => async (dispatch) => {
         },
       })
       .then((res) => {
-        if (res.request.status >= 200 && res.request.status < 400) {
+        if (res.status >= 200 && res.status < 300) {
           dispatch(openNotice(true));
-          dispatch(showLoader(false));
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
         }
       })
       .catch((err) => {
-        dispatch(showLoader(false));
         dispatch(warningNotice(true));
+        dispatch(openNotice(true));
       })
-      .finally((res) => {
-        dispatch(showLoader(false));
+      .finally(() => {
+        dispatch(getEditCar(emptyCar));
       });
   } catch (e) {
     console.error(e);

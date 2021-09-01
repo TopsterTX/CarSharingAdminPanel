@@ -2,6 +2,7 @@ import React, { useCallback, useState, memo } from "react";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import "./Selector.scss";
+import { useDispatch } from "react-redux";
 
 const SelectorInner = ({
   children = "",
@@ -10,6 +11,7 @@ const SelectorInner = ({
   content = "",
   onClick = () => {},
 }) => {
+  const dispatch = useDispatch();
   const [active, setActive] = useState(false);
   const [text, setText] = useState("");
 
@@ -19,7 +21,7 @@ const SelectorInner = ({
         setText((t) => el);
       }
       setText((t) => el[`${content}`]);
-      onClick(el);
+      dispatch(onClick(el));
     },
     [content, onClick]
   );
@@ -42,17 +44,19 @@ const SelectorInner = ({
         }
       });
     } else {
-      return array.map((el) => {
-        return (
-          <li
-            key={el.id}
-            className="selector__item"
-            onClick={() => clickHandler(el)}
-          >
-            {content === "el" ? el : el[`${content}`]}
-          </li>
-        );
-      });
+      return array
+        ? array.map((el) => {
+            return (
+              <li
+                key={el.id}
+                className="selector__item"
+                onClick={() => clickHandler(el)}
+              >
+                {content === "el" ? el : el[`${content}`]}
+              </li>
+            );
+          })
+        : null;
     }
   };
 

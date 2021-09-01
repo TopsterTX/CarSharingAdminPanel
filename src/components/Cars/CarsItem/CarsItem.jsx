@@ -73,8 +73,8 @@ function CarsItemInner({ car }) {
 CarsItemInner.propTypes = {
   car: PropTypes.shape({
     id: PropTypes.string.isRequired,
-    tank: PropTypes.number.isRequired,
-    number: PropTypes.string.isRequired,
+    tank: PropTypes.number,
+    number: PropTypes.string,
     colors: PropTypes.arrayOf(PropTypes.string).isRequired,
     description: PropTypes.string.isRequired,
     categoryId: PropTypes.objectOf(PropTypes.string).isRequired,

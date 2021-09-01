@@ -2,15 +2,18 @@ import React, { useRef, useCallback, memo } from "react";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import "./Radio.scss";
+import { useDispatch } from "react-redux";
 
 const RadioInner = ({ children, active, item, onClick = () => {} }) => {
+  const dispatch = useDispatch();
+
   let ID = item ? item.id : uuidv4();
   let radio = useRef();
   let label = useRef();
 
   const onClickHandler = useCallback(
     (item) => {
-      onClick(item);
+      dispatch(onClick(item));
     },
     [item, onClick]
   );

@@ -7,7 +7,7 @@ import "./Button.scss";
 const ButtonInner = ({
   children = "",
   type = "",
-  disabled,
+  disabled = false,
   className = "",
   onClick = () => {},
   ...props
@@ -29,7 +29,6 @@ const ButtonInner = ({
           ? `${className} button ${type ? type : null}`
           : `button ${type ? type : null}`
       }`}
-      disable={disabled ? "true" : "false"}
       onClick={(e) => clickHander(e)}
       key={key}
       {...props}
@@ -46,6 +45,7 @@ ButtonInner.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   onClick: PropTypes.func,
+  disabled: PropTypes.bool,
 };
 
 export const Button = memo(ButtonInner);

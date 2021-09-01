@@ -21,8 +21,27 @@ const defaultState = {
   inputs: {
     color: "",
   },
-  categories: [],
+
   copyCar: {
+    id: "",
+    priceMax: 0,
+    priceMin: 0,
+    name: "Название автомобиля",
+    thumbnail: {
+      size: 0,
+      originalname: "",
+      mimetype: "",
+      path: "",
+    },
+    description: "Описание машины",
+    categoryId: {
+      name: "Категория",
+      description: "",
+      id: "",
+    },
+    colors: [],
+  },
+  emptyCar: {
     id: "",
     priceMax: 0,
     priceMin: 0,
@@ -46,11 +65,10 @@ const defaultState = {
 const reduce = "CAR-CARD__";
 export const ADD_IMAGE = `${reduce}ADD_IMAGE`;
 export const ADD_COLOR = `${reduce}ADD_COLOR`;
-
 export const DELETE_COLOR = `${reduce}DELETE_COLOR`;
 export const GET_EDIT_CAR = `${reduce}GET_EDIT_CAR`;
-export const APPLY_CATEGORY = `${reduce}APPLY_CATEGORY`;
 export const GET_CATEGORIES = `${reduce}GET_CATEGORIES`;
+export const APPLY_CATEGORY = `${reduce}APPLY_CATEGORY`;
 export const CANCEL_EDIT_CAR = `${reduce}CANCEL_EDIT_CAR`;
 export const CHANGE_TYPE_CAR = `${reduce}CHANGE_TYPE_CAR`;
 export const CHANGE_MODEL_CAR = `${reduce}CHANGE_MODEL_CAR`;
@@ -75,11 +93,6 @@ export default (state = defaultState, { type, payload }) => {
           ...state.editCar,
           categoryId: payload,
         },
-      };
-    case GET_CATEGORIES:
-      return {
-        ...state,
-        categories: payload,
       };
     case CHANGE_MODEL_CAR:
       return {

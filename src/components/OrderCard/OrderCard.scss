@@ -15,6 +15,10 @@
     font-weight: 400;
     color: $mainBlack;
     margin-bottom: 15px;
+    span {
+      color: $mainRed;
+      margin-right: 5px;
+    }
   }
   &__container {
     display: flex;
@@ -48,6 +52,11 @@
     display: flex;
     flex-direction: column;
     width: $inputHalfWidth;
+    &-wrapper {
+      &--input {
+        margin-bottom: 23px;
+      }
+    }
   }
   &__rate {
     margin-bottom: 20px;
@@ -61,6 +70,9 @@
   &__price {
     margin-bottom: 5px;
     width: $inputHalfWidth;
+    &--input {
+      margin-bottom: 23px;
+    }
   }
   &__addons {
     margin-bottom: 20px;

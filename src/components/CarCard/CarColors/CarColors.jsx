@@ -1,13 +1,15 @@
 import React, { memo, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { CheckboxPrimary } from "../../UI/CheckboxPrimary/CheckboxPrimary";
 import { Button } from "./../../UI/Button/Button";
 import PropTypes from "prop-types";
 import "./CarColors.scss";
 
 const CarColorsInner = ({ arr, onClick }) => {
+  const dispatch = useDispatch();
   const clickHandler = useCallback(
     (arr) => {
-      onClick(arr.length - 1);
+      dispatch(onClick(arr.length - 1));
     },
     [arr, onClick]
   );

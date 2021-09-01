@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import ReactDom from "react-dom";
 import { Button } from "../Button/Button";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,7 @@ import {
 import "./WarningPopup.scss";
 import PropTypes from "prop-types";
 
-export const WarningPopup = ({
+const WarningPopupInner = ({
   children = "",
   onClick = () => {},
   type = "",
@@ -77,8 +77,10 @@ export const WarningPopup = ({
   );
 };
 
-WarningPopup.propTypes = {
+WarningPopupInner.propTypes = {
   children: PropTypes.any.isRequired,
   text: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 };
+
+export const WarningPopup = memo(WarningPopupInner);
