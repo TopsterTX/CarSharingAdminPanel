@@ -6,7 +6,7 @@ const ImageInner = ({ path, ...props }) => {
   const imageHandler = useCallback(
     (path) => {
       if (!path) {
-        return "";
+        return null;
       } else if (path.indexOf("data:image") !== -1) {
         return path;
       } else {
