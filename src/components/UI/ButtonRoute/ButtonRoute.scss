@@ -1,0 +1,40 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.buttons {
+  &__item {
+    cursor: pointer;
+    width: 66px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 10px;
+    position: relative;
+    text-decoration: none;
+    color: $mainBlack;
+    &--primary {
+      @include readyIcon();
+    }
+    &--warning {
+      @include closeIcon();
+    }
+    &--default {
+      @include dotsIcon(7px, 4px);
+    }
+  }
+  &__item:not(:last-child) {
+    border-right: 1px solid $mainGrayDark;
+  }
+  &__text {
+    display: block;
+  }
+}
+
+@media (min-width: 768px) {
+  .buttons {
+    &__item {
+      width: 71px;
+      font-size: 11px;
+    }
+  }
+}

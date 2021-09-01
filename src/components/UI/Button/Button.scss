@@ -1,0 +1,29 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.button {
+  width: 100%;
+  text-align: center;
+  &:not(:last-child) {
+    margin-right: 8px;
+    
+  }
+  
+  &__image {
+    text-align: center;
+    width: 12px;
+    height: 12px;
+  }
+  @include button();
+  &.link {
+    @include linkButton();
+  }
+}
+
+@media (min-width: 768px) {
+  .button {
+    &:not(:last-child) {
+      margin-bottom: 0;
+    }
+  }
+}

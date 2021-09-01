@@ -1,35 +1,130 @@
-import React from "react";
-import car from "../../../images/car.png";
-import { v4 as uuidv4 } from "uuid";
-import { Checkbox } from "./Checkbox/Checkbox";
-import { Info } from "./Info/Info";
-import { Buttons } from "./Buttons/Buttons";
+import React, { memo } from "react";
+import { WarningPopup } from "./../../UI/WarningPopup/WarningPopup";
+import { Image } from "../../UI/Image/Image";
+import Info from "./Info/Info";
+import { ButtonsContainer } from "./../../UI/ButtonsContainer/ButtonsContainer";
+import { ButtonRoute } from "../../UI/ButtonRoute/ButtonRoute";
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { CheckboxOrder } from "./CheckboxOrder/CheckboxOrder";
+import {
+  getOrder,
+  deleteOrder,
+} from "../../../redux/actions/orderCard/orderCard";
 import "./OrderItem.scss";
+import {
+  openedApplyPopup,
+  openedDeletePopup,
+} from "../../../redux/actions/warningPopup/warningPopup";
 
-export const OrderItem = () => {
-  (function basicCreate() {
-    let random = uuidv4();
-    let secret = "4cbcea96de";
-    let basic = btoa(`${random}:${secret}`);
-  })();
+export const OrderItem = ({ order, id }) => {
+  const dispatch = useDispatch();
+
+  const {
+    carId = {},
+    pointId = {},
+    cityId = {},
+    color = "",
+    rateId = {},
+    orderStatusId = {},
+    dateFrom = "",
+    dateTo = "",
+    price = 0,
+    isFullTank = false,
+    isRightWheel = false,
+    isNeedChildChair = false,
+  } = order;
+
+  const clickDeleteHandler = (id) => {
+    return console.log(id);
+  };
 
   return (
     <section className="order__item">
       <ul className="order__item-container">
         <li className="order__item-part order__item-part--wrapper">
           <div className="order__item-part order__item-part--full-width">
-            <img src={car} alt="" className="order__item-image" />
-            <Info />
+            <Image
+              path={carId ? (carId.thumbnail ? carId.thumbnail.path : "") : ""}
+            />
+            <Info {...order} />
           </div>
-          <Checkbox />
+          <CheckboxOrder
+            isFullTank={isFullTank}
+            isNeedChildChair={isNeedChildChair}
+            isRightWheel={isRightWheel}
+          />
         </li>
         <li className="order__item-part">
-          <span className="order__item-price">4 300 ₽</span>
+          <span className="order__item-price">{price} ₽</span>
         </li>
         <li className="order__item-part">
-          <Buttons />
+          <ButtonsContainer>
+            <ButtonRoute
+              to={"/admin/panel/orders"}
+              type={"primary"}
+              onClick={() => console.log(id)}
+            >
+              Готово
+            </ButtonRoute>
+            <ButtonRoute
+              to={"/admin/panel/card_order"}
+              type={"default"}
+              onClick={() => dispatch(getOrder(order))}
+            >
+              Изменить
+            </ButtonRoute>
+            <ButtonRoute
+              to={"/admin/panel/orders"}
+              type={"warning"}
+              onClick={() => dispatch(deleteOrder(id))}
+            >
+              Удалить
+            </ButtonRoute>
+          </ButtonsContainer>
         </li>
       </ul>
     </section>
   );
+};
+
+OrderItem.propTypes = {
+  order: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    color: PropTypes.string.isRequired,
+    dateFrom: PropTypes.number.isRequired,
+    dateTo: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    isFullTank: PropTypes.bool,
+    isNeedChildChair: PropTypes.bool,
+    isRightWheel: PropTypes.bool,
+    orderStatusId: PropTypes.objectOf(PropTypes.string.isRequired),
+    cityId: PropTypes.objectOf(PropTypes.string),
+    pointId: PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      address: PropTypes.string,
+      cityId: PropTypes.objectOf(PropTypes.string.isRequired),
+    }),
+    carId: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      colors: PropTypes.arrayOf(PropTypes.string).isRequired,
+      description: PropTypes.string.isRequired,
+      categoryId: PropTypes.objectOf(PropTypes.string),
+      name: PropTypes.string.isRequired,
+      priceMin: PropTypes.number.isRequired,
+      priceMax: PropTypes.number.isRequired,
+      thumbnail: PropTypes.shape({
+        size: PropTypes.number,
+        originalname: PropTypes.string,
+        mimetype: PropTypes.string,
+        path: PropTypes.string,
+      }),
+    }).isRequired,
+    rateId: PropTypes.shape({
+      rateTypeId: PropTypes.objectOf(PropTypes.string.isRequired).isRequired,
+      price: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
+    }).isRequired,
+  }),
 };

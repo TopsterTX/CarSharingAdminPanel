@@ -1,0 +1,19 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.checkbox {
+  margin-bottom: 8px;
+  position: relative;
+  display: flex;
+  &__input {
+    margin-right: 8px;
+    display: none;
+  }
+  &__label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 400;
+    color: $wordsColor;
+    @include checkbox
+  }
+}

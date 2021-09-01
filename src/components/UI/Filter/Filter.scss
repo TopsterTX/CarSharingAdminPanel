@@ -1,0 +1,80 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.filter {
+  z-index: 10;
+  position: relative;
+  @include filterWrapper();
+
+  &__toggler {
+    @include filterToggler();
+    margin-right: 8px;
+  }
+  &__container {
+    pointer-events: none;
+    @include filterContainer();
+    &.active {
+      pointer-events: all;
+    }
+  }
+  &__button {
+    @include button();
+    &:not(:last-child) {
+      margin-right: 10px;
+    }
+    &-wrapper {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-width: 100px;
+      &-item {
+        margin-bottom: 8px;
+      }
+    }
+  }
+  &__button-wrapper {
+    display: flex;
+  }
+  &__item {
+    margin-bottom: 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  .filter {
+    &__wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    &__item {
+      max-width: 110px;
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
+    }
+    &__button {
+      &-wrapper {
+        flex-direction: row;
+        justify-content: flex-start;
+        &-item {
+          margin-bottom: 0;
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .filter {
+    width: 100%;
+    &__item {
+      margin-bottom: 0;
+    }
+    &__container {
+      pointer-events: all;
+    }
+  }
+}

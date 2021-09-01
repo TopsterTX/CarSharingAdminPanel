@@ -1,0 +1,8 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.table-body {
+  padding: 16px 21px;
+  border-bottom: 1px solid $mainGrayDark;
+  min-height: 312px;
+}

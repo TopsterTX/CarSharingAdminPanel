@@ -1,4 +1,5 @@
-import React from "react";
+import React, { memo } from "react";
+import { Button } from "./../../UI/Button/Button";
 import { changeIsOpenAsideMenu } from "../../../redux/actions/aside/aside";
 import { useSelector, useDispatch } from "react-redux";
 import search from "../../../icons/header/Shape.svg";
@@ -6,19 +7,27 @@ import notice from "../../../icons/header/Notifications.svg";
 import avatar from "../../../images/Avatar.png";
 import exit from "../../../icons/Exit.svg";
 import "./Header.scss";
-import { userLogout } from "./../../../redux/actions/user/user";
+import {
+  changePassword,
+  changeUsername,
+  userLogout,
+} from "./../../../redux/actions/user/user";
+import { Notice } from "../../UI/Notice/Notice";
 
-export const Header = () => {
+const HeaderInner = () => {
   const { accessToken } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const clickHandler = () => {
-    return dispatch(userLogout(accessToken));
+    dispatch(userLogout(accessToken));
+    dispatch(changePassword(""));
+    dispatch(changeUsername(""));
   };
 
   return (
     <header className="header">
       <ul className="header__list">
+        <Notice></Notice>
         <div
           className="header__button"
           onClick={() => dispatch(changeIsOpenAsideMenu(true))}
@@ -48,15 +57,16 @@ export const Header = () => {
           </div>
           <ul className="header__account-sublist">
             <li className="header__account-item">
-              <button
+              <Button
                 className="header__account-button"
                 onClick={() => {
                   clickHandler();
                 }}
+                type="warning"
               >
-                <span className='header__account-text'>Выйти</span>
+                <span className="header__account-text">Выйти</span>
                 <img src={exit} alt="" width="15px" height="15px" />
-              </button>
+              </Button>
             </li>
           </ul>
         </li>
@@ -64,3 +74,5 @@ export const Header = () => {
     </header>
   );
 };
+
+export const Header = memo(HeaderInner);

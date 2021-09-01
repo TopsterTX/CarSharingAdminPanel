@@ -2,9 +2,8 @@
 @import "../../../scss/vars.scss";
 
 .header {
-  z-index: 5;
   position: fixed;
-  z-index: 20;
+  z-index: 40;
   box-shadow: $boxShadowOnBlock;
   background-color: #fff;
   &__button {
@@ -35,15 +34,17 @@
       align-items: center;
       justify-content: flex-start;
       position: relative;
+      z-index: 40;
     }
     &-account:hover {
       .header__account-sublist {
+        transform: translate(0, 100%);
         opacity: 1;
-        padding: 5px 5px;
       }
     }
   }
   &__list {
+    position: relative;
     min-width: 100vw;
     height: 67px;
     display: flex;
@@ -80,6 +81,9 @@
       padding-right: 5px;
     }
     &-sublist {
+      z-index: -1;
+      padding: 5px 10px;
+      position: absolute;
       // pointer-events: auto;
       align-items: center;
       transition: 0.2s all;
@@ -87,22 +91,13 @@
       background-color: #fff;
       height: 67px;
       width: 120%;
-      top: 67px;
+      transform: translate(0, -100%);
       position: absolute;
       display: flex;
       opacity: 0;
       left: 0;
       border-bottom-left-radius: 9px;
       border-bottom-right-radius: 9px;
-    }
-    &-button {
-      cursor: pointer;
-      padding: 5px 12px;
-      border: 1px solid #900;
-      border-radius: 5px;
-      background-color: transparent;
-      transition: 0.2s all;
-      color: #900;
     }
     &-button:active {
       background-color: #900;

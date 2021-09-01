@@ -29,3 +29,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+#popup {
+  position: fixed;
+  z-index: 1000;
+  min-width: 100vw;
+  min-height: 100vh;
+}

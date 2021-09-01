@@ -1,42 +1,48 @@
 import { v4 } from "uuid";
-import pen from "../../../icons/navbar/Pen.svg";
-import forms from "../../../icons/navbar/Forms.svg";
-import newPost from "../../../icons/navbar/NewPost.svg";
-import error from "../../../icons/navbar/Error.svg";
-import overview from "../../../icons/navbar/Overview.svg";
+import { ReactComponent as ErrorIcon } from "../../../icons/navbar/Error.svg";
+import { ReactComponent as Pen } from "../../../icons/navbar/Pen.svg";
+import { ReactComponent as Forms } from "../../../icons/navbar/Forms.svg";
+import { ReactComponent as NewPost } from "../../../icons/navbar/NewPost.svg";
+import { ReactComponent as Overview } from "../../../icons/navbar/Overview.svg";
 
 const defaultState = {
   asideMenuIsOpen: false,
   asideItems: [
     {
       id: v4(),
+      title: "Карточка заказа",
+      icon: <Forms className="aside__item-icon"></Forms>,
+      path: "/admin/panel/card_order",
+    },
+    {
+      id: v4(),
       title: "Карточка автомобиля",
-      icon: pen,
-      path: "/admin/panel/main",
+      icon: <Pen className="aside__item-icon"></Pen>,
+      path: "/admin/panel/card_car",
     },
     {
       id: v4(),
       title: "Список авто",
-      icon: forms,
-      path: "/admin/panel/cars",
+      icon: <Forms className="aside__item-icon"></Forms>,
+      path: "/admin/panel/main",
     },
     {
       id: v4(),
       title: "Заказы",
-      icon: newPost,
+      icon: <NewPost className="aside__item-icon"></NewPost>,
       path: "/admin/panel/orders",
     },
     {
       id: v4(),
-      title: "Меню 4",
-      icon: overview,
-      path: "/admin/panel/orders",
+      title: "Адреса",
+      icon: <Overview className="aside__item-icon"></Overview>,
+      path: "/admin/panel/address",
     },
     {
       id: v4(),
-      title: "Меню 5",
-      icon: error,
-      path: "/admin/panel/orders",
+      title: "Города",
+      icon: <ErrorIcon className="aside__item-icon"></ErrorIcon>,
+      path: "/admin/panel/cities",
     },
   ],
 };

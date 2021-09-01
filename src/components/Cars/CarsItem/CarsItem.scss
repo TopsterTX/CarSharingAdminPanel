@@ -1,0 +1,114 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.car {
+  &__price {
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+  &__image {
+    display: none;
+  }
+  &__item {
+    min-height: 118px;
+    &-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin: 15px 0;
+    }
+    &-part {
+      display: flex;
+      &.--full-width {
+        justify-content: space-between;
+        flex: 1 1 100%;
+        margin-bottom: 5px;
+      }
+    }
+  }
+  &__info {
+    max-width: 120px;
+    margin-bottom: 5px;
+  }
+  &__description {
+    max-width: 200px;
+  }
+  &__model {
+    color: $mainBlack;
+    font-size: 14px;
+  }
+  &__description {
+    font-size: 12px;
+    color: $wordGray;
+  }
+  &__colors {
+    text-align: center;
+    max-width: 100px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    span {
+      font-size: 14px;
+    }
+    &-item {
+      margin-right: 5px;
+      font-size: 12px;
+      color: $wordGray;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .car {
+    &__item {
+      display: flex;
+      &-container {
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+      }
+      &-part {
+        display: flex;
+        &.--full-width {
+          min-width: 320px;
+          justify-content: space-between;
+          flex: 0;
+          margin-bottom: 5px;
+        }
+      }
+    }
+    &__info {
+      min-width: 230px;
+    }
+    &__colors {
+      text-align: left;
+    }
+  }
+}
+
+@media (min-width: 1024px) {
+  .car {
+    &__price {
+      font-size: 22px;
+    }
+    &__item {
+      &-part {
+        &.--full-width {
+          min-width: 500px;
+        }
+        &.--fisrt-block {
+          display: flex;
+        }
+      }
+    }
+    &__image {
+      align-self: center;
+      display: block;
+      margin-right: 10px;
+      height: 63px;
+      width: 138px;
+    }
+  }
+}

@@ -4,7 +4,7 @@
 .aside {
   top: 0;
   left: -100%;
-  z-index: 20;
+  z-index: 50;
   position: fixed;
   transition: 0.4s all ease-out;
   &.active {

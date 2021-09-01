@@ -1,0 +1,74 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.address-item {
+  &:not(:last-child) {
+    margin-bottom: 25px;
+  }
+
+  &__container {
+    display: flex;
+    justify-content: center;
+
+    font-size: 15px;
+    flex-direction: column;
+  }
+  &__part {
+    max-width: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+    &-block {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+    }
+  }
+  &__city {
+    display: block;
+    font-size: 14px;
+  }
+  &__point {
+    display: block;
+    font-size: 13px;
+    color: $dotsGray;
+    text-align: left;
+  }
+  &__address {
+    font-size: 13px;
+    display: block;
+    color: $dotsGray;
+  }
+}
+
+@media (min-width: 768px) {
+  .address-item {
+    &__city {
+    }
+    &__container {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &__part {
+      &-block {
+        align-items: flex-end;
+      }
+      &--sub {
+        min-width: 350px;
+
+        justify-content: space-between;
+        display: flex;
+        flex-direction: row;
+      }
+    }
+  }
+}

@@ -1,0 +1,80 @@
+@import "../../scss/vars.scss";
+@import "../../scss/mixins.scss";
+
+.order-card {
+  padding: 0 0 100px 0;
+  &__status {
+    &-block {
+      display: flex;
+      flex-direction: column;
+    }
+    margin-bottom: 40px;
+  }
+  &__title {
+    font-size: 12px;
+    font-weight: 400;
+    color: $mainBlack;
+    margin-bottom: 15px;
+    span {
+      color: $mainRed;
+      margin-right: 5px;
+    }
+  }
+  &__container {
+    display: flex;
+    flex-direction: column;
+  }
+  &__main {
+    margin-bottom: 20px;
+    align-items: center;
+    display: flex;
+    position: relative;
+    z-index: 30;
+    &-wrapper {
+      width: 100%;
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+  }
+  &__address {
+    margin-bottom: 20px;
+    display: flex;
+    &-wrapper {
+      width: 100%;
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+  }
+  &__date {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    width: $inputHalfWidth;
+    &-wrapper {
+      &--input {
+        margin-bottom: 23px;
+      }
+    }
+  }
+  &__rate {
+    margin-bottom: 20px;
+    &-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+  }
+  &__price {
+    margin-bottom: 5px;
+    width: $inputHalfWidth;
+    &--input {
+      margin-bottom: 23px;
+    }
+  }
+  &__addons {
+    margin-bottom: 20px;
+  }
+}

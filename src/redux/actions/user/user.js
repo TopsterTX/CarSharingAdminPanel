@@ -5,6 +5,9 @@ import {
   GET_TOKENS,
 } from "../../reducers/user/user";
 import api from "../../../axios/axios";
+import { showLoader } from "./../loader/loader";
+import { warningNotice } from "../notice/notice";
+import { openNotice } from "../notice/notice";
 
 export const userLogin = (
   isUserLogin,
@@ -29,26 +32,40 @@ export const userLogin = (
 
 export const userAuthorize = (body, basicKey) => async (dispatch) => {
   try {
+    dispatch(showLoader(true));
     await api
       .post("auth/login", body, {
         headers: {
-          "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
           "Content-Type": "application/json",
           Authorization: `Basic ${basicKey}`,
         },
       })
-      .then((res) =>
-        dispatch(
-          userLogin(
-            true,
-            res.data.refresh_token,
-            res.data.access_token,
-            res.data.user_id,
-            false,
-            basicKey
-          )
-        )
-      );
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          dispatch(
+            userLogin(
+              true,
+              res.data.refresh_token,
+              res.data.access_token,
+              res.data.user_id,
+              false,
+              basicKey
+            )
+          );
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
+        }
+      })
+      .catch((err) => {
+        dispatch(userLogin(false, null, null, null, true));
+        dispatch(warningNotice(true));
+        dispatch(openNotice(true));
+      })
+      .finally((res) => {
+        dispatch(showLoader(false));
+      });
   } catch (e) {
     dispatch(userLogin(false, null, null, null, true));
   }
@@ -56,18 +73,25 @@ export const userAuthorize = (body, basicKey) => async (dispatch) => {
 
 export const userLogout = (access) => async (dispatch) => {
   try {
+    dispatch(showLoader(true));
     await api
-      .post(
-        "auth/logout",
-        {},
-        {
-          headers: {
-            "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
-            Authorization: `Bearer ${access}`,
-          },
+      .post("auth/logout")
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          return dispatch(userLogin(false, null, null, null, false, null));
+        } else {
+          let error = new Error(res.statusText);
+          error.response = res;
+          throw error;
         }
-      )
-      .then((res) => dispatch(userLogin(false, null, null, null, false, null)));
+      })
+      .catch((err) => {
+        dispatch(warningNotice(true));
+        dispatch(openNotice(true));
+      })
+      .finally(() => {
+        dispatch(showLoader(false));
+      });
   } catch (e) {
     console.error(e);
   }
@@ -97,7 +121,6 @@ export const userRefreshAuthorize = (refresh, basicKey) => async (dispatch) => {
         },
         {
           headers: {
-            "X-Api-Factory-Application-Id": "5e25c641099b810b946c5d5b",
             Authorization: `Basic ${basicKey}`,
             "Content-Type": "application/json",
           },

@@ -4,5 +4,9 @@
 .aside {
   &__item {
     @include asideItem();
+    &-container.active > &-icon {
+      transition: 0.2s all;
+      fill: $buttonPrimary;
+    }
   }
 }

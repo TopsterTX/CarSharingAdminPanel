@@ -1,0 +1,18 @@
+@import "../../../scss/vars.scss";
+@import "../../../scss/mixins.scss";
+
+.radio {
+  &__label {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    color: $radioGray;
+    padding-left: 21px;
+    font-size: 11px;
+    margin-bottom: 8px;
+    @include radio();
+  }
+  &__input {
+    display: none;
+  }
+}

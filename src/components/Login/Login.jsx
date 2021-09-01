@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useCallback, memo } from "react";
+import { Button } from "../UI/Button/Button";
+import { Input } from "../UI/Input/Input";
 import { SECRET_KEY } from "../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
@@ -10,14 +12,13 @@ import {
 } from "../../redux/actions/user/user";
 import "./Login.scss";
 
-export const Login = () => {
-  
+const LoginInner = () => {
   const { username, password, isUserLoginFailed } = useSelector(
     (state) => state.user
   );
   const dispatch = useDispatch();
 
-  const authUser = () => {
+  const authUser = useCallback(() => {
     let secret = SECRET_KEY;
     let random = uuidv4();
     let basicKey = btoa(`${random}:${secret}`);
@@ -26,14 +27,22 @@ export const Login = () => {
       password: `${password}`,
     };
 
-    return dispatch(userAuthorize(body, basicKey));
-  };
+    dispatch(userAuthorize(body, basicKey));
+  }, [password, username]);
 
-  const clickHandler = (e) => {
-    e.preventDefault();
+  const changeUsernameHandler = useCallback(
+    (e) => {
+      return dispatch(changeUsername(e.target.value));
+    },
+    [username, changeUsername]
+  );
 
-    return authUser();
-  };
+  const changePasswordHandler = useCallback(
+    (e) => {
+      return dispatch(changePassword(e.target.value));
+    },
+    [password, changeUsername]
+  );
 
   return (
     <section className="login">
@@ -46,35 +55,33 @@ export const Login = () => {
           <div className="login__container">
             <div className="login__subtitle">Вход</div>
             <form action="" className="login__form">
-              <label htmlFor="email">Почта</label>
-              <input
-                type="text"
-                className={`login__email ${isUserLoginFailed ? "warning" : ""}`}
-                id="email"
-                required
-                value={username}
-                onChange={(e) => dispatch(changeUsername(e.target.value))}
-              />
-              <label htmlFor="password">Пароль </label>
-              <input
-                type="password"
-                className={`login__password ${
-                  isUserLoginFailed ? "warning" : ""
-                }`}
-                id="password"
-                required
-                value={password}
-                onChange={(e) => dispatch(changePassword(e.target.value))}
-              />
-              <div className="login__buttons">
-                <button className="login__access">Запросить доступ</button>
-                <button
-                  className="login__enter"
-                  type="submit"
-                  onClick={(e) => clickHandler(e)}
+              <div className="login__item--input">
+                <Input
+                  warning={isUserLoginFailed}
+                  warningText={"Не правильный логин"}
+                  onChange={(e) => changeUsernameHandler(e)}
+                  value={username}
+                  required
                 >
-                  Войти
-                </button>
+                  Логин
+                </Input>
+              </div>
+              <div className="login__item--input">
+                <Input
+                  warning={isUserLoginFailed}
+                  type={"password"}
+                  required
+                  value={password}
+                  onChange={(e) => changePasswordHandler(e)}
+                  warningText={"Не правильный пароль"}
+                >
+                  Пароль
+                </Input>
+              </div>
+
+              <div className="login__buttons">
+                <Button type={"link"}>Запросить доступ</Button>
+                <Button onClick={() => authUser()}>Войти</Button>
               </div>
             </form>
           </div>
@@ -83,3 +90,4 @@ export const Login = () => {
     </section>
   );
 };
+export const Login = memo(LoginInner);

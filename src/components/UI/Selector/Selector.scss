@@ -1,0 +1,47 @@
+@import "../../../scss/mixins.scss";
+@import "../../../scss/vars.scss";
+
+.selector {
+  &:not(:last-child) {
+    margin-right: 10px;
+  }
+  &__block {
+    @include filterList();
+    width: 100%;
+    height: 30px;
+  }
+  &__list {
+    position: absolute;
+    pointer-events: none;
+    top: 94%;
+    left: 0;
+    opacity: 0;
+    background-color: #fff;
+    width: 100%;
+    border: 1px solid $inputBorder;
+    transition: 0.2s all;
+    max-height: 160px;
+    z-index: 11;
+    overflow: auto;
+    &.active {
+      pointer-events: all;
+
+      transition: 0.2s all;
+      opacity: 1;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+  }
+  &__item {
+    position: relative;
+    z-index: auto;
+    display: block;
+    font-size: 13px;
+    color: $mainBlack;
+    padding: 5px 15px;
+    background-color: #fff;
+    &:not(:last-child) {
+      border-bottom: 1px solid $inputBorder;
+    }
+  }
+}
