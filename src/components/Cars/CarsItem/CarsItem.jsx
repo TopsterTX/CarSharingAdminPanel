@@ -41,7 +41,7 @@ function CarsItemInner({ car }) {
             </ul>
           </div>
         </li>
-
+        
         <li className="car__item-part">
           <span className="car__price">
             {priceMin} ₽ - {priceMax} ₽

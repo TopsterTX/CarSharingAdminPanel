@@ -1,6 +1,6 @@
 const defaultState = {
   status: "504",
-  isShow: true,
+  isShow: false,
 };
 
 const reduce = "ERROR__";
